@@ -20,3 +20,25 @@ export const axiosWithBearer = axios.create({
     Authorization: "bearer " + localStorage.getItem("token"),
   },
 });
+
+axiosWithBearer.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    if (error.response && error.response.status === 401) {
+    }
+    return Promise.reject(error);
+  }
+);
+
+axiosBase.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    if (error.response && error.response.status === 401) {
+    }
+    return Promise.reject(error);
+  }
+);
