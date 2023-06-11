@@ -1,33 +1,39 @@
-import { useContext } from "react";
-import { AuthContext } from "../context/AuthStore";
-import { Outlet, Navigate } from "react-router-dom";
+"use client";
 
 const ProtectRoute = (props) => {
-  const Auth = useContext(AuthContext);
-
   if (
     props.role === "company" &&
     localStorage.getItem("role") === "company" &&
     localStorage.getItem("token")
   )
-    return <Outlet />;
+    return props.children;
   else if (
     props.role === "user" &&
     localStorage.getItem("role") === "user" &&
     localStorage.getItem("token")
   )
-    return <Outlet />;
+    return props.children;
   else if (
     props.role === "null" &&
     !localStorage.getItem("role") &&
     !localStorage.getItem("token")
   )
-    return <Outlet />;
+    return props.children;
+  else if (
+    props.role === "user null" &&
+    (localStorage.getItem("role") === "user" || !localStorage.getItem("role"))
+  )
+    return props.children;
   else if (props.role !== localStorage.getItem("role"));
   {
     //localStorage.clear();
-    return <Navigate to="/" />;
+    if (localStorage.getItem("role") === "company") window.location.href = "/";
+    else {
+      window.location.href = "/";
+    }
   }
+
+  return null;
 };
 
 export default ProtectRoute;

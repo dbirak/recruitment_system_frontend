@@ -11,7 +11,7 @@ const Logo = () => {
         alt=""
         width={70}
         height={70}
-        className="w-[70px] h-[70px] cursor-pointer block mx-auto"
+        className="cursor-pointer block mx-auto"
         onClick={() => {
           router.push("/");
         }}
