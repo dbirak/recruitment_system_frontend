@@ -35,10 +35,10 @@ const LoginPage = () => {
           const token = res.data.token;
           const role = res.data.data.role.role_name;
 
-          localStorage.setItem("token", token);
-          localStorage.setItem("role", role);
+          window.localStorage.setItem("token", token);
+          window.localStorage.setItem("role", role);
 
-          router.push("/");
+          router.push("/company/dashboard");
         })
         .catch((error) => {
           if (error.response.status == 401) {

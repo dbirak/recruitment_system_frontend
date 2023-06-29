@@ -24,9 +24,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="pl">
       <QueryClientProvider client={queryClient}>
-        <AuthProvider>
-          <body /*className={inter.className}*/>{children}</body>
-        </AuthProvider>
+        {/* <AuthProvider> */}
+        <body /*className={inter.className}*/>{children}</body>
+        {/* </AuthProvider> */}
       </QueryClientProvider>
     </html>
   );

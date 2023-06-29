@@ -27,8 +27,9 @@ const ProtectRoute = (props) => {
   else if (props.role !== localStorage.getItem("role"));
   {
     //localStorage.clear();
-    if (localStorage.getItem("role") === "company") window.location.href = "/";
-    else {
+    if (localStorage.getItem("role") === "company") {
+      window.location.href = "/company/dashboard";
+    } else {
       window.location.href = "/";
     }
   }
