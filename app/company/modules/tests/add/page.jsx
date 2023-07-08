@@ -6,7 +6,7 @@ import CompanyContainer from "@/components/layouts/companyContainer";
 import Modal from "@/components/modals/modal";
 import ProtectRoute from "@/utils/middleware/protectRoute";
 import FirstStep from "./components/firstStep";
-import { useState } from "react";
+import { createFactory, useState } from "react";
 import SecondStep from "./components/secondStep";
 
 const AddTestModulePage = () => {
@@ -17,8 +17,6 @@ const AddTestModulePage = () => {
     let updatedQuestions = questions;
     updatedQuestions.pytania.push(question);
     setQuestions(updatedQuestions);
-
-    console.log(questions);
   };
 
   const changeStep = (activities) => {
@@ -28,6 +26,21 @@ const AddTestModulePage = () => {
     else if (activities === "down") newStep--;
 
     setStep(newStep);
+  };
+
+  const deleteQuestion = (index) => {
+    console.log(index);
+
+    const updatedQuestions = [...questions.pytania];
+    updatedQuestions.splice(index, 1);
+    setQuestions({ pytania: updatedQuestions });
+  };
+
+  const editQuestion = (question) => {
+    let updatedQuestions = questions;
+    updatedQuestions.pytania[question.index] = question.question;
+
+    setQuestions(updatedQuestions);
   };
 
   return (
@@ -53,6 +66,8 @@ const AddTestModulePage = () => {
                 addQuestion={addQuestion}
                 questions={questions}
                 changeStep={changeStep}
+                deleteQuestion={deleteQuestion}
+                editQuestion={editQuestion}
               />
             ) : step == 2 ? (
               <SecondStep changeStep={changeStep} />

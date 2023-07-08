@@ -11,9 +11,14 @@ import {
 import { MdModeEdit } from "react-icons/md";
 import { FaTrash } from "react-icons/fa";
 import AddQuestionForm from "./addQuestionForm";
+import Swal from "sweetalert2";
+import EditQuestionForm from "./editQuestionForm";
 
 const FirstStep = (props) => {
   const [isAddQuestionModal, setIsAddQuestionModal] = useState(false);
+  const [isEditQuestionModal, setIsEditQuestionModal] = useState(false);
+
+  const [editedQuestion, setEditedQuestion] = useState({});
 
   const openAddQuestionModal = () => {
     setIsAddQuestionModal(true);
@@ -23,14 +28,57 @@ const FirstStep = (props) => {
     setIsAddQuestionModal(false);
   };
 
+  const openEditQuestionModal = (index) => {
+    setEditedQuestion({
+      index: index,
+      question: props.questions.pytania[index],
+    });
+
+    console.log(editedQuestion);
+
+    setIsEditQuestionModal(true);
+  };
+
+  const closeEditQuestionModal = () => {
+    setIsEditQuestionModal(false);
+  };
+
   const addQuestion = (question) => {
     props.addQuestion(question);
 
     closeAddQuestionModal();
   };
 
+  const editQuestion = (question) => {
+    let updatedQuestion = editedQuestion;
+    updatedQuestion.question = question;
+    props.editQuestion(updatedQuestion);
+
+    closeEditQuestionModal();
+  };
+
   const changeStep = (activities) => {
     props.changeStep(activities);
+  };
+
+  const deleteQuestion = (index) => {
+    Swal.fire({
+      title: "Czy na pewno chcesz usunąć wybrane pytanie?",
+      icon: "warning",
+      showCancelButton: true,
+      color: "hsl(var(--n))",
+      background: "hsl(var(--b1))",
+      confirmButtonColor: "hsl(var(--er))",
+      allowOutsideClick: false,
+      backdrop: "#000000a6",
+      cancelButtonColor: "hsl(var(--n))",
+      confirmButtonText: "Usuń",
+      cancelButtonText: "Anuluj",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        props.deleteQuestion(index);
+      }
+    });
   };
 
   return (
@@ -74,12 +122,18 @@ const FirstStep = (props) => {
               </div>
               <div className="flex justify-around mt-5">
                 <div className="tooltip" data-tip="edytuj pytanie">
-                  <button className="btn btn-square btn-warning text-[22px]">
+                  <button
+                    onClick={() => openEditQuestionModal(index)}
+                    className="btn btn-square btn-warning text-[22px]"
+                  >
                     <MdModeEdit />
                   </button>
                 </div>
                 <div className="tooltip" data-tip="usuń pytanie">
-                  <button className="btn btn-square btn-error text-[18px]">
+                  <button
+                    onClick={() => deleteQuestion(index)}
+                    className="btn btn-square btn-error text-[18px]"
+                  >
                     <FaTrash />
                   </button>
                 </div>
@@ -112,6 +166,14 @@ const FirstStep = (props) => {
         <AddQuestionForm
           closeAddQuestionModal={closeAddQuestionModal}
           addQuestion={addQuestion}
+        />
+      )}
+
+      {isEditQuestionModal && (
+        <EditQuestionForm
+          closeEditQuestionModal={closeEditQuestionModal}
+          editQuestion={editQuestion}
+          editedQuestion={editedQuestion.question}
         />
       )}
     </div>
