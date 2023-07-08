@@ -5,16 +5,24 @@ import { AiFillHome } from "react-icons/ai";
 import { RxDotFilled } from "react-icons/rx";
 import { BiSolidCategoryAlt } from "react-icons/bi";
 import { RiLogoutBoxRLine } from "react-icons/ri";
+import { useRouter } from "next/navigation";
 
 const Navbar = (props) => {
+  const activeButtonStyle = "active bg-primary text-neutral";
+  const router = useRouter();
+
+  const navigate = (url) => {
+    router.push(url);
+  };
+
   return (
-    <div>
+    <div className="z-20">
       {/* main navbar */}
       <div className="navbar bg-base-200">
         <div className="navbar-start">
           <label
             htmlFor="my-drawer"
-            className="btn btn-square btn-ghost visible lg:hidden"
+            className="btn btn-square btn-ghost visible xl:hidden"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -51,7 +59,7 @@ const Navbar = (props) => {
       </div>
 
       {/* desktop sidebar */}
-      <div className="bg-base-200 w-72 m-0 h-[calc(100vh-0px)] pt-7 overflow-hidden fixed top-0 hidden lg:block">
+      <div className="z-20 bg-base-200 w-72 m-0 h-[calc(100vh-0px)] pt-7 overflow-hidden fixed top-0 hidden xl:block">
         <Image
           className="rounded-full border-secondary mx-auto mb-7 block"
           src="/avatars/company.png"
@@ -75,7 +83,12 @@ const Navbar = (props) => {
           </style>
           <ul className="menu menu-lg font-medium bg-base-200 h-auto">
             <li>
-              <a className="active bg-primary text-neutral">
+              <a
+                className={props.site === "home" ? activeButtonStyle : ""}
+                onClick={() => {
+                  navigate("/company/dashboard");
+                }}
+              >
                 <AiFillHome />
                 Strona główna
               </a>
@@ -88,19 +101,34 @@ const Navbar = (props) => {
                 </summary>
                 <ul>
                   <li>
-                    <a>
+                    <a
+                      className={
+                        props.site === "tests" ? activeButtonStyle : ""
+                      }
+                      onClick={() => {
+                        navigate("/company/modules/tests");
+                      }}
+                    >
                       <RxDotFilled />
                       Testy
                     </a>
                   </li>
                   <li>
-                    <a>
+                    <a
+                      className={
+                        props.site === "openQuestions" ? activeButtonStyle : ""
+                      }
+                    >
                       <RxDotFilled />
                       Pytania otwarte
                     </a>
                   </li>
                   <li>
-                    <a>
+                    <a
+                      className={
+                        props.site === "sendFiles" ? activeButtonStyle : ""
+                      }
+                    >
                       <RxDotFilled />
                       Przesyłanie plików
                     </a>
@@ -178,8 +206,17 @@ const Navbar = (props) => {
         </div>
         <div className="drawer-side">
           <label htmlFor="my-drawer" className="drawer-overlay"></label>
+
           <div className="bg-base-200 w-72 m-0 h-[calc(100vh-0px)] pt-7 overflow-hidden top-0">
-            <ul className="menu menu-lg font-medium bg-base-200 h-auto">
+            <Image
+              className="rounded-full border-secondary mx-auto mb-7 block"
+              src="/avatars/company.png"
+              alt=""
+              width={70}
+              height={70}
+              priority={false}
+            />
+            <ul className="menu menu-md font-medium bg-base-200 h-auto">
               <li>
                 <a className="active bg-primary text-neutral">
                   <AiFillHome />
