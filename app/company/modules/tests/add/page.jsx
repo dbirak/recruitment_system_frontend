@@ -8,9 +8,15 @@ import ProtectRoute from "@/utils/middleware/protectRoute";
 import FirstStep from "./components/firstStep";
 import { createFactory, useState } from "react";
 import SecondStep from "./components/secondStep";
+import ThirdStep from "./components/thirdStep";
 
 const AddTestModulePage = () => {
   const [questions, setQuestions] = useState({ pytania: [] });
+  const [additionalInformation, setAdditionalInformation] = useState({
+    nazwa: "",
+    czas: 10,
+  });
+
   const [step, setStep] = useState(1);
 
   const addQuestion = (question) => {
@@ -70,9 +76,18 @@ const AddTestModulePage = () => {
                 editQuestion={editQuestion}
               />
             ) : step == 2 ? (
-              <SecondStep changeStep={changeStep} />
+              <SecondStep
+                changeStep={changeStep}
+                questions={questions}
+                setAdditionalInformation={setAdditionalInformation}
+                additionalInformation={additionalInformation}
+              />
             ) : (
-              ""
+              <ThirdStep
+                changeStep={changeStep}
+                questions={questions}
+                additionalInformation={additionalInformation}
+              />
             )}
           </CompanyContainer>
         </Navbar>
