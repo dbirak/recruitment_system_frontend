@@ -1,17 +1,75 @@
 "use client";
 
+import { axiosWithBearer } from "@/utils/api/axios";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import {
   TiArrowLeftThick,
   TiArrowRightThick,
   TiTick,
   TiTimes,
 } from "react-icons/ti";
+import { useMutation } from "react-query";
+import Swal from "sweetalert2";
 
 const ThirdStep = (props) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+
+  const addTestRequest = useMutation({
+    mutationFn: (data) => {
+      axiosWithBearer
+        .post("/company/test", data)
+        .then((res) => {
+          Swal.fire({
+            title: "Sukces",
+            text: "Test został poprawnie utworzony!",
+            icon: "success",
+            color: "hsl(var(--n))",
+            background: "hsl(var(--b1))",
+            confirmButtonColor: "hsl(var(--su))",
+            allowOutsideClick: false,
+            backdrop: "#000000a6",
+            confirmButtonText: "Zamknij",
+          }).then((result) => {
+            router.push("/company/modules/tests");
+          });
+        })
+        .catch((error) => {
+          if (error.response.status == 401 || error.response.status == 403) {
+            // localStorage.clear();
+            // router.push("/");
+            console.log(error);
+          } else if (error.response.status == 422) {
+            for (const validateField in error.response.data.errors) {
+              Swal.fire({
+                title: "Błąd",
+                text: "Nie można utworzyć testu, ponieważ zawiera w sobie niepoprawne dane!",
+                icon: "error",
+                color: "hsl(var(--n))",
+                background: "hsl(var(--b1))",
+                confirmButtonColor: "hsl(var(--er))",
+                allowOutsideClick: false,
+                backdrop: "#000000a6",
+                confirmButtonText: "Zamknij",
+              }).then((result) => {});
+            }
+          } else console.log(error);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    },
+  });
+
   const submitTest = () => {
+    setIsLoading(true);
+
     let json = Object.assign({}, props.questions, props.additionalInformation);
 
     console.log(json);
+
+    addTestRequest.mutate(json);
   };
 
   const changeStep = (activities) => {
@@ -87,9 +145,18 @@ const ThirdStep = (props) => {
           <TiArrowLeftThick />
           wstecz
         </button>
-        <button onClick={submitTest} className="btn btn-success w-[150px]">
-          utwórz test
-        </button>
+        {isLoading ? (
+          <button
+            onClick={submitTest}
+            className="btn btn-success w-[150px] btn-disabled"
+          >
+            <span className="loading loading-spinner"></span>
+          </button>
+        ) : (
+          <button onClick={submitTest} className="btn btn-success w-[150px]">
+            utwórz test
+          </button>
+        )}
       </div>
     </div>
   );
