@@ -120,7 +120,7 @@ const FirstStep = (props) => {
                   );
                 })}
               </div>
-              <div className="flex justify-around mt-5">
+              <div className="flex justify-around mt-5 w-[150px] mx-auto">
                 <div className="tooltip" data-tip="edytuj pytanie">
                   <button
                     onClick={() => openEditQuestionModal(index)}

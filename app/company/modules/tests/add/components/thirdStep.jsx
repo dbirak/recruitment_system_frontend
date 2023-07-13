@@ -37,9 +37,8 @@ const ThirdStep = (props) => {
         })
         .catch((error) => {
           if (error.response.status == 401 || error.response.status == 403) {
-            // localStorage.clear();
-            // router.push("/");
-            console.log(error);
+            localStorage.clear();
+            router.push("/");
           } else if (error.response.status == 422) {
             for (const validateField in error.response.data.errors) {
               Swal.fire({
