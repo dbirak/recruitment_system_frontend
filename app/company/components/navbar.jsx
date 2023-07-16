@@ -118,6 +118,9 @@ const Navbar = (props) => {
                       className={
                         props.site === "openQuestions" ? activeButtonStyle : ""
                       }
+                      onClick={() => {
+                        navigate("/company/modules/open-questions");
+                      }}
                     >
                       <RxDotFilled />
                       Pytania otwarte

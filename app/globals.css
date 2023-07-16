@@ -1,3 +1,60 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* React Quill - style global*/
+
+button:hover .ql-stroke,
+.ql-picker-label:hover .ql-stroke,
+ql-picker-label {
+  fill: none;
+  stroke: hsl(var(--s)) !important;
+  color: hsl(var(--s)) !important;
+}
+
+.ql-active .ql-stroke {
+  fill: none;
+  stroke: hsl(var(--s)) !important;
+}
+
+button:hover .ql-fill,
+.ql-picker-label:hover .ql-fill {
+  fill: hsl(var(--s)) !important;
+  stroke: none;
+}
+
+.ql-active .ql-fill {
+  fill: hsl(var(--p)) !important;
+  stroke: none;
+}
+
+.ql-snow.ql-container {
+  border-bottom-left-radius: 0.5em !important;
+  border-bottom-right-radius: 0.5em !important;
+  border-color: hsl(var(--b3)) !important;
+}
+
+/* Snow Theme */
+.ql-snow.ql-toolbar {
+  display: block;
+  background: hsl(var(--b2)) !important;
+  border-top-left-radius: 0.5em;
+  border-top-right-radius: 0.5em;
+  border-color: hsl(var(--b3)) !important;
+}
+
+#root .ql-editor {
+  min-height: 18em;
+}
+
+.ql-snow
+  .ql-picker.ql-header
+  .ql-picker-label[data-label]:not([data-label=""]):hover,
+.ql-picker-label ql-active,
+.ql-picker-label-item:hover {
+  color: hsl(var(--s)) !important;
+}
+
+span.ql-picker-item.ql-selected {
+  color: hsl(var(--s)) !important;
+}
