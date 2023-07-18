@@ -14,27 +14,27 @@ import Loading from "@/components/loadings/loading";
 import { MdModeEdit, MdRemoveRedEye } from "react-icons/md";
 import { FaTrash } from "react-icons/fa";
 
-const OpenQuestionsPage = () => {
+const SendFilesPage = () => {
   const [isLoading, setIsLoading] = useState(true);
 
-  const [isShowOpenTaskModal, setIsShowOpenTaskModal] = useState(false);
-  const [openTaskShowInfo, setOpenTaskShowInfo] = useState({
+  const [isShowFileTaskModal, setIsShowFileTaskModal] = useState(false);
+  const [fileTaskShowInfo, setFileTaskShowInfo] = useState({
     name: "",
     id: null,
   });
 
-  const [allOpenTasks, setAllOpenTasks] = useState([]);
+  const [allFileTasks, setAllFileTasks] = useState([]);
   const router = useRouter();
 
-  const addOpenQuestionNavigate = () => {
-    router.push("/company/modules/open-questions/add");
+  const addSendFilesNavigate = () => {
+    router.push("/company/modules/send-files/add");
   };
 
-  const getAllOpenTasks = useQuery("getAllOpenTasks", () => {
+  const getAllFileTasks = useQuery("getAllFileTasks", () => {
     axiosWithBearer
-      .get("/company/open-task")
+      .get("/company/file-task")
       .then((res) => {
-        setAllOpenTasks(res.data);
+        setAllFileTasks(res.data);
       })
       .catch((error) => {
         if (error.response.status == 401 || error.response.status == 403) {
@@ -59,27 +59,27 @@ const OpenQuestionsPage = () => {
       });
   });
 
-  const deleteOpenTask = (questionId) => {
+  const deleteFileTask = (questionId) => {
     console.log(questionId);
   };
 
-  const showOpenTask = (questionId, questionName) => {
-    setOpenTaskShowInfo({ name: questionName, id: questionId });
-    setIsShowOpenTaskModal(true);
+  const showFileTask = (questionId, questionName) => {
+    setFileTaskShowInfo({ name: questionName, id: questionId });
+    setIsShowFileTaskModal(true);
   };
 
-  const closeShowOpenTaskModal = () => {
-    setIsShowOpenTaskModal(false);
+  const closeShowFileTaskModal = () => {
+    setIsShowFileTaskModal(false);
   };
 
   return (
     <div>
       <ProtectRoute role="company">
-        <Navbar site="openQuestions">
+        <Navbar site="sendFiles">
           <CompanyContainer>
-            <Title name="Moduły - Pytania otwarte" />
+            <Title name="Moduły - Przesyłanie plików" />
             <button
-              onClick={addOpenQuestionNavigate}
+              onClick={addSendFilesNavigate}
               className="btn btn-primary rounded-none w-full p-3 mb-5"
             >
               <span className="text-[20px]">
@@ -90,11 +90,11 @@ const OpenQuestionsPage = () => {
 
             {isLoading ? (
               <Loading />
-            ) : allOpenTasks.length === 0 ? (
+            ) : allFileTasks.length === 0 ? (
               <p>Brak pytań!</p>
             ) : (
               <div>
-                {allOpenTasks.map((item, index) => {
+                {allFileTasks.map((item, index) => {
                   return (
                     <div
                       className="collapse collapse-sm collapse-arrow bg-base-200 mb-3 mt-5"
@@ -126,7 +126,7 @@ const OpenQuestionsPage = () => {
                         <div className="flex justify-around mt-6 w-[225px] mx-auto">
                           <div className="tooltip" data-tip="zobacz pytanie">
                             <button
-                              onClick={() => showOpenTask(item.id, item.name)}
+                              onClick={() => showFileTask(item.id, item.name)}
                               className="btn btn-square btn-primary text-[22px]"
                             >
                               <MdRemoveRedEye />
@@ -139,7 +139,7 @@ const OpenQuestionsPage = () => {
                           </div>
                           <div className="tooltip" data-tip="usuń pytanie">
                             <button
-                              onClick={() => deleteOpenTask(item.id)}
+                              onClick={() => deleteFileTask(item.id)}
                               className="btn btn-square btn-error text-[18px]"
                             >
                               <FaTrash />
@@ -159,4 +159,4 @@ const OpenQuestionsPage = () => {
   );
 };
 
-export default OpenQuestionsPage;
+export default SendFilesPage;

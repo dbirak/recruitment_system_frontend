@@ -10,7 +10,7 @@ import ThirdStep from "./components/thirdStep";
 import SecondStep from "./components/secondStep";
 import FirstStep from "./components/firstStep";
 
-const AddOpenQuestionPage = () => {
+const AddSendFilePage = () => {
   const [descryption, setDescryption] = useState("");
   const [additionalInformation, setAdditionalInformation] = useState({
     nazwa: "",
@@ -31,7 +31,7 @@ const AddOpenQuestionPage = () => {
   return (
     <div>
       <ProtectRoute role="company">
-        <Navbar site="openQuestions">
+        <Navbar site="sendFiles">
           <CompanyContainer>
             <Title name="Dodaj nowe pytanie" />
             <ul className="steps w-full mb-5 z-0">
@@ -72,4 +72,4 @@ const AddOpenQuestionPage = () => {
   );
 };
 
-export default AddOpenQuestionPage;
+export default AddSendFilePage;

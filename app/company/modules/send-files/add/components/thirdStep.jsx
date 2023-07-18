@@ -22,7 +22,7 @@ const ThirdStep = (props) => {
   const addQuestionRequest = useMutation({
     mutationFn: (data) => {
       axiosWithBearer
-        .post("/company/open-task", data)
+        .post("/company/file-task", data)
         .then((res) => {
           Swal.fire({
             title: "Sukces",
@@ -35,7 +35,7 @@ const ThirdStep = (props) => {
             backdrop: "#000000a6",
             confirmButtonText: "Zamknij",
           }).then((result) => {
-            router.push("/company/modules/open-questions");
+            router.push("/company/modules/send-files");
           });
         })
         .catch((error) => {

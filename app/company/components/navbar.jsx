@@ -131,6 +131,9 @@ const Navbar = (props) => {
                       className={
                         props.site === "sendFiles" ? activeButtonStyle : ""
                       }
+                      onClick={() => {
+                        navigate("/company/modules/send-files");
+                      }}
                     >
                       <RxDotFilled />
                       Przesyłanie plików
