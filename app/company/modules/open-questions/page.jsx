@@ -13,12 +13,14 @@ import Swal from "sweetalert2";
 import Loading from "@/components/loadings/loading";
 import { MdModeEdit, MdRemoveRedEye } from "react-icons/md";
 import { FaTrash } from "react-icons/fa";
+import moment from "moment";
+import ShowOpenQuestionModal from "./components/showOpenQuestionModal";
 
 const OpenQuestionsPage = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const [isShowOpenTaskModal, setIsShowOpenTaskModal] = useState(false);
-  const [openTaskShowInfo, setOpenTaskShowInfo] = useState({
+  const [openQuestionShowInfo, setOpenQuestionShowInfo] = useState({
     name: "",
     id: null,
   });
@@ -64,11 +66,11 @@ const OpenQuestionsPage = () => {
   };
 
   const showOpenTask = (questionId, questionName) => {
-    setOpenTaskShowInfo({ name: questionName, id: questionId });
+    setOpenQuestionShowInfo({ name: questionName, id: questionId });
     setIsShowOpenTaskModal(true);
   };
 
-  const closeShowOpenTaskModal = () => {
+  const closeShowOpenQuestionModal = () => {
     setIsShowOpenTaskModal(false);
   };
 
@@ -80,7 +82,7 @@ const OpenQuestionsPage = () => {
             <Title name="Moduły - Pytania otwarte" />
             <button
               onClick={addOpenQuestionNavigate}
-              className="btn btn-primary rounded-none w-full p-3 mb-5"
+              className="btn btn-primary w-full p-3 mb-5"
             >
               <span className="text-[20px]">
                 <IoMdAddCircle />
@@ -118,13 +120,18 @@ const OpenQuestionsPage = () => {
                               {/* row 2 */}
                               <tr>
                                 <th className="w-1/2">Data utworzenia</th>
-                                <td>{item.created_at}</td>
+                                <td>
+                                  {moment
+                                    .utc(item.created_at)
+                                    .add(2, "hours")
+                                    .format("HH:mm DD.MM.YYYY")}
+                                </td>
                               </tr>
                             </tbody>
                           </table>
                         </div>
                         <div className="flex justify-around mt-6 w-[225px] mx-auto">
-                          <div className="tooltip" data-tip="zobacz pytanie">
+                          <div className="tooltip" data-tip="wyświetl pytanie">
                             <button
                               onClick={() => showOpenTask(item.id, item.name)}
                               className="btn btn-square btn-primary text-[22px]"
@@ -155,6 +162,13 @@ const OpenQuestionsPage = () => {
           </CompanyContainer>
         </Navbar>
       </ProtectRoute>
+
+      {isShowOpenTaskModal && (
+        <ShowOpenQuestionModal
+          openQuestionShowInfo={openQuestionShowInfo}
+          closeShowOpenQuestionModal={closeShowOpenQuestionModal}
+        />
+      )}
     </div>
   );
 };

@@ -146,10 +146,10 @@ export const QuillToolbar = () => (
     <span className="ql-formats">
       <button className="ql-link" />
       <button className="ql-image" />
-      <button className="ql-video" />
+      {/* <button className="ql-video" /> */}
     </span>
     <span className="ql-formats">
-      <button className="ql-formula" />
+      {/* <button className="ql-formula" /> */}
       <button className="ql-code-block" />
       <button className="ql-clean" />
     </span>

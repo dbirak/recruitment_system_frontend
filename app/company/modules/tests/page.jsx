@@ -14,6 +14,7 @@ import Swal from "sweetalert2";
 import { FaTrash } from "react-icons/fa";
 import { MdModeEdit, MdRemoveRedEye } from "react-icons/md";
 import ShowTestModal from "./components/showTestModal";
+import moment from "moment";
 
 const TestModulePage = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -78,7 +79,7 @@ const TestModulePage = () => {
             <Title name="Moduły - Testy" />
             <button
               onClick={addTestNavigate}
-              className="btn btn-primary rounded-none w-full p-3 mb-5"
+              className="btn btn-primary w-full p-3 mb-5"
             >
               <span className="text-[20px]">
                 <IoMdAddCircle />
@@ -116,11 +117,21 @@ const TestModulePage = () => {
                                 <th className="w-1/2">Czas trwania testu</th>
                                 <td>{item.time} min</td>
                               </tr>
+                              {/* row 3 */}
+                              <tr>
+                                <th className="w-1/2">Data utworzenia</th>
+                                <td>
+                                  {moment
+                                    .utc(item.created_at)
+                                    .add(2, "hours")
+                                    .format("HH:mm DD.MM.YYYY")}
+                                </td>
+                              </tr>
                             </tbody>
                           </table>
                         </div>
                         <div className="flex justify-around mt-6 w-[225px] mx-auto">
-                          <div className="tooltip" data-tip="zobacz pytania">
+                          <div className="tooltip" data-tip="wyświetl pytania">
                             <button
                               onClick={() => showTest(item.id, item.name)}
                               className="btn btn-square btn-primary text-[22px]"

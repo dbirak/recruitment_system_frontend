@@ -34,7 +34,7 @@ const AddSendFilePage = () => {
         <Navbar site="sendFiles">
           <CompanyContainer>
             <Title name="Dodaj nowe pytanie" />
-            <ul className="steps w-full mb-5 z-0">
+            <ul className="steps w-full mb-5">
               <li className={step >= 1 ? "step step-primary" : "step"}>
                 Tworzenie pytania
               </li>

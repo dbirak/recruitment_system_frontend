@@ -13,6 +13,8 @@ import Swal from "sweetalert2";
 import Loading from "@/components/loadings/loading";
 import { MdModeEdit, MdRemoveRedEye } from "react-icons/md";
 import { FaTrash } from "react-icons/fa";
+import moment from "moment";
+import ShowSendFileModal from "./components/showSendFileModal";
 
 const SendFilesPage = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -68,7 +70,7 @@ const SendFilesPage = () => {
     setIsShowFileTaskModal(true);
   };
 
-  const closeShowFileTaskModal = () => {
+  const closeShowSendFileModal = () => {
     setIsShowFileTaskModal(false);
   };
 
@@ -80,7 +82,7 @@ const SendFilesPage = () => {
             <Title name="Moduły - Przesyłanie plików" />
             <button
               onClick={addSendFilesNavigate}
-              className="btn btn-primary rounded-none w-full p-3 mb-5"
+              className="btn btn-primary w-full p-3 mb-5"
             >
               <span className="text-[20px]">
                 <IoMdAddCircle />
@@ -118,13 +120,18 @@ const SendFilesPage = () => {
                               {/* row 2 */}
                               <tr>
                                 <th className="w-1/2">Data utworzenia</th>
-                                <td>{item.created_at}</td>
+                                <td>
+                                  {moment
+                                    .utc(item.created_at)
+                                    .add(2, "hours")
+                                    .format("HH:mm DD.MM.YYYY")}
+                                </td>
                               </tr>
                             </tbody>
                           </table>
                         </div>
                         <div className="flex justify-around mt-6 w-[225px] mx-auto">
-                          <div className="tooltip" data-tip="zobacz pytanie">
+                          <div className="tooltip" data-tip="wyświetl pytanie">
                             <button
                               onClick={() => showFileTask(item.id, item.name)}
                               className="btn btn-square btn-primary text-[22px]"
@@ -155,6 +162,13 @@ const SendFilesPage = () => {
           </CompanyContainer>
         </Navbar>
       </ProtectRoute>
+
+      {isShowFileTaskModal && (
+        <ShowSendFileModal
+          fileTaskShowInfo={fileTaskShowInfo}
+          closeShowSendFileModal={closeShowSendFileModal}
+        />
+      )}
     </div>
   );
 };
