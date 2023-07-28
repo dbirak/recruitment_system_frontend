@@ -4,35 +4,30 @@ import { TiArrowLeftThick, TiArrowRightThick } from "react-icons/ti";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 
-const SecondStep = (props) => {
-  const [time, setTime] = useState(props.additionalInformation.czas);
-
+const FirstStep = (props) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
     setError,
     onChange,
-    getValues,
   } = useForm();
 
   const styleInputCorrect = "input input-bordered w-full";
   const styleInputError = styleInputCorrect + " input-error text-error";
 
-  const changeStep = (activities) => {
-    props.setAdditionalInformation(getValues());
+  const styleTextareaCorrect =
+    "textarea textarea-bordered h-[150px] text-[16px] w-full";
+  const styleTextareaError =
+    "textarea textarea-bordered h-[150px] text-[16px] w-full textarea-error text-error";
+
+  const changeStep = async (activities) => {
     props.changeStep(activities);
   };
 
   const onSubmitHandler = async (data) => {
-    data.czas = parseInt(data.czas);
-
-    props.setAdditionalInformation(data);
+    await props.updateAnnoucementInfo(data);
     props.changeStep("up");
-  };
-
-  const changeTime = (e) => {
-    setTime(e.target.value);
   };
 
   return (
@@ -41,14 +36,14 @@ const SecondStep = (props) => {
         <form onSubmit={handleSubmit(onSubmitHandler)}>
           <input
             type="text"
-            placeholder="Nazwa pytania"
+            placeholder="Nazwa stanowiska pracy"
             className={errors.nazwa ? styleInputError : styleInputCorrect}
-            defaultValue={props.additionalInformation.nazwa}
+            defaultValue={props.announcementInfo.nazwa}
             {...register("nazwa", {
-              required: "Nazwa pytania jest wymagana.",
+              required: "Nazwa stanowiska pracy jest wymagana.",
               maxLength: {
                 value: 100,
-                message: "Nazwa pytania jest zbyt długa.",
+                message: "Nazwa stanowiska pracy jest zbyt długa.",
               },
               pattern: {
                 value: /^[a-zA-ZĄ-ŻĄąĆćĘęŁłŃńÓóŚśŹźŻż _-]{1,}$/,
@@ -64,37 +59,36 @@ const SecondStep = (props) => {
             )}
           </label>
 
-          <div className="flex">
-            <div className="w-[190px]">Czas trwania testu: </div>
-            <div className="grid items-center w-[100%]">
-              <input
-                type="range"
-                min={1}
-                max={180}
-                defaultValue={props.additionalInformation.czas}
-                className="w-full range"
-                step={1}
-                {...register("czas", {
-                  onChange: (e) => {
-                    const newValue = e.target.value;
-                    setTime(newValue);
-                  },
-                })}
-              />
-            </div>
-            <div className="w-[120px] text-right grid items-center justify-end">
-              {time} min
-            </div>
-          </div>
+          <textarea
+            type="text"
+            placeholder="Opis stanowiska pracy"
+            className={errors.opis ? styleTextareaError : styleTextareaCorrect}
+            defaultValue={props.announcementInfo.opis}
+            {...register("opis", {
+              required: "Opis stanowiska pracy jest wymagany.",
+              maxLength: {
+                value: 500,
+                message: "Opis jest zbyt długi.",
+              },
+            })}
+          ></textarea>
+          <label className="label mb-5">
+            {errors.opis && (
+              <span className="label-text-alt text-error text-[13px]">
+                {errors.opis.message}
+              </span>
+            )}
+          </label>
 
-          <div className="flex justify-between mt-10">
-            <button
+          <div className="flex justify-between mt-10 overflow-x-hidden">
+            <div></div>
+            {/* <button
               onClick={() => changeStep("down")}
               className="btn btn-primary w-[150px]"
             >
               <TiArrowLeftThick />
               wstecz
-            </button>
+            </button> */}
             <button type="submit" className="btn btn-primary w-[150px]">
               Dalej <TiArrowRightThick />
             </button>
@@ -105,4 +99,4 @@ const SecondStep = (props) => {
   );
 };
 
-export default SecondStep;
+export default FirstStep;

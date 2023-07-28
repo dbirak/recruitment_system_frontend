@@ -13,12 +13,14 @@ const SecondStep = (props) => {
     formState: { errors },
     setError,
     onChange,
+    getValues,
   } = useForm();
 
   const styleInputCorrect = "input input-bordered w-full";
   const styleInputError = styleInputCorrect + " input-error text-error";
 
   const changeStep = (activities) => {
+    props.setAdditionalInformation(getValues());
     props.changeStep(activities);
   };
 
