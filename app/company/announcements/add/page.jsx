@@ -29,6 +29,8 @@ const AddAnnouncementPage = () => {
     typ_pracy: 0,
   });
 
+  const [additionalInformation, setAdditionalInformation] = useState({});
+
   const changeStep = (activities) => {
     let newStep = step;
 
@@ -87,11 +89,14 @@ const AddAnnouncementPage = () => {
               ) : step == 3 ? (
                 <ThirdStep
                   changeStep={changeStep}
+                  updateAnnoucementInfo={updateAnnoucementInfo}
+                  setAdditionalInformation={setAdditionalInformation}
                   announcementInfo={announcementInfo}
                 />
               ) : step == 4 ? (
                 <FourthStep
                   changeStep={changeStep}
+                  updateAnnoucementInfo={updateAnnoucementInfo}
                   announcementInfo={announcementInfo}
                 />
               ) : step == 5 ? (
