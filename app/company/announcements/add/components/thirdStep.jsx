@@ -50,7 +50,7 @@ const ThirdStep = (props) => {
         } else {
           Swal.fire({
             title: "Błąd",
-            text: "Nie można informacji, ponieważ wystąpił błąd podczas połączenia z serwerem!",
+            text: "Nie można pobrać informacji, ponieważ wystąpił błąd podczas połączenia z serwerem!",
             icon: "error",
             color: "hsl(var(--n))",
             background: "hsl(var(--b1))",
@@ -73,24 +73,11 @@ const ThirdStep = (props) => {
     data.typ_pracy = parseInt(data.typ_pracy);
 
     let additionalInfo = {
-      kategoria: null,
-      umowa: null,
-      czas_pracy: null,
-      typ_pracy: null,
+      kategoria: info.categories.find((item) => item.id === data.kategoria),
+      umowa: info.contracts.find((item) => item.id === data.umowa),
+      czas_pracy: info.workTimes.find((item) => item.id === data.czas_pracy),
+      typ_pracy: info.workTypes.find((item) => item.id === data.typ_pracy),
     };
-
-    additionalInfo.kategoria = info.categories.find(
-      (item) => item.id === data.kategoria
-    );
-    additionalInfo.umowa = info.contracts.find(
-      (item) => item.id === data.umowa
-    );
-    additionalInfo.czas_pracy = info.workTimes.find(
-      (item) => item.id === data.czas_pracy
-    );
-    additionalInfo.typ_pracy = info.workTypes.find(
-      (item) => item.id === data.typ_pracy
-    );
 
     await props.updateAnnoucementInfo(data);
     await props.setAdditionalInformation(additionalInfo);

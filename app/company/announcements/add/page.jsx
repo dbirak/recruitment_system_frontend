@@ -30,6 +30,10 @@ const AddAnnouncementPage = () => {
   });
 
   const [additionalInformation, setAdditionalInformation] = useState({});
+  const [earnInformation, setEarnInformation] = useState({
+    radioInfo: 1,
+    selectValue: "",
+  });
 
   const changeStep = (activities) => {
     let newStep = step;
@@ -98,6 +102,8 @@ const AddAnnouncementPage = () => {
                   changeStep={changeStep}
                   updateAnnoucementInfo={updateAnnoucementInfo}
                   announcementInfo={announcementInfo}
+                  earnInformation={earnInformation}
+                  setEarnInformation={setEarnInformation}
                 />
               ) : step == 5 ? (
                 <FifthStep
