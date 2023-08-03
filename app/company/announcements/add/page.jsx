@@ -27,6 +27,7 @@ const AddAnnouncementPage = () => {
     typ_wynagrodzenia: 0,
     czas_pracy: 0,
     typ_pracy: 0,
+    data_zakonczenia: null,
   });
 
   const [additionalInformation, setAdditionalInformation] = useState({});
@@ -34,6 +35,7 @@ const AddAnnouncementPage = () => {
     radioInfo: 1,
     selectValue: "",
   });
+  const [stepInformation, setStepInformation] = useState([]);
 
   const changeStep = (activities) => {
     let newStep = step;
@@ -71,7 +73,7 @@ const AddAnnouncementPage = () => {
                   <span className="hidden md:block">Zarobki</span>
                 </li>
                 <li className={step >= 5 ? "step step-primary" : "step"}>
-                  <span className="hidden md:block">Kroki rekrutacji</span>
+                  <span className="hidden md:block">Etapy rekrutacji</span>
                 </li>
                 <li className={step >= 6 ? "step step-primary" : "step"}>
                   <span className="hidden md:block">Podsumowanie</span>
@@ -109,11 +111,16 @@ const AddAnnouncementPage = () => {
                 <FifthStep
                   changeStep={changeStep}
                   announcementInfo={announcementInfo}
+                  stepInformation={stepInformation}
+                  setStepInformation={setStepInformation}
                 />
               ) : (
                 <SixthStep
                   changeStep={changeStep}
-                  announcementsInfo={announcementsInfo}
+                  announcementInfo={announcementInfo}
+                  earnInformation={earnInformation}
+                  additionalInformation={additionalInformation}
+                  stepInformation={stepInformation}
                 />
               )}
             </div>

@@ -13,6 +13,8 @@ const FourthStep = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [info, setInfo] = useState(null);
   const [radioInfo, setRadioInfo] = useState(props.earnInformation.radioInfo);
+  const [selectedValue, setSelectedV] = useState("");
+
   const {
     register,
     handleSubmit,
@@ -141,11 +143,13 @@ const FourthStep = (props) => {
 
       let earnInfoTemp = {
         radioInfo: parseInt(radioInfo),
-        selectValue: info.find((item) => item.id === data.typ_wynagrodzenia),
+        selectValue: info.find(
+          (item) => item.id === parseInt(data.typ_wynagrodzenia)
+        ),
       };
 
-      props.setEarnInformation(earnInfoTemp);
-      props.updateAnnoucementInfo(temp);
+      await props.setEarnInformation(earnInfoTemp);
+      await props.updateAnnoucementInfo(temp);
       props.changeStep("up");
     }
   };

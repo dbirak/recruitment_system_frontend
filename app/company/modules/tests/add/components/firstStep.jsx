@@ -34,8 +34,6 @@ const FirstStep = (props) => {
       question: props.questions.pytania[index],
     });
 
-    console.log(editedQuestion);
-
     setIsEditQuestionModal(true);
   };
 

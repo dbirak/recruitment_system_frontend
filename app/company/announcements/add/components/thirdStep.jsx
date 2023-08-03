@@ -98,7 +98,7 @@ const ThirdStep = (props) => {
           {...register("kategoria", {
             pattern: {
               value: /^(?!0$).+$/,
-              message: "Proszę wybrać kategorię",
+              message: "Proszę wybrać kategorię.",
             },
           })}
         >
