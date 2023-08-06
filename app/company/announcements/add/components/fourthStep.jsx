@@ -132,10 +132,33 @@ const FourthStep = (props) => {
         temp.max_wynagrodzenie = null;
         temp.typ_wynagrodzenia = 0;
       } else if (radioInfo == 2) {
+        if (parseFloat(data.min_wynagrodzenie) > 99999.99) {
+          setError("min_wynagrodzenie", {
+            type: "manual",
+            message: "Kwota wynagrodzenia jest za wysoka.",
+          });
+          return;
+        }
+        if (parseFloat(data.max_wynagrodzenie) > 99999.99) {
+          setError("max_wynagrodzenie", {
+            type: "manual",
+            message: "Kwota wynagrodzenia jest za wysoka.",
+          });
+          return;
+        }
+
         temp.min_wynagrodzenie = parseFloat(data.min_wynagrodzenie);
         temp.max_wynagrodzenie = parseFloat(data.max_wynagrodzenie);
         temp.typ_wynagrodzenia = parseInt(data.typ_wynagrodzenia);
       } else if (radioInfo == 3) {
+        if (parseFloat(data.min_wynagrodzenie) > 99999.99) {
+          setError("min_wynagrodzenie", {
+            type: "manual",
+            message: "Kwota wynagrodzenia jest za wysoka.",
+          });
+          return;
+        }
+
         temp.min_wynagrodzenie = parseFloat(data.min_wynagrodzenie);
         temp.max_wynagrodzenie = null;
         temp.typ_wynagrodzenia = parseInt(data.typ_wynagrodzenia);

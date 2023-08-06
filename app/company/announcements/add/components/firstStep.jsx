@@ -32,13 +32,11 @@ const FirstStep = (props) => {
     selectedDateTime.setHours(0, 0, 0, 0);
     today.setHours(0, 0, 0, 0);
 
-    console.log(data);
-
     if (selectedDateTime <= today) {
       setError("data_zakonczenia", {
         type: "manual",
         message:
-          "Data zakończenia ogłoszenia nie może być wcześniejsza, niż dzisiejsza data.",
+          "Data zakończenia ogłoszenia musi być późniejsza, niż dzisiejsza data.",
       });
       return;
     }

@@ -7,9 +7,11 @@ import { TiArrowLeftThick, TiArrowRightThick } from "react-icons/ti";
 import { useMutation } from "react-query";
 import Swal from "sweetalert2";
 import moment from "moment";
+import { useRouter } from "next/navigation";
 
 const SixthStep = (props) => {
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const changeStep = async (activities) => {
     props.changeStep(activities);
@@ -32,7 +34,7 @@ const SixthStep = (props) => {
             backdrop: "#000000a6",
             confirmButtonText: "Zamknij",
           }).then((result) => {
-            router.push("/company/modules/send-files");
+            router.push("/company/announcements");
           });
         })
         .catch((error) => {
@@ -43,7 +45,7 @@ const SixthStep = (props) => {
             for (const validateField in error.response.data.errors) {
               Swal.fire({
                 title: "Błąd",
-                text: "Nie można utworzyć pytania, ponieważ zawiera w sobie niepoprawne dane!",
+                text: "Nie można utworzyć ogłoszenia, ponieważ zawiera w sobie niepoprawne dane!",
                 icon: "error",
                 color: "hsl(var(--n))",
                 background: "hsl(var(--b1))",
@@ -65,8 +67,7 @@ const SixthStep = (props) => {
     setIsLoading(true);
     let data = { ...props.announcementInfo, etapy: props.stepInformation };
 
-    console.log(data);
-    //addAnnouncementRequest.mutate(data);
+    addAnnouncementRequest.mutate(data);
   };
 
   return (
@@ -253,7 +254,7 @@ const SixthStep = (props) => {
             onClick={submitAnnouncement}
             className="btn btn-success w-[150px]"
           >
-            utwórz pytanie
+            utwórz ogłoszenie
           </button>
         )}
       </div>

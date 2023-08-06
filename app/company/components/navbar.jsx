@@ -15,6 +15,11 @@ const Navbar = (props) => {
     router.push(url);
   };
 
+  const logout = () => {
+    localStorage.clear();
+    router.push("/");
+  };
+
   return (
     <div className="z-20">
       {/* main navbar */}
@@ -52,9 +57,14 @@ const Navbar = (props) => {
           </span>
         </div>
         <div className="navbar-end">
-          <button className="btn btn-ghost btn-square text-[19px] text-center">
-            <RiLogoutBoxRLine />
-          </button>
+          <div className="tooltip tooltip-left" data-tip="Wyloguj się">
+            <button
+              onClick={logout}
+              className="btn btn-ghost btn-square text-[19px] text-center"
+            >
+              <RiLogoutBoxRLine />
+            </button>
+          </div>
         </div>
       </div>
 
