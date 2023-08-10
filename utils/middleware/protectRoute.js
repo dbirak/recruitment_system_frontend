@@ -24,11 +24,12 @@ const ProtectRoute = (props) => {
     (localStorage.getItem("role") === "user" || !localStorage.getItem("role"))
   )
     return props.children;
-  else if (props.role !== localStorage.getItem("role"));
-  {
+  else if (props.role !== localStorage.getItem("role")) {
     //localStorage.clear();
     if (localStorage.getItem("role") === "company") {
       window.location.href = "/company/dashboard";
+    } else if (localStorage.getItem("role") === "user") {
+      window.location.href = "/announcement";
     } else {
       window.location.href = "/";
     }

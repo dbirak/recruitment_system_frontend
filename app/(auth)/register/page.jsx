@@ -16,17 +16,20 @@ const RegisterPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isWorker, setIsWorker] = useState(true);
 
-  const styleTabUnactive = "tab tab-bordered tab-primary w-1/2 text-[16px] ";
-  const styleTabActive = styleTabUnactive + "tab-active";
+  const styleTabUnactive =
+    "tab tab-bordered tab-primary w-1/2 text-[14px] sm:text-[16px]";
+  const styleTabActive =
+    styleTabUnactive +
+    "tab-active text-neutral border-neutral text-[14px] sm:text-[16px]";
 
   return (
     <div>
       <ProtectRoute role="null">
-        <MainContainer>
-          <div className="max-w-[500px] mx-auto p-5 bg-base-300">
+        <div className="bg-[url('/assets/image2.jpg')] py-7 pt-[80px] px-5 hero block min-h-screen">
+          <div className="hero-content block max-w-[500px] mx-auto p-5 bg-base-100">
             <Logo />
 
-            <div className="border-b-2 border-dotted border-primary my-5"></div>
+            <div className="border-b-2 border-dotted border-neutral my-5"></div>
             <div>
               <h1 className="font-semibold text-[26px] text-center mb-5">
                 Rejestracja
@@ -48,7 +51,7 @@ const RegisterPage = () => {
               {isWorker ? <UserForm /> : <CompanyForm />}
             </div>
           </div>
-        </MainContainer>
+        </div>
       </ProtectRoute>
     </div>
   );

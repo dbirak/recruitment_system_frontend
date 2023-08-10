@@ -15,15 +15,15 @@ const Navbar = (props) => {
     router.push(url);
   };
 
-  const logout = () => {
-    localStorage.clear();
+  const logout = async () => {
+    window.localStorage.clear();
     router.push("/");
   };
 
   return (
     <div className="z-20">
       {/* main navbar */}
-      <div className="navbar bg-base-200">
+      <div className="navbar bg-base-100 shadow-lg">
         <div className="navbar-start">
           <label
             htmlFor="my-drawer"
@@ -52,7 +52,7 @@ const Navbar = (props) => {
             alt=""
             priority={false}
           />
-          <span className="text-center mx-auto ml-2 text-[25px] font-sans text-primary-focus font-semibold cursor-default select-none">
+          <span className="text-center mx-auto ml-2   text-[25px] font-sans text-neutral font-semibold cursor-default select-none">
             WorkHunter
           </span>
         </div>
@@ -69,7 +69,7 @@ const Navbar = (props) => {
       </div>
 
       {/* desktop sidebar */}
-      <div className="z-20 bg-base-200 w-72 m-0 h-[calc(100vh-0px)] pt-7 overflow-hidden fixed top-0 hidden xl:block">
+      <div className="z-20 bg-base-100 shadow-lg w-72 m-0 h-[calc(100vh-0px)] pt-7 overflow-hidden fixed top-0 hidden xl:block">
         <Image
           className="rounded-full border-secondary mx-auto mb-7 block"
           src="/avatars/company.png"
@@ -91,7 +91,7 @@ const Navbar = (props) => {
           }
         `}
           </style>
-          <ul className="menu menu-lg font-medium bg-base-200 h-auto">
+          <ul className="menu menu-lg font-medium bg-base-100 h-auto">
             <li>
               <a
                 className={props.site === "home" ? activeButtonStyle : ""}
@@ -100,7 +100,7 @@ const Navbar = (props) => {
                 }}
               >
                 <AiFillHome />
-                Strona główna
+                <span>Strona główna</span>
               </a>
             </li>
             <li>
@@ -120,7 +120,7 @@ const Navbar = (props) => {
                       }}
                     >
                       <RxDotFilled />
-                      Testy
+                      <span>Testy</span>
                     </a>
                   </li>
                   <li>
@@ -133,7 +133,7 @@ const Navbar = (props) => {
                       }}
                     >
                       <RxDotFilled />
-                      Pytania otwarte
+                      <span>Pytania otwarte</span>
                     </a>
                   </li>
                   <li>
@@ -146,7 +146,7 @@ const Navbar = (props) => {
                       }}
                     >
                       <RxDotFilled />
-                      Przesyłanie plików
+                      <span>Przesyłanie plików</span>
                     </a>
                   </li>
                 </ul>
@@ -162,7 +162,7 @@ const Navbar = (props) => {
                 }}
               >
                 <BiSolidCategoryAlt />
-                Twoje ogłoszenia
+                <span>Twoje ogłoszenia</span>
               </a>
             </li>
             <li>
@@ -181,7 +181,7 @@ const Navbar = (props) => {
                     d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
                   />
                 </svg>
-                Profil
+                <span>Profil</span>
               </a>
             </li>
             <li>
@@ -200,7 +200,7 @@ const Navbar = (props) => {
                     d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
                   />
                 </svg>
-                Ustawienia
+                <span>Ustawienia</span>
               </a>
             </li>
           </ul>
@@ -230,32 +230,32 @@ const Navbar = (props) => {
               <li>
                 <a className="active bg-primary text-neutral">
                   <AiFillHome />
-                  Strona główna
+                  <span>Strona główna</span>
                 </a>
               </li>
               <li>
                 <details open>
                   <summary>
                     <BiSolidCategoryAlt />
-                    Moduły
+                    <span>Moduły</span>
                   </summary>
                   <ul>
                     <li>
                       <a>
                         <RxDotFilled />
-                        Testy
+                        <span>Testy</span>
                       </a>
                     </li>
                     <li>
                       <a>
                         <RxDotFilled />
-                        Pytania otwarte
+                        <span>Pytania otwarte</span>
                       </a>
                     </li>
                     <li>
                       <a>
                         <RxDotFilled />
-                        Przesyłanie plików
+                        <span>Przesyłanie plików</span>
                       </a>
                     </li>
                   </ul>
@@ -277,7 +277,7 @@ const Navbar = (props) => {
                       d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
                     />
                   </svg>
-                  Twoje ogłoszenia
+                  <span>Twoje ogłoszenia</span>
                 </a>
               </li>
               <li>
@@ -296,7 +296,7 @@ const Navbar = (props) => {
                       d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
                     />
                   </svg>
-                  Profil
+                  <span>Profil</span>
                 </a>
               </li>
               <li>
@@ -315,7 +315,7 @@ const Navbar = (props) => {
                       d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
                     />
                   </svg>
-                  Ustawienia
+                  <span>Ustawienia</span>
                 </a>
               </li>
             </ul>

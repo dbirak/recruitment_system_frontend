@@ -39,7 +39,10 @@ const UserForm = () => {
               setError(validateField, { message: validateMessage });
             }
 
-            if (error.response.data.message) {
+            if (
+              error.response.data.message ==
+              "Podane hasła różnią się od siebie!"
+            ) {
               setError("hasło", { message: "" });
               setError("powtórz hasło", {
                 message: error.response.data.message,
@@ -177,12 +180,12 @@ const UserForm = () => {
 
         <div className="w-[150px] mx-auto mt-3">
           {isLoading ? (
-            <button className="btn btn-primary w-[150px] btn-disabled">
+            <button className="btn btn-neutral w-[150px] btn-disabled">
               <span className="loading loading-spinner"></span>
             </button>
           ) : (
             <input
-              className="btn btn-primary w-[150px]"
+              className="btn btn-neutral w-[150px]"
               type="submit"
               value="Zarejestruj się"
             />

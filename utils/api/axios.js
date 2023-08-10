@@ -21,7 +21,32 @@ export const axiosWithBearer = axios.create({
   },
 });
 
+export const axiosWithBearerOrBase = axios.create({
+  baseURL: baseURL,
+  timeout: 8000,
+  headers: {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+    Authorization:
+      localStorage.getItem("token") || sessionStorage.getItem("token")
+        ? "Bearer " +
+          (localStorage.getItem("token") || sessionStorage.getItem("token"))
+        : undefined,
+  },
+});
+
 axiosWithBearer.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    if (error.response && error.response.status === 401) {
+    }
+    return Promise.reject(error);
+  }
+);
+
+axiosWithBearerOrBase.interceptors.response.use(
   (response) => {
     return response;
   },

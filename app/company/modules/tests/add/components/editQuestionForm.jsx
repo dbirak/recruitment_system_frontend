@@ -113,7 +113,7 @@ const EditQuestionForm = (props) => {
                       <input
                         {...register(`odpowiedzi.${index}.poprawna`)}
                         type="checkbox"
-                        className="toggle toggle-sm toggle-success"
+                        className="toggle toggle-sm toggle-neutral"
                         defaultChecked={item.poprawna}
                       />
                     </div>

@@ -41,7 +41,10 @@ const CompanyForm = () => {
               setError(validateField, { message: validateMessage });
             }
 
-            if (error.response.data.message) {
+            if (
+              error.response.data.message ==
+              "Podane hasła różnią się od siebie!"
+            ) {
               setError("hasło", { message: "" });
               setError("powtórz hasło", {
                 message: error.response.data.message,
@@ -63,7 +66,7 @@ const CompanyForm = () => {
   };
 
   return (
-    <div>
+    <div className="max-h-[468px] pe-3 overflow-y-scroll">
       <form onSubmit={handleSubmit(onSubmitHandler)}>
         <input
           type="text"
@@ -109,6 +112,30 @@ const CompanyForm = () => {
           {errors.nazwisko && (
             <span className="label-text-alt text-error text-[13px]">
               {errors.nazwisko.message}
+            </span>
+          )}
+        </label>
+
+        <input
+          type="text"
+          placeholder="Nazwa przedsiębiorstwa"
+          className={errors.nazwa ? styleInputError : styleInputCorrect}
+          {...register("nazwa", {
+            required: "Pole nazwa przedsiębiorstwa jest wymagane.",
+            maxLength: {
+              value: 50,
+              message: "Podana nazwa jest zbyt długa.",
+            },
+            pattern: {
+              value: /^[a-zA-ZĄ-ŻĄąĆćĘęŁłŃńÓóŚśŹźŻż. _-]{1,}$/,
+              message: "Nieprawidłowe nazwa.",
+            },
+          })}
+        />
+        <label className="label mb-5">
+          {errors.nazwa && (
+            <span className="label-text-alt text-error text-[13px]">
+              {errors.nazwa.message}
             </span>
           )}
         </label>
@@ -393,12 +420,12 @@ const CompanyForm = () => {
 
         <div className="w-[150px] mx-auto mt-3">
           {isLoading ? (
-            <button className="btn btn-primary w-[150px] btn-disabled">
+            <button className="btn btn-neutral w-[150px] btn-disabled">
               <span className="loading loading-spinner"></span>
             </button>
           ) : (
             <input
-              className="btn btn-primary w-[150px]"
+              className="btn btn-neutral w-[150px]"
               type="submit"
               value="Zarejestruj się"
             />

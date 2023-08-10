@@ -108,7 +108,7 @@ const AddQuestionForm = (props) => {
                     <input
                       {...register(`odpowiedzi.${index}.poprawna`)}
                       type="checkbox"
-                      className="toggle toggle-sm toggle-success"
+                      className="toggle toggle-sm toggle-neutral"
                     />
                   </div>
                 </div>

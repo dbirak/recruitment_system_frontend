@@ -67,11 +67,11 @@ const LoginPage = () => {
   return (
     <div>
       <ProtectRoute role="null">
-        <MainContainer>
-          <div className="max-w-[500px] mx-auto p-5 bg-base-300">
+        <div className="bg-[url('/assets/image2.jpg')] py-7 pt-[80px] px-5 hero block min-h-screen">
+          <div className="hero-content block max-w-[500px] mx-auto p-5 bg-base-100 shadow-lg">
             <Logo />
 
-            <div className="border-b-2 border-dotted border-primary my-5"></div>
+            <div className="border-b-2 border-dotted border-neutral my-5"></div>
             <div>
               <h1 className="font-semibold text-[26px] text-center mb-5">
                 Logowanie
@@ -124,12 +124,12 @@ const LoginPage = () => {
 
                 <div className="w-[150px] mx-auto mt-3">
                   {isLoading ? (
-                    <button className="btn btn-primary w-[150px] btn-disabled">
+                    <button className="btn btn-neutral w-[150px] btn-disabled">
                       <span className="loading loading-spinner"></span>
                     </button>
                   ) : (
                     <input
-                      className="btn btn-primary w-[150px]"
+                      className="btn btn-neutral w-[150px]"
                       type="submit"
                       value="Zaloguj się"
                     />
@@ -138,7 +138,7 @@ const LoginPage = () => {
               </form>
             </div>
           </div>
-        </MainContainer>
+        </div>
       </ProtectRoute>
     </div>
   );

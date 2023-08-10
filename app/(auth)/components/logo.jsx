@@ -17,7 +17,7 @@ const Logo = () => {
         }}
       />
       <div
-        className="w-[160px] pt-2 text-center mx-auto text-[28px] font-sans text-primary-focus font-semibold cursor-pointer"
+        className="w-[160px] pt-2 text-center mx-auto text-[28px] font-sans text-neutral font-semibold cursor-pointer"
         onClick={() => {
           router.push("/");
         }}
