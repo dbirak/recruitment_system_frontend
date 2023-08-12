@@ -18,6 +18,8 @@ import {
 } from "react-icons/md";
 import moment from "moment";
 import { TbPointFilled } from "react-icons/tb";
+import AdditionalInformatio from "./components/AdditionalInformation";
+import AnnouncementInformation from "./components/AnnouncementInformation";
 
 function AnnouncementPage(props) {
   const [announcement, setAnnouncement] = useState({});
@@ -41,18 +43,19 @@ function AnnouncementPage(props) {
         var b = moment();
 
         setLeftDaysNumber(a.diff(b, "days") + 1);
+
+        setIsLoading(false);
       })
       .catch((error) => {
         if (error.response.status == 401 || error.response.status == 403) {
           localStorage.clear();
           router.push("/");
         } else if (error.response.status == 404) {
+          console.log("aaaa");
           router.push("/");
         }
       })
-      .finally(() => {
-        setIsLoading(false);
-      });
+      .finally(() => {});
   });
 
   return (
@@ -92,155 +95,31 @@ function AnnouncementPage(props) {
                     {" - "}
                     <a className="link">zobacz profil</a>
                   </div>
-
                   <div className="my-14 mx-7 text-justify text-[17px]">
                     {announcement.description}
                   </div>
-
-                  <div className="my-14 rounded-lg shadow-lg w-fit py-4 px-4 text-center font-semibold text-[19px] mx-auto">
-                    {announcement.min_earn === null
-                      ? ""
-                      : announcement.min_earn + " zł "}
-                    {announcement.max_earn === null
-                      ? ""
-                      : "- " + announcement.max_earn + " zł "}
-                    {announcement.earn_time === null
-                      ? ""
-                      : announcement.earn_time.earn_time_name}
-                  </div>
-
-                  <div className="flex justify-between mx-7 ">
-                    <div className="w-1/2">
-                      <div className="text-right flex my-7">
-                        <div className="grid items center text-[35px] me-5">
-                          <MdLocationOn />
-                        </div>
-                        <div className="text-[16px] font-semibold grid items-center truncate overflow-hidden">
-                          {announcement.company.street.charAt(0).toUpperCase() +
-                            announcement.company.street.slice(1).toLowerCase() +
-                            ", " +
-                            announcement.company.city.charAt(0).toUpperCase() +
-                            announcement.company.city.slice(1).toLowerCase() +
-                            ", " +
-                            announcement.company.province.province_name
-                              .charAt(0)
-                              .toUpperCase() +
-                            announcement.company.province.province_name
-                              .slice(1)
-                              .toLowerCase()}
-                        </div>
-                      </div>
-
-                      <div className="text-right flex my-7">
-                        <div className="grid items center text-[35px] me-5">
-                          <BiSolidCategoryAlt />
-                        </div>
-                        <div className="text-[16px] font-semibold grid items-center">
-                          {announcement.category.category_name}
-                        </div>
-                      </div>
-
-                      <div className="text-right flex my-7">
-                        <div className="grid items center text-[35px] me-5">
-                          <AiFillFileText />
-                        </div>
-                        <div className="text-[16px] font-semibold grid items-center">
-                          {announcement.contract.contract_name}
-                        </div>
-                      </div>
+                  {announcement.earn_time !== null && (
+                    <div className="my-14 rounded-lg shadow-lg w-fit py-4 px-4 text-center font-semibold text-[19px] mx-auto">
+                      {announcement.min_earn === null
+                        ? ""
+                        : announcement.min_earn + " zł "}
+                      {announcement.max_earn === null
+                        ? ""
+                        : "- " + announcement.max_earn + " zł "}
+                      {announcement.earn_time === null
+                        ? ""
+                        : announcement.earn_time.earn_time_name}
                     </div>
-                    <div className="w-1/2">
-                      <div className="text-right flex my-7">
-                        <div className="grid items center text-[35px] me-5">
-                          <MdOutlineTimelapse />
-                        </div>
-                        <div className="text-[16px] font-semibold grid items-center">
-                          Dostępne jeszcze: {leftDaysNumber}{" "}
-                          {leftDaysNumber === 1 ? "dzień" : "dni"} - do{" "}
-                          {moment
-                            .utc(announcement.expiry_date)
-                            .format("DD.MM.YYYY")}
-                        </div>
-                      </div>
+                  )}
 
-                      <div className="text-right flex my-7">
-                        <div className="grid items center text-[35px] me-5">
-                          <MdAccessTimeFilled />
-                        </div>
-                        <div className="text-[16px] font-semibold grid items-center">
-                          {announcement.work_time.work_time_name}
-                        </div>
-                      </div>
-
-                      <div className="text-right flex my-7">
-                        <div className="grid items center text-[35px] me-5">
-                          <MdWork />
-                        </div>
-                        <div className="text-[16px] font-semibold grid items-center">
-                          {announcement.work_type.work_type_name}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <AnnouncementInformation
+                    announcement={announcement}
+                    leftDaysNumber={leftDaysNumber}
+                  />
                 </div>
               </div>
 
-              <div className="relative bg-base-100 shadow-lg rounded-lg z-20 max-w-[1200px] mx-auto py-3 px-4 mt-8 mb-4">
-                <div className="flex justify-between">
-                  <div className="font-bold text-[20px] grid items-center">
-                    Nasze wymagania:
-                  </div>
-                </div>
-
-                {announcement.requirements.map((item, index) => (
-                  <div className="flex justify-between my-4" key={index}>
-                    <div className="flex justify-between text-[15px]">
-                      <span className="grid items-center me-3 ms-6 text-[16px]">
-                        <TbPointFilled />
-                      </span>
-                      {item}
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <div className="relative bg-base-100 shadow-lg rounded-lg z-20 max-w-[1200px] mx-auto py-3 px-4 mt-8 mb-4">
-                <div className="flex justify-between">
-                  <div className="font-bold text-[20px] grid items-center">
-                    Twoje obowiązki:
-                  </div>
-                </div>
-
-                {announcement.duties.map((item, index) => (
-                  <div className="flex justify-between my-4" key={index}>
-                    <div className="flex justify-between text-[15px]">
-                      <span className="grid items-center me-3 ms-6 text-[16px]">
-                        <TbPointFilled />
-                      </span>
-                      {item}
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <div className="relative bg-base-100 shadow-lg rounded-lg z-20 max-w-[1200px] mx-auto py-3 px-4 mt-8 mb-4">
-                <div className="flex justify-between">
-                  <div className="font-bold text-[20px] grid items-center">
-                    Co oferujemy:
-                  </div>
-                </div>
-
-                {announcement.offer.map((item, index) => (
-                  <div className="flex justify-between my-4" key={index}>
-                    <div className="flex justify-between text-[15px]">
-                      <span className="grid items-center me-3 ms-6 text-[16px]">
-                        <TbPointFilled />
-                      </span>
-                      {item}
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <AdditionalInformatio announcement={announcement} />
 
               <div className="relative bg-base-100 shadow-lg rounded-lg z-20 max-w-[1200px] text-center mx-auto py-5 px-4 mt-8 mb-4">
                 <button className="btn btn-neutral w-full mx-auto">
