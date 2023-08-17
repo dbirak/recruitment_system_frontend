@@ -10,11 +10,13 @@ import { axiosBase } from "@/utils/api/axios";
 import Swal from "sweetalert2";
 import { useMutation, useQuery } from "react-query";
 import Loading from "@/components/loadings/loading";
+import EarnItem from "./components/earnItem";
+import AnnouncementItem from "./components/announcementItem";
 
 const SerachAnnouncementPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [info, setInfo] = useState(null);
-  const [announcements, setAnnouncements] = useState(null);
+  const [announcements, setAnnouncements] = useState([]);
   const [searchInfo, setSearchInfo] = useState({
     nazwa: "",
     kategoria: 0,
@@ -25,6 +27,13 @@ const SerachAnnouncementPage = () => {
     czas_pracy: [],
     typ_pracy: [],
   });
+
+  const updateSearchInfo = (newValues) => {
+    setSearchInfo((prevSearchInfo) => ({
+      ...prevSearchInfo,
+      ...newValues,
+    }));
+  };
 
   const {
     register,
@@ -96,7 +105,15 @@ const SerachAnnouncementPage = () => {
   });
 
   const onSubmitHandler = async (data) => {
-    console.log("asd");
+    let json = searchInfo;
+
+    json.nazwa = data.nazwa;
+    json.kategoria = parseInt(data.kategoria);
+
+    setSearchInfo(() => ({
+      ...json,
+    }));
+
     console.log(searchInfo);
   };
 
@@ -158,7 +175,7 @@ const SerachAnnouncementPage = () => {
                         {...register("kategoria")}
                       >
                         <option key={0} value="0" defaultValue>
-                          Kategoria
+                          Wszystkie kategorie
                         </option>
                         {info.categories.map((item) => (
                           <option key={item.id} value={item.id}>
@@ -174,35 +191,55 @@ const SerachAnnouncementPage = () => {
                       </button>
                     </div>
                   </div>
-                </form>
 
-                <div className="flex gap-8 mx-auto max-w-[1200px]">
-                  <div className="relative bg-base-100 rounded-lg shadow-lg z-20 w-[400px] mx-auto h-fit">
-                    <CollapseItem
-                      name="umowa"
-                      header="Rodzaj umowy"
-                      data={info.contracts}
-                      changeValue={changeValue}
-                      searchInfo={searchInfo}
-                    />
-                    <CollapseItem
-                      name="czas_pracy"
-                      header="Wymiar czasowy"
-                      data={info.workTimes}
-                      changeValue={changeValue}
-                      searchInfo={searchInfo}
-                    />
-                    <CollapseItem
-                      name="typ_pracy"
-                      header="Typ pracy"
-                      data={info.workTypes}
-                      changeValue={changeValue}
-                      searchInfo={searchInfo}
-                    />
+                  <div className="flex gap-8 mx-auto max-w-[1200px] mb-2">
+                    <div className="relative bg-base-100 rounded-lg shadow-lg z-20 w-[400px] mx-auto h-fit">
+                      <CollapseItem
+                        name="umowa"
+                        header="Rodzaj umowy"
+                        data={info.contracts}
+                        changeValue={changeValue}
+                        searchInfo={searchInfo}
+                      />
+                      <CollapseItem
+                        name="czas_pracy"
+                        header="Wymiar czasowy"
+                        data={info.workTimes}
+                        changeValue={changeValue}
+                        searchInfo={searchInfo}
+                      />
+                      <CollapseItem
+                        name="typ_pracy"
+                        header="Typ pracy"
+                        data={info.workTypes}
+                        changeValue={changeValue}
+                        searchInfo={searchInfo}
+                      />
+                      <EarnItem
+                        data={info.earnTimes}
+                        updateSearchInfo={updateSearchInfo}
+                      />
+
+                      <div className="p-3">
+                        <button
+                          type="submit"
+                          className="btn btn-neutral w-full "
+                        >
+                          <FaSearch />
+                          Szukaj
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="relative bg-base-100 z-20 w-full mx-auto  h-fit">
+                      {announcements.data.map((item, index) => {
+                        return (
+                          <AnnouncementItem key={index} announcement={item} />
+                        );
+                      })}
+                    </div>
                   </div>
-
-                  <div className="relative bg-base-100 rounded-lg shadow-lg z-20 w-full mx-auto p-10 flex gap-4 h-fit"></div>
-                </div>
+                </form>
               </div>
             )}
           </div>

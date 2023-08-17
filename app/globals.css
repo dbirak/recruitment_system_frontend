@@ -58,3 +58,11 @@ button:hover .ql-fill,
 span.ql-picker-item.ql-selected {
   color: hsl(var(--s)) !important;
 }
+
+@layer base {
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
