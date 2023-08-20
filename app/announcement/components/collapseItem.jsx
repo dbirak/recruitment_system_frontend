@@ -29,6 +29,9 @@ const CollapseItem = (props) => {
                     value={item.id}
                     onChange={(e) => change(e.target.value)}
                     type="checkbox"
+                    defaultChecked={props.searchInfo[props.name].some(
+                      (value) => value === item.id
+                    )}
                     className="checkbox checkbox-sm"
                   />
                   <span className=" w-full ms-3">

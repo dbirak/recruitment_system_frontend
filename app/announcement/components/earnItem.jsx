@@ -6,12 +6,22 @@ import { useForm } from "react-hook-form";
 import { FaMinus } from "react-icons/fa";
 
 const EarnItem = (props) => {
-  const [isInputEnabled, setIsInputEnabled] = useState(false);
+  const [isInputEnabled, setIsInputEnabled] = useState(
+    props.searchInfo.min_wynagrodzenie !== null ||
+      props.searchInfo.max_wynagrodzenie !== null ||
+      props.searchInfo.typ_wynagrodzenia !== 0
+      ? true
+      : false
+  );
   const [earnInfo, setEarnInfo] = useState({
-    min_wynagrodzenie: null,
-    max_wynagrodzenie: null,
-    typ_wynagrodzenia: 0,
+    min_wynagrodzenie: props.searchInfo.min_wynagrodzenie,
+    max_wynagrodzenie: props.searchInfo.max_wynagrodzenie,
+    typ_wynagrodzenia: props.searchInfo.typ_wynagrodzenia,
   });
+
+  useEffect(() => {
+    props.setIsEarnChecked(isInputEnabled);
+  }, [isInputEnabled]);
 
   const {
     register,
@@ -114,6 +124,7 @@ const EarnItem = (props) => {
               <label className="label cursor-pointer">
                 <input
                   value={0}
+                  defaultChecked={isInputEnabled}
                   onChange={(e) => change(e.target.checked, "checkbox")}
                   type="checkbox"
                   className="checkbox checkbox-sm"
@@ -124,6 +135,11 @@ const EarnItem = (props) => {
             <div className="w-full mb-3 mt-4">
               <input
                 type="number"
+                defaultValue={
+                  props.searchInfo.min_wynagrodzenie === null
+                    ? ""
+                    : props.searchInfo.min_wynagrodzenie
+                }
                 placeholder="Kwota minimalna (PLN)"
                 disabled={isInputEnabled === false}
                 className={
@@ -145,12 +161,16 @@ const EarnItem = (props) => {
             <div className="w-full mb-3">
               <input
                 type="number"
+                defaultValue={
+                  props.searchInfo.max_wynagrodzenie === null
+                    ? ""
+                    : props.searchInfo.max_wynagrodzenie
+                }
                 disabled={isInputEnabled === false}
                 placeholder="Kwota maksymalna (PLN)"
                 className={
                   errors.max_wynagrodzenie ? styleInputError : styleInputCorrect
                 }
-                defaultValue=""
                 {...register("max_wynagrodzenie", {
                   onChange: (e) => change(e.target.value, "max"),
                   maxLength: {
@@ -172,7 +192,7 @@ const EarnItem = (props) => {
                     ? styleInputErrorSelect
                     : styleInputCorrecSelect
                 }
-                defaultValue={0}
+                defaultValue={props.searchInfo.typ_wynagrodzenia}
                 {...register("typ_wynagrodzenia", {
                   onChange: (e) => change(e.target.value, "select"),
                   pattern: {

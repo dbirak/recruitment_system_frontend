@@ -3,7 +3,7 @@
 import ProtectRoute from "@/utils/middleware/protectRoute";
 import Navbar from "../components/navbar";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import CollapseItem from "./components/collapseItem";
 import { axiosBase } from "@/utils/api/axios";
@@ -12,21 +12,30 @@ import { useMutation, useQuery } from "react-query";
 import Loading from "@/components/loadings/loading";
 import EarnItem from "./components/earnItem";
 import AnnouncementItem from "./components/announcementItem";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { SearchContext } from "@/utils/contexts/SearchContext";
 
 const SerachAnnouncementPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [info, setInfo] = useState(null);
+
+  const [advancedFilterCounter, setAdvancedFilterCounter] = useState(0);
+  const [isEarnChecked, setIsEarnChecked] = useState(false);
+
   const [announcements, setAnnouncements] = useState([]);
-  const [searchInfo, setSearchInfo] = useState({
-    nazwa: "",
-    kategoria: 0,
-    umowa: [],
-    min_wynagrodzenie: null,
-    max_wynagrodzenie: null,
-    typ_wynagrodzenia: 0,
-    czas_pracy: [],
-    typ_pracy: [],
-  });
+  const [hasMore, setHasMore] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const refForLargeScreen = useRef(null);
+  const refForSmallScreen = useRef(null);
+
+  const { searchAnnouncementState, setSearchAnnouncementState } =
+    useContext(SearchContext);
+
+  const [serachInfoCurrent, setSerachInfoCurrent] = useState(
+    searchAnnouncementState
+  );
+  const [searchInfo, setSearchInfo] = useState(searchAnnouncementState);
 
   const updateSearchInfo = (newValues) => {
     setSearchInfo((prevSearchInfo) => ({
@@ -41,6 +50,7 @@ const SerachAnnouncementPage = () => {
     formState: { errors },
     setError,
     onChange,
+    setValue,
   } = useForm();
 
   const styleInputCorrect = "input input-bordered w-full";
@@ -51,6 +61,37 @@ const SerachAnnouncementPage = () => {
   const styleInputErrorSelect =
     styleInputCorrecSelect + " input-error text-error";
 
+  const styleBadge =
+    advancedFilterCounter === 0
+      ? "rounded-full bg-primary text-center h-[24px] grid items-center w-[24px] ms-2 text-[12px] mt-[1px] hidden"
+      : "rounded-full bg-primary text-center h-[24px] grid items-center w-[24px] ms-2 text-[12px] mt-[1px]";
+
+  const [isMediumScreen, setIsMediumScreen] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMediumScreen(window.innerWidth < 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    handleResize();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
+    let counter = 0;
+
+    if (searchInfo.umowa.length > 0) counter++;
+    if (searchInfo.czas_pracy.length > 0) counter++;
+    if (searchInfo.typ_pracy.length > 0) counter++;
+    if (isEarnChecked) counter++;
+
+    setAdvancedFilterCounter(counter);
+  }, [searchInfo, isEarnChecked]);
+
   const getAnnouncementSearchInfo = useQuery(
     "getAnnouncementSearchInfo",
     () => {
@@ -58,7 +99,8 @@ const SerachAnnouncementPage = () => {
         .get("/announcement/search/info")
         .then((res) => {
           setInfo(res.data);
-          getAnnouncementSearch.mutate(searchInfo);
+          setSerachInfoCurrent(searchInfo);
+          getAnnouncementSearch.mutate({ data: searchInfo, pageNumber: 1 });
         })
         .catch((error) => {
           if (error.response.status == 401 || error.response.status == 403) {
@@ -85,9 +127,20 @@ const SerachAnnouncementPage = () => {
   const getAnnouncementSearch = useMutation({
     mutationFn: (data) => {
       axiosBase
-        .post("/announcement/search", data)
+        .post("/announcement/search?page=" + data.pageNumber, data.data)
         .then((res) => {
-          setAnnouncements(res.data);
+          if (res.data.meta.last_page === data.pageNumber) {
+            setHasMore(false);
+          } else {
+            setCurrentPage(data.pageNumber);
+          }
+
+          if (data.pageNumber === 1) setAnnouncements(res.data.data);
+          else {
+            setAnnouncements((previousData) =>
+              previousData.concat(res.data.data)
+            );
+          }
         })
         .catch((error) => {
           if (error.response.status == 401 || error.response.status == 403) {
@@ -110,11 +163,26 @@ const SerachAnnouncementPage = () => {
     json.nazwa = data.nazwa;
     json.kategoria = parseInt(data.kategoria);
 
-    setSearchInfo(() => ({
-      ...json,
-    }));
+    setSearchInfo(json);
+    setSerachInfoCurrent(json);
+    setSearchAnnouncementState(json);
 
-    console.log(searchInfo);
+    setCurrentPage(1);
+    setAnnouncements([]);
+    setHasMore(true);
+
+    setValue("advancedSearch", false);
+
+    getAnnouncementSearch.mutate({ data: json, pageNumber: 1 });
+
+    if (!isMediumScreen)
+      refForLargeScreen.current.scrollIntoView({
+        behavior: "smooth",
+      });
+    else
+      refForSmallScreen.current.scrollIntoView({
+        behavior: "smooth",
+      });
   };
 
   const changeValue = (value, name) => {
@@ -152,26 +220,29 @@ const SerachAnnouncementPage = () => {
             ) : (
               <div>
                 <form onSubmit={handleSubmit(onSubmitHandler)}>
-                  <div className="relative bg-base-100 rounded-lg shadow-lg z-20 mt-[-100px] max-w-[1200px] mx-auto p-10 flex gap-4 mb-7">
-                    <div className="w-1/2 mx-auto">
+                  <div
+                    ref={refForLargeScreen}
+                    className="relative bg-base-100 rounded-lg shadow-lg z-20 mt-[-100px] max-w-[1200px] mx-auto p-10 block md:flex gap-4"
+                  >
+                    <div className="w-full mb-3 md:mb-0 md:w-1/2 mx-auto">
                       <input
                         type="text"
                         placeholder="Wpisz nazwę stanowiska lub firmy"
+                        defaultValue={searchInfo.nazwa}
                         className={
                           errors.nazwa ? styleInputError : styleInputCorrect
                         }
-                        defaultValue=""
                         {...register("nazwa")}
                       />
                     </div>
-                    <div className="w-1/4 mx-auto">
+                    <div className="w-full mb-5 md:mb-0 md:w-1/4 mx-auto">
                       <select
                         className={
                           errors.kategoria
                             ? styleInputErrorSelect
                             : styleInputCorrecSelect
                         }
-                        defaultValue="0"
+                        defaultValue={searchInfo.kategoria}
                         {...register("kategoria")}
                       >
                         <option key={0} value="0" defaultValue>
@@ -184,7 +255,7 @@ const SerachAnnouncementPage = () => {
                         ))}
                       </select>
                     </div>
-                    <div className="mx-auto w-1/4">
+                    <div className="mx-auto w-full md:w-1/4">
                       <button type="submit" className="btn btn-neutral w-full ">
                         <FaSearch />
                         Szukaj
@@ -192,51 +263,133 @@ const SerachAnnouncementPage = () => {
                     </div>
                   </div>
 
-                  <div className="flex gap-8 mx-auto max-w-[1200px] mb-2">
-                    <div className="relative bg-base-100 rounded-lg shadow-lg z-20 w-[400px] mx-auto h-fit">
-                      <CollapseItem
-                        name="umowa"
-                        header="Rodzaj umowy"
-                        data={info.contracts}
-                        changeValue={changeValue}
-                        searchInfo={searchInfo}
-                      />
-                      <CollapseItem
-                        name="czas_pracy"
-                        header="Wymiar czasowy"
-                        data={info.workTimes}
-                        changeValue={changeValue}
-                        searchInfo={searchInfo}
-                      />
-                      <CollapseItem
-                        name="typ_pracy"
-                        header="Typ pracy"
-                        data={info.workTypes}
-                        changeValue={changeValue}
-                        searchInfo={searchInfo}
-                      />
-                      <EarnItem
-                        data={info.earnTimes}
-                        updateSearchInfo={updateSearchInfo}
-                      />
+                  <div className="block md:flex gap-9 mx-auto max-w-[1200px] mb-2 pt-12 px-3">
+                    {isMediumScreen ? (
+                      <div className="block md:hidden w-full bg-base-100 mb-3 rounded-lg shadow-lg z-20">
+                        <div className="collapse collapse-arrow bg-base-100 mb-3 rounded-none">
+                          <input
+                            type="checkbox"
+                            defaultChecked
+                            {...register("advancedSearch")}
+                          />
+                          <div className="collapse-title mb-2 text-md font-medium">
+                            <div className="flex">
+                              <div>Wyszukiwanie zaawansowane</div>
+                              <div className={styleBadge}>
+                                {advancedFilterCounter}
+                              </div>
+                            </div>
+                          </div>
+                          <div className="collapse-content">
+                            <div className="block relative w-full md:w-[400px] mx-auto h-fit">
+                              <CollapseItem
+                                name="umowa"
+                                header="Rodzaj umowy"
+                                data={info.contracts}
+                                changeValue={changeValue}
+                                searchInfo={searchInfo}
+                              />
+                              <CollapseItem
+                                name="czas_pracy"
+                                header="Wymiar czasowy"
+                                data={info.workTimes}
+                                changeValue={changeValue}
+                                searchInfo={searchInfo}
+                              />
+                              <CollapseItem
+                                name="typ_pracy"
+                                header="Typ pracy"
+                                data={info.workTypes}
+                                changeValue={changeValue}
+                                searchInfo={searchInfo}
+                              />
+                              <EarnItem
+                                setIsEarnChecked={(value) =>
+                                  setIsEarnChecked(value)
+                                }
+                                data={info.earnTimes}
+                                updateSearchInfo={updateSearchInfo}
+                                searchInfo={searchInfo}
+                              />
 
-                      <div className="p-3">
-                        <button
-                          type="submit"
-                          className="btn btn-neutral w-full "
-                        >
-                          <FaSearch />
-                          Szukaj
-                        </button>
+                              <div className="p-3">
+                                <button
+                                  type="submit"
+                                  className="btn btn-neutral w-full "
+                                >
+                                  <FaSearch />
+                                  Szukaj
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                    </div>
+                    ) : (
+                      <div className="hidden md:block relative bg-base-100 rounded-lg shadow-lg z-20 w-full md:w-[400px] mx-auto h-fit">
+                        <CollapseItem
+                          name="umowa"
+                          header="Rodzaj umowy"
+                          data={info.contracts}
+                          changeValue={changeValue}
+                          searchInfo={searchInfo}
+                        />
+                        <CollapseItem
+                          name="czas_pracy"
+                          header="Wymiar czasowy"
+                          data={info.workTimes}
+                          changeValue={changeValue}
+                          searchInfo={searchInfo}
+                        />
+                        <CollapseItem
+                          name="typ_pracy"
+                          header="Typ pracy"
+                          data={info.workTypes}
+                          changeValue={changeValue}
+                          searchInfo={searchInfo}
+                        />
+                        <EarnItem
+                          setIsEarnChecked={setIsEarnChecked}
+                          data={info.earnTimes}
+                          updateSearchInfo={updateSearchInfo}
+                          searchInfo={searchInfo}
+                        />
 
-                    <div className="relative bg-base-100 z-20 w-full mx-auto  h-fit">
-                      {announcements.data.map((item, index) => {
-                        return (
-                          <AnnouncementItem key={index} announcement={item} />
-                        );
-                      })}
+                        <div className="p-3">
+                          <button
+                            type="submit"
+                            className="btn btn-neutral w-full "
+                          >
+                            <FaSearch />
+                            Szukaj
+                          </button>
+                        </div>
+                      </div>
+                    )}
+
+                    <div
+                      ref={refForSmallScreen}
+                      className="relative bg-base-100 z-20 w-full mx-auto h-fit overflow-visible"
+                    >
+                      <InfiniteScroll
+                        className="block overflow-visible w-full"
+                        style={{ overflow: "visible !important" }}
+                        dataLength={announcements.length}
+                        next={() =>
+                          getAnnouncementSearch.mutate({
+                            data: serachInfoCurrent,
+                            pageNumber: currentPage + 1,
+                          })
+                        }
+                        hasMore={hasMore}
+                        loader={<Loading />}
+                      >
+                        {announcements.map((item, index) => {
+                          return (
+                            <AnnouncementItem key={index} announcement={item} />
+                          );
+                        })}
+                      </InfiniteScroll>
                     </div>
                   </div>
                 </form>
