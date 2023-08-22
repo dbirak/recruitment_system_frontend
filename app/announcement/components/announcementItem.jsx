@@ -44,8 +44,9 @@ const AnnouncementItem = (props) => {
                 {props.announcement.company.name}
               </div>
               <div className="text-[14px] truncate">
-                {props.announcement.company.city},{" "}
-                {props.announcement.company.province.province_name}
+                {props.announcement.company.city.charAt(0).toUpperCase() +
+                  props.announcement.company.city.slice(1).toLowerCase()}
+                , {props.announcement.company.province.province_name}
               </div>
             </div>
           </div>

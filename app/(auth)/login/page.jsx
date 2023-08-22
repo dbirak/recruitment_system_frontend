@@ -38,7 +38,9 @@ const LoginPage = () => {
           window.localStorage.setItem("token", token);
           window.localStorage.setItem("role", role);
 
-          router.push("/company/dashboard");
+          if (res.data.data.role.role_name === "company")
+            router.push("/company/dashboard");
+          else router.push("/announcement");
         })
         .catch((error) => {
           if (error.response.status == 401) {

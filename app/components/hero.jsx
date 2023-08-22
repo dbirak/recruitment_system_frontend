@@ -7,7 +7,7 @@ const Hero = () => {
   const router = useRouter();
 
   const navigate = (url) => {
-    router.push("/register");
+    router.push("/login");
   };
 
   return (

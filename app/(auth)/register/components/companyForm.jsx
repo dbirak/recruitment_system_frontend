@@ -19,6 +19,11 @@ const CompanyForm = () => {
   const styleInputCorrect = "input input-bordered w-full";
   const styleInputError = styleInputCorrect + " input-error text-error";
 
+  const styleInputCorrecSelect =
+    "select w-full font-normal text-[16px] input input-bordered";
+  const styleInputErrorSelect =
+    styleInputCorrecSelect + " input-error text-error";
+
   const registerRequest = useMutation({
     mutationFn: (data) => {
       axiosBase
@@ -379,7 +384,9 @@ const CompanyForm = () => {
         </label>
 
         <select
-          className="select w-full font-normal text-[16px]"
+          className={
+            errors.województwo ? styleInputErrorSelect : styleInputCorrecSelect
+          }
           defaultValue={"Województwo"}
           {...register("województwo", {
             required: "Pole województwo jest wymagane.",

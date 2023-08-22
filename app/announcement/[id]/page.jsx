@@ -33,7 +33,7 @@ function AnnouncementPage(props) {
     axiosWithBearerOrBase
       .get(
         localStorage.getItem("token") || sessionStorage.getItem("token")
-          ? ""
+          ? "/user/announcement/" + id
           : "/announcement/" + id
       )
       .then((res) => {

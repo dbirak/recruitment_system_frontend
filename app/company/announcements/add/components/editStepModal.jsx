@@ -25,7 +25,7 @@ const EditStepModal = (props) => {
     if (props.editedStep.step.module === "test") {
       let index = props.info.tests.indexOf(props.editedStep.step.task) + 1;
 
-      setValue("task", index.toString());
+      setValue("task", props.editedStep.step.task.id.toString());
 
       console.log(index);
       console.log(props.editedStep);
@@ -35,13 +35,13 @@ const EditStepModal = (props) => {
     if (props.editedStep.step.module === "openTask") {
       let index = props.info.openTasks.indexOf(props.editedStep.step.task) + 1;
 
-      setValue("task", index.toString());
+      setValue("task", props.editedStep.step.task.id.toString());
     }
 
     if (props.editedStep.step.module === "fileTask") {
       let index = props.info.fileTasks.indexOf(props.editedStep.step.task) + 1;
 
-      setValue("task", index.toString());
+      setValue("task", props.editedStep.step.task.id.toString());
     }
   }, [props.info]);
 

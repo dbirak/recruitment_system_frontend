@@ -13,10 +13,10 @@ const AnnouncementInformation = (props) => {
     <div className="block md:flex md:justify-between mx-7 ">
       <div className="mx-auto md:mx-0 w-3/4 md:w-1/2">
         <div className="text-right flex my-7">
-          <div className="grid items center text-[35px] me-5">
+          <div className="grid items-center text-[35px] me-5">
             <MdLocationOn />
           </div>
-          <div className="text-[16px] font-semibold grid items-center truncate overflow-hidden text-left">
+          <div className="text-[16px] font-semibold grid items-center overflow-auto text-left">
             {props.announcement.company.street.charAt(0).toUpperCase() +
               props.announcement.company.street.slice(1).toLowerCase() +
               ", " +
