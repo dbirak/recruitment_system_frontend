@@ -20,6 +20,7 @@ import moment from "moment";
 import { TbPointFilled } from "react-icons/tb";
 import AdditionalInformatio from "./components/AdditionalInformation";
 import AnnouncementInformation from "./components/AnnouncementInformation";
+import ApplicationModule from "./components/ApplicationModule";
 
 function AnnouncementPage(props) {
   const [announcement, setAnnouncement] = useState({});
@@ -48,11 +49,9 @@ function AnnouncementPage(props) {
       })
       .catch((error) => {
         if (error.response.status == 401 || error.response.status == 403) {
-          localStorage.clear();
-          router.push("/");
+          location.reload;
         } else if (error.response.status == 404) {
-          console.log("aaaa");
-          router.push("/");
+          //router.push("/");
         }
       })
       .finally(() => {});
@@ -121,14 +120,7 @@ function AnnouncementPage(props) {
 
               <AdditionalInformatio announcement={announcement} />
 
-              <div className="relative bg-base-100 shadow-lg rounded-lg z-20 max-w-[1200px] text-center mx-auto py-5 px-4 mt-8 mb-4">
-                <button className="btn btn-neutral w-full mx-auto">
-                  <div className="text-[20px]">
-                    <AiFillFileText />
-                  </div>
-                  Aplikuj teraz
-                </button>
-              </div>
+              <ApplicationModule announcement={announcement} />
             </div>
           )}
         </ProtectRoute>

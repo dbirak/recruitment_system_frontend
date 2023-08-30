@@ -35,6 +35,16 @@ export const axiosWithBearerOrBase = axios.create({
   },
 });
 
+export const axiosWithBearerFormData = axios.create({
+  baseURL: baseURL,
+  timeout: 8000,
+  headers: {
+    Accept: "application/json",
+    "Content-Type": "multipart/form-data",
+    Authorization: "Bearer " + localStorage.getItem("token"),
+  },
+});
+
 axiosWithBearer.interceptors.response.use(
   (response) => {
     return response;
@@ -58,6 +68,17 @@ axiosWithBearerOrBase.interceptors.response.use(
 );
 
 axiosBase.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    if (error.response && error.response.status === 401) {
+    }
+    return Promise.reject(error);
+  }
+);
+
+axiosWithBearerFormData.interceptors.response.use(
   (response) => {
     return response;
   },

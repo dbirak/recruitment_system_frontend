@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 
 const UserForm = () => {
-  const ruter = useRouter();
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const {
     register,
@@ -28,7 +28,7 @@ const UserForm = () => {
           localStorage.setItem("token", token);
           localStorage.setItem("role", role);
 
-          router.push("/");
+          router.push("/announcement");
         })
         .catch((error) => {
           if (error.response.status == 422) {
