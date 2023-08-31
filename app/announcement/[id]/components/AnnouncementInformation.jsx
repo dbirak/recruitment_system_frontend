@@ -56,9 +56,13 @@ const AnnouncementInformation = (props) => {
             <MdOutlineTimelapse />
           </div>
           <div className="text-[16px] font-semibold grid items-center text-left">
-            Dostępne jeszcze: {props.leftDaysNumber}{" "}
-            {props.leftDaysNumber === 1 ? "dzień" : "dni"} - do{" "}
-            {moment.utc(props.announcement.expiry_date).format("DD.MM.YYYY")}
+            Dostępne jeszcze:{" "}
+            {props.leftDaysNumber < 0 ? 0 : props.leftDaysNumber}{" "}
+            {props.leftDaysNumber === 1 ? "dzień" : "dni"}{" "}
+            {props.leftDaysNumber < 0 ? "" : " - do"}{" "}
+            {props.leftDaysNumber < 0
+              ? ""
+              : moment.utc(props.announcement.expiry_date).format("DD.MM.YYYY")}
           </div>
         </div>
 

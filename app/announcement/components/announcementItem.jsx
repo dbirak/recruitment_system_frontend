@@ -1,3 +1,4 @@
+import moment from "moment";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { TbPointFilled } from "react-icons/tb";
@@ -66,7 +67,10 @@ const AnnouncementItem = (props) => {
             {props.announcement.contract.contract_name}
           </div>
           <div className="border-t-2 border-dotted text-[13px] text-right pt-1">
-            Dodano: <span className="font-medium">12.08.2023</span>
+            Dodano:{" "}
+            <span className="font-medium">
+              {moment.utc(props.announcement.created_at).format("DD.MM.YYYY")}
+            </span>
           </div>
         </div>
       </div>
