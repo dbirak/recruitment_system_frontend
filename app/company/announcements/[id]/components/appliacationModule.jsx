@@ -8,6 +8,10 @@ const AppliactionModule = (props) => {
     props.showTask(taskType, taskInfo);
   };
 
+  const showManageUsersModal = (stepInfo, canManageUsers) => {
+    props.showManageUsersModal(stepInfo, canManageUsers);
+  };
+
   return (
     <div className="relative bg-base-100 shadow-lg rounded-lg z-0 max-w-[1200px] text-center mx-auto py-5 px-4 mt-8 mb-4">
       <div className="flex justify-between mb-7">
@@ -57,7 +61,7 @@ const AppliactionModule = (props) => {
             ) : item.task.task_name === "openTask" ? (
               <a
                 onClick={() =>
-                  showTask(item.task.task_name, item.info.task_info.id)
+                  showTask(item.task.task_name, item.info.task_info.id[0])
                 }
                 className="link link-neutral w-fit h-fit mx-auto"
               >
@@ -66,7 +70,7 @@ const AppliactionModule = (props) => {
             ) : (
               <a
                 onClick={() =>
-                  showTask(item.task.task_name, item.info.task_info.id)
+                  showTask(item.task.task_name, item.info.task_info.id[0])
                 }
                 className="link link-neutral w-fit h-fit mx-auto"
               >
@@ -76,11 +80,17 @@ const AppliactionModule = (props) => {
           </div>
           <div className="w-[28%] text-center sm:text-[14px] text-[12px] grid items-center">
             {item.info.application_info === "see_answers" ? (
-              <button className="btn btn-base-100 btn-sm w-fit px-3 mx-auto">
+              <button
+                onClick={() => showManageUsersModal(item, false)}
+                className="btn btn-base-100 btn-sm w-fit px-3 mx-auto"
+              >
                 Zobacz aplikacje
               </button>
             ) : item.info.application_info === "manage_answers" ? (
-              <button className="btn scale-[0.77] md:scale-[1] btn-base-100 btn-sm w-fit md:px-3 mx-auto">
+              <button
+                onClick={() => showManageUsersModal(item, true)}
+                className="btn scale-[0.77] md:scale-[1] btn-base-100 btn-sm w-fit md:px-3 mx-auto"
+              >
                 Zarządzaj aplikacjami
               </button>
             ) : (
