@@ -1,7 +1,13 @@
+"use client";
+
 import moment from "moment";
-import React from "react";
+import React, { useState } from "react";
 
 const AppliactionModule = (props) => {
+  const showTask = (taskType, taskInfo) => {
+    props.showTask(taskType, taskInfo);
+  };
+
   return (
     <div className="relative bg-base-100 shadow-lg rounded-lg z-0 max-w-[1200px] text-center mx-auto py-5 px-4 mt-8 mb-4">
       <div className="flex justify-between mb-7">
@@ -40,13 +46,30 @@ const AppliactionModule = (props) => {
             {item.task.task_name === "cvTask" ? (
               "Przesłanie CV"
             ) : item.task.task_name === "testTask" ? (
-              <a className="link link-neutral w-fit h-fit mx-auto">Test</a>
+              <a
+                onClick={() =>
+                  showTask(item.task.task_name, item.info.task_info[0])
+                }
+                className="link link-neutral w-fit h-fit mx-auto"
+              >
+                Test
+              </a>
             ) : item.task.task_name === "openTask" ? (
-              <a className="link link-neutral w-fit h-fit mx-auto">
+              <a
+                onClick={() =>
+                  showTask(item.task.task_name, item.info.task_info.id)
+                }
+                className="link link-neutral w-fit h-fit mx-auto"
+              >
                 Pytanie otwarte
               </a>
             ) : (
-              <a className="link link-neutral w-fit h-fit mx-auto">
+              <a
+                onClick={() =>
+                  showTask(item.task.task_name, item.info.task_info.id)
+                }
+                className="link link-neutral w-fit h-fit mx-auto"
+              >
                 Przesyłanie plików
               </a>
             )}
