@@ -15,7 +15,7 @@ import AnnouncementTableInfo from "./components/announcementTableInfo";
 import ShowTestModal from "../../modules/tests/components/showTestModal";
 import ShowOpenQuestionModal from "../../modules/open-questions/components/showOpenQuestionModal";
 import ShowSendFileModal from "../../modules/send-files/components/showSendFileModal";
-import ManageUsersModal from "./components/manageUsersModal";
+import ManageUsers from "./components/manageUsers";
 
 const AnnouncementPage = (props) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -59,6 +59,10 @@ const AnnouncementPage = (props) => {
     setIsShowModal(false);
   };
 
+  const closeManageUsers = () => {
+    setIsShowManageUsersModal(false);
+  };
+
   const getCompanyAnnouncementById = useQuery(
     "getCompanyAnnouncementById",
     () => {
@@ -86,7 +90,11 @@ const AnnouncementPage = (props) => {
         <Navbar site="announcements">
           <CompanyContainer>
             {isLoading ? (
-              <Loading />
+              <div>
+                <Title name="Twoje ogłoszenia" />
+
+                <Loading />
+              </div>
             ) : isShowManageUsersModal ? (
               <div>
                 <Title
@@ -114,7 +122,8 @@ const AnnouncementPage = (props) => {
                   }
                 />
 
-                <ManageUsersModal
+                <ManageUsers
+                  closeManageUsers={closeManageUsers}
                   stepModal={stepModal}
                   canManageUsers={canManageUsers}
                 />

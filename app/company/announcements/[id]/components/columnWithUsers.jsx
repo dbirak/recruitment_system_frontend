@@ -1,17 +1,40 @@
+import {
+  setColorBackground,
+  setColorBackroundItem,
+  setColorText,
+} from "@/utils/tools/colorColumns";
 import { Draggable, Droppable } from "@hello-pangea/dnd";
 
 const ColumnWithUsers = (props) => {
+  var colorBackground;
+  if (props.name === "Brak odpowiedzi") colorBackground = "primary";
+  else if (props.name === "Nowe aplikacje") colorBackground = "primary";
+  else if (props.name === "Zaakceptowani") colorBackground = "green-400";
+  else if (props.name === "Odrzuceni") colorBackground = "red-400";
+
+  var colorText;
+  if (props.name === "Brak odpowiedzi") colorText = "neutral";
+  else if (props.name === "Nowe aplikacje") colorText = "neutral";
+  else if (props.name === "Zaakceptowani") colorText = "green-950";
+  else if (props.name === "Odrzuceni") colorText = "red-950";
+
+  var colorBackgroundItem;
+  if (props.name === "Brak odpowiedzi") colorBackgroundItem = "base-200";
+  else if (props.name === "Nowe aplikacje") colorBackgroundItem = "base-200";
+  else if (props.name === "Zaakceptowani") colorBackgroundItem = "green-100";
+  else if (props.name === "Odrzuceni") colorBackgroundItem = "red-100";
+
   return (
-    <div className="mx-auto mt-2 min-w-[300px] w-[370px] px-3 overflow-hidden">
+    <div className="mt-2 min-w-[290px] mx-auto w-[290px] overflow-hidden">
       <h1
-        className={`text-center p-2 text-[27px] font-bold tracking-wide bg-green-600 text-white rounded-t-lg`}
+        className={`text-center p-2 text-[24px] font-bold tracking-wide bg-${colorBackground} text-${colorText} `}
       >
         {props.name}
       </h1>
       <Droppable droppableId={props.droppableId}>
         {(provided) => (
           <ul
-            className="bg-green-600 pb-[1px]"
+            className={`bg-${colorBackground} pb-[1px]`}
             {...provided.droppableProps}
             ref={provided.innerRef}
           >
@@ -26,17 +49,26 @@ const ColumnWithUsers = (props) => {
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
-                    className={`font-sans p-3 text-[15px] bg-green-100 200 mb-2 mx-2`}
+                    className={`p-3 text-[15px] bg-${colorBackgroundItem} 200 mb-2 mx-2`}
                   >
-                    <div className="flex justify-between">
-                      <div className="font-Kanit font-semibold tracking-wide w-full h-[60px] ml-3 text-center flex items-center text-[18px]">
-                        <span className="text-center w-full text-green-600">
-                          {item.name}
-                        </span>
+                    <div className="tracking-wide w-full">
+                      <div
+                        className={`text-left w-full text-${colorText} text-[19px] font-semibold`}
+                      >
+                        {item.name} {item.surname}
                       </div>
-                    </div>
-                    <div className="w-full font-sans leading-7 font-medium text-green-600 text-justify mt-5 text-[18px]">
-                      {item.desc}
+                      <div
+                        className={`text-left w-full text-${colorText} text-[15px] font-light`}
+                      >
+                        {item.email}
+                      </div>
+                      <div>
+                        <button
+                          className={`btn btn-sm btn-ghost rounded-none mt-3 mx-auto w-full bg-${colorBackground} hover:bg-${colorBackground} text-${colorText}`}
+                        >
+                          Zobacz odpowiedź
+                        </button>
+                      </div>
                     </div>
                   </li>
                 )}
