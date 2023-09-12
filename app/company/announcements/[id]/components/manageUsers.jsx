@@ -226,6 +226,10 @@ const ManageUsers = (props) => {
     props.closeManageUsers();
   };
 
+  const showApplication = (userId, name, surname) => {
+    props.showApplication(userId, name, surname);
+  };
+
   if (isLoading) return <Loading />;
   else
     return (
@@ -273,24 +277,28 @@ const ManageUsers = (props) => {
                 items={notAppliedList}
                 droppableId={"notApplied"}
                 name={"Brak odpowiedzi"}
+                showApplication={showApplication}
               />
             )}
             <ColumnWithUsers
               items={appliedList}
               droppableId={"applied"}
               name={"Nowe aplikacje"}
+              showApplication={showApplication}
             />
 
             <ColumnWithUsers
               items={acceptedList}
               droppableId={"accepted"}
               name={"Zaakceptowani"}
+              showApplication={showApplication}
             />
 
             <ColumnWithUsers
               items={rejectedList}
               droppableId={"rejected"}
               name={"Odrzuceni"}
+              showApplication={showApplication}
             />
           </div>
         </DragDropContext>

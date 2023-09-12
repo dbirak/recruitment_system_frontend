@@ -24,6 +24,10 @@ const ColumnWithUsers = (props) => {
   else if (props.name === "Zaakceptowani") colorBackgroundItem = "green-100";
   else if (props.name === "Odrzuceni") colorBackgroundItem = "red-100";
 
+  const showApplication = (userId, name, surname) => {
+    props.showApplication(userId, name, surname);
+  };
+
   return (
     <div className="mt-2 min-w-[290px] mx-auto w-[290px] overflow-hidden">
       <h1
@@ -64,6 +68,9 @@ const ColumnWithUsers = (props) => {
                       </div>
                       <div>
                         <button
+                          onClick={() =>
+                            showApplication(item.id, item.name, item.surname)
+                          }
                           className={`btn btn-sm btn-ghost rounded-none mt-3 mx-auto w-full bg-${colorBackground} hover:bg-${colorBackground} text-${colorText}`}
                         >
                           Zobacz odpowiedź

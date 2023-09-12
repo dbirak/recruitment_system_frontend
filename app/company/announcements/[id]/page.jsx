@@ -16,6 +16,7 @@ import ShowTestModal from "../../modules/tests/components/showTestModal";
 import ShowOpenQuestionModal from "../../modules/open-questions/components/showOpenQuestionModal";
 import ShowSendFileModal from "../../modules/send-files/components/showSendFileModal";
 import ManageUsers from "./components/manageUsers";
+import ApplicationModal from "./components/applicationModal";
 
 const AnnouncementPage = (props) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -30,6 +31,10 @@ const AnnouncementPage = (props) => {
   const [isShowManageUsersModal, setIsShowManageUsersModal] = useState(false);
   const [canManageUsers, setCanManageUsers] = useState(false);
   const [stepModal, setStepModal] = useState(null);
+
+  const [isShowApplicationModal, setIsShowApplicationModal] = useState(false);
+  const [name, setName] = useState("");
+  const [data, setData] = useState(null);
 
   const router = useRouter();
   const id = props.params.id;
@@ -63,6 +68,10 @@ const AnnouncementPage = (props) => {
     setIsShowManageUsersModal(false);
   };
 
+  const closeApplicationModal = () => {
+    setIsShowApplicationModal(false);
+  };
+
   const getCompanyAnnouncementById = useQuery(
     "getCompanyAnnouncementById",
     () => {
@@ -83,6 +92,21 @@ const AnnouncementPage = (props) => {
         .finally(() => {});
     }
   );
+
+  const showApplication = (userId, name, surname) => {
+    setName(name + " " + surname);
+
+    let data = {
+      announcement_id: stepModal.announcement_id,
+      user_id: userId,
+      step_id: stepModal.id,
+      step_number: stepModal.step_number,
+    };
+
+    setData(data);
+
+    setIsShowApplicationModal(true);
+  };
 
   return (
     <div>
@@ -126,6 +150,7 @@ const AnnouncementPage = (props) => {
                   closeManageUsers={closeManageUsers}
                   stepModal={stepModal}
                   canManageUsers={canManageUsers}
+                  showApplication={showApplication}
                 />
               </div>
             ) : (
@@ -167,7 +192,14 @@ const AnnouncementPage = (props) => {
         />
       )}
 
-      {/* {isShowManageUsersModal && <ManageUsersModal />} */}
+      {isShowApplicationModal && (
+        <ApplicationModal
+          stepModal={stepModal}
+          data={data}
+          name={name}
+          closeApplicationModal={closeApplicationModal}
+        />
+      )}
     </div>
   );
 };
