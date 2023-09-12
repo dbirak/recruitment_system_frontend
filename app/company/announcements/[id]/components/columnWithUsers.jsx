@@ -7,7 +7,7 @@ import { Draggable, Droppable } from "@hello-pangea/dnd";
 
 const ColumnWithUsers = (props) => {
   var colorBackground;
-  if (props.name === "Brak odpowiedzi") colorBackground = "primary";
+  if (props.name === "Brak odpowiedzi") colorBackground = "orange-400";
   else if (props.name === "Nowe aplikacje") colorBackground = "primary";
   else if (props.name === "Zaakceptowani") colorBackground = "green-400";
   else if (props.name === "Odrzuceni") colorBackground = "red-400";
@@ -19,7 +19,7 @@ const ColumnWithUsers = (props) => {
   else if (props.name === "Odrzuceni") colorText = "red-950";
 
   var colorBackgroundItem;
-  if (props.name === "Brak odpowiedzi") colorBackgroundItem = "base-200";
+  if (props.name === "Brak odpowiedzi") colorBackgroundItem = "orange-100";
   else if (props.name === "Nowe aplikacje") colorBackgroundItem = "base-200";
   else if (props.name === "Zaakceptowani") colorBackgroundItem = "green-100";
   else if (props.name === "Odrzuceni") colorBackgroundItem = "red-100";
@@ -53,7 +53,7 @@ const ColumnWithUsers = (props) => {
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
-                    className={`p-3 text-[15px] bg-${colorBackgroundItem} 200 mb-2 mx-2`}
+                    className={`p-3 text-[15px] bg-${colorBackgroundItem} mb-2 mx-2`}
                   >
                     <div className="tracking-wide w-full">
                       <div
@@ -66,15 +66,26 @@ const ColumnWithUsers = (props) => {
                       >
                         {item.email}
                       </div>
-                      <div>
+                      <div className={item.have_answer ? "" : "hidden"}>
                         <button
                           onClick={() =>
                             showApplication(item.id, item.name, item.surname)
                           }
-                          className={`btn btn-sm btn-ghost rounded-none mt-3 mx-auto w-full bg-${colorBackground} hover:bg-${colorBackground} text-${colorText}`}
+                          className={`btn btn-sm btn-ghost rounded-none mt-[13px] mx-auto w-full bg-${colorBackground} hover:bg-${colorBackground} text-${colorText}`}
                         >
                           Zobacz odpowiedź
                         </button>
+                      </div>
+                      <div
+                        className={
+                          !item.have_answer
+                            ? `block text-${colorText} my-3 text-[14px] text-center font-medium w-full mx-auto`
+                            : "hidden"
+                        }
+                      >
+                        {props.isActualStep
+                          ? "OCZEKIWANIE NA ODPOWIEDŹ"
+                          : "BRAK ODPOWIEDZI"}
                       </div>
                     </div>
                   </li>

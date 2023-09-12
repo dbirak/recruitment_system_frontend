@@ -12,6 +12,10 @@ const AppliactionModule = (props) => {
     props.showManageUsersModal(stepInfo, canManageUsers);
   };
 
+  const showBeginNewStepModal = (stepInfo) => {
+    props.showBeginNewStepModal(stepInfo);
+  };
+
   return (
     <div className="relative bg-base-100 shadow-lg rounded-lg z-0 max-w-[1200px] text-center mx-auto py-5 px-4 mt-8 mb-4">
       <div className="flex justify-between mb-7">
@@ -116,7 +120,10 @@ const AppliactionModule = (props) => {
           </div>
           <div className="text-center w-[20%] sm:text-[14px] text-[12px] grid items-center">
             {item.info.can_change_expiry_date_info ? (
-              <button className="btn scale-[0.77] md:scale-[1] btn-base-100 btn-sm w-fit md:px-3 mx-auto">
+              <button
+                onClick={() => showBeginNewStepModal(item)}
+                className="btn scale-[0.77] md:scale-[1] btn-base-100 btn-sm w-fit md:px-3 mx-auto"
+              >
                 Rozpocznij etap
               </button>
             ) : item.expiry_date !== null ? (

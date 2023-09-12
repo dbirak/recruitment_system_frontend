@@ -52,13 +52,54 @@ const ManageUsers = (props) => {
     if (!item.source) return;
   };
 
+  const isActualStep = () => {
+    const expiryData = new Date(props.stepModal.expiry_date);
+    const today = new Date();
+
+    expiryData.setHours(0, 0, 0, 0);
+    today.setHours(0, 0, 0, 0);
+
+    return expiryData < today;
+  };
+
   const handleOnDragEnd = (result) => {
     if (!result.destination) return;
+    if (!props.canManageUsers) {
+      Swal.fire({
+        title: "Błąd",
+        text: "Nie możesz zarządzać aplikacjami w nieaktualnym etapie!",
+        icon: "error",
+        color: "hsl(var(--n))",
+        background: "hsl(var(--b1))",
+        confirmButtonColor: "hsl(var(--er))",
+        allowOutsideClick: false,
+        backdrop: "#000000a6",
+        confirmButtonText: "Zamknij",
+      }).then((result) => {});
+
+      return;
+    }
 
     const { source, destination } = result;
 
     if (source.droppableId !== destination.droppableId) {
       let items, item;
+
+      if (isActualStep && source.droppableId === "notApplied") {
+        Swal.fire({
+          title: "Błąd",
+          text: "Nie możesz aktaulnie zarządzać osobami z tej kolumny! Zarządzanie osobami, które nie udzieliły odpowiedzi, a mają dostęp do tego etapu będzie możliwe po jego zakończeniu!",
+          icon: "error",
+          color: "hsl(var(--n))",
+          background: "hsl(var(--b1))",
+          confirmButtonColor: "hsl(var(--er))",
+          allowOutsideClick: false,
+          backdrop: "#000000a6",
+          confirmButtonText: "Zamknij",
+        }).then((result) => {});
+
+        return;
+      }
 
       if (
         (source.droppableId == "notApplied" &&
@@ -241,24 +282,26 @@ const ManageUsers = (props) => {
               className="btn btn-base-100 w-full"
             >
               <TiArrowLeftThick />
-              Anuluj
+              {props.canManageUsers ? "Anuluj" : "Powrót"}
             </button>
           </div>
-          <div className="w-full">
-            {isSaved ? (
-              <button className="btn btn-primary btn-disabled w-full">
-                <span className="loading loading-spinner"></span>
-              </button>
-            ) : (
-              <button
-                onClick={submitUpdatedUsers}
-                className="btn btn-primary w-full"
-              >
-                <AiTwotoneSave />
-                Zapisz
-              </button>
-            )}
-          </div>
+          {props.canManageUsers && (
+            <div className="w-full">
+              {isSaved ? (
+                <button className="btn btn-primary btn-disabled w-full">
+                  <span className="loading loading-spinner"></span>
+                </button>
+              ) : (
+                <button
+                  onClick={submitUpdatedUsers}
+                  className="btn btn-primary w-full"
+                >
+                  <AiTwotoneSave />
+                  Zapisz
+                </button>
+              )}
+            </div>
+          )}
         </div>
 
         <DragDropContext
@@ -278,6 +321,7 @@ const ManageUsers = (props) => {
                 droppableId={"notApplied"}
                 name={"Brak odpowiedzi"}
                 showApplication={showApplication}
+                isActualStep={isActualStep}
               />
             )}
             <ColumnWithUsers
@@ -285,6 +329,7 @@ const ManageUsers = (props) => {
               droppableId={"applied"}
               name={"Nowe aplikacje"}
               showApplication={showApplication}
+              isActualStep={isActualStep}
             />
 
             <ColumnWithUsers
@@ -292,6 +337,7 @@ const ManageUsers = (props) => {
               droppableId={"accepted"}
               name={"Zaakceptowani"}
               showApplication={showApplication}
+              isActualStep={isActualStep}
             />
 
             <ColumnWithUsers
@@ -299,6 +345,7 @@ const ManageUsers = (props) => {
               droppableId={"rejected"}
               name={"Odrzuceni"}
               showApplication={showApplication}
+              isActualStep={isActualStep}
             />
           </div>
         </DragDropContext>

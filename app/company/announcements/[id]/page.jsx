@@ -17,6 +17,7 @@ import ShowOpenQuestionModal from "../../modules/open-questions/components/showO
 import ShowSendFileModal from "../../modules/send-files/components/showSendFileModal";
 import ManageUsers from "./components/manageUsers";
 import ApplicationModal from "./components/applicationModal";
+import BeginNewStepModal from "./components/beginNewStepModal";
 
 const AnnouncementPage = (props) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -35,6 +36,8 @@ const AnnouncementPage = (props) => {
   const [isShowApplicationModal, setIsShowApplicationModal] = useState(false);
   const [name, setName] = useState("");
   const [data, setData] = useState(null);
+
+  const [isShowBeginNewStepModal, setIsShowBeginNewStepModal] = useState(false);
 
   const router = useRouter();
   const id = props.params.id;
@@ -70,6 +73,16 @@ const AnnouncementPage = (props) => {
 
   const closeApplicationModal = () => {
     setIsShowApplicationModal(false);
+  };
+
+  const showBeginNewStepModal = (stepInfo) => {
+    setStepModal(stepInfo);
+
+    setIsShowBeginNewStepModal(true);
+  };
+
+  const closeBeginNewStepModal = () => {
+    setIsShowBeginNewStepModal(false);
   };
 
   const getCompanyAnnouncementById = useQuery(
@@ -164,6 +177,8 @@ const AnnouncementPage = (props) => {
                   showTask={showTask}
                   closeTask={closeTask}
                   showManageUsersModal={showManageUsersModal}
+                  showBeginNewStepModal={showBeginNewStepModal}
+                  closeBeginNewStepModal={closeBeginNewStepModal}
                 />
               </div>
             )}
@@ -198,6 +213,13 @@ const AnnouncementPage = (props) => {
           data={data}
           name={name}
           closeApplicationModal={closeApplicationModal}
+        />
+      )}
+
+      {isShowBeginNewStepModal && (
+        <BeginNewStepModal
+          stepModal={stepModal}
+          closeBeginNewStepModal={closeBeginNewStepModal}
         />
       )}
     </div>
