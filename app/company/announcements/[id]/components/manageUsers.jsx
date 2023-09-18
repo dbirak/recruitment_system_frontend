@@ -85,7 +85,7 @@ const ManageUsers = (props) => {
     if (source.droppableId !== destination.droppableId) {
       let items, item;
 
-      if (isActualStep && source.droppableId === "notApplied") {
+      if (!isActualStep() && source.droppableId === "notApplied") {
         Swal.fire({
           title: "Błąd",
           text: "Nie możesz aktaulnie zarządzać osobami z tej kolumny! Zarządzanie osobami, które nie udzieliły odpowiedzi, a mają dostęp do tego etapu będzie możliwe po jego zakończeniu!",

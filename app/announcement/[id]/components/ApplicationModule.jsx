@@ -10,6 +10,8 @@ const ApplicationModule = (props) => {
   const router = useRouter();
 
   const [isCvSendModal, setIsCvModal] = useState(false);
+  const { additionalStepState, setAdditionalStepState } =
+    useContext(AdditionalContext);
 
   const redirectToLoginPage = () => {
     router.push("/login");
@@ -43,6 +45,12 @@ const ApplicationModule = (props) => {
 
   const closeCvSendModal = () => {
     setIsCvModal(false);
+  };
+
+  const sendAnswer = (stepInfo) => {
+    setAdditionalStepState(stepInfo);
+
+    router.push("/announcement/answer");
   };
 
   return (
@@ -134,7 +142,10 @@ const ApplicationModule = (props) => {
                   ) : item.info.answer_info === null ? (
                     "-"
                   ) : (
-                    <button className="btn btn-base-100 btn-sm w-fit px-3 mx-auto">
+                    <button
+                      onClick={() => sendAnswer(item)}
+                      className="btn btn-base-100 btn-sm w-fit px-3 mx-auto"
+                    >
                       Prześlij teraz
                     </button>
                   )}

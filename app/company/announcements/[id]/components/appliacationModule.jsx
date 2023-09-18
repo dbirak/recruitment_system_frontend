@@ -5,6 +5,7 @@ import React, { useState } from "react";
 
 const AppliactionModule = (props) => {
   const showTask = (taskType, taskInfo) => {
+    console.log(taskType, taskInfo);
     props.showTask(taskType, taskInfo);
   };
 
@@ -65,7 +66,7 @@ const AppliactionModule = (props) => {
             ) : item.task.task_name === "openTask" ? (
               <a
                 onClick={() =>
-                  showTask(item.task.task_name, item.info.task_info.id[0])
+                  showTask(item.task.task_name, item.info.task_info)
                 }
                 className="link link-neutral w-fit h-fit mx-auto"
               >
@@ -74,7 +75,7 @@ const AppliactionModule = (props) => {
             ) : (
               <a
                 onClick={() =>
-                  showTask(item.task.task_name, item.info.task_info.id[0])
+                  showTask(item.task.task_name, item.info.task_info)
                 }
                 className="link link-neutral w-fit h-fit mx-auto"
               >
