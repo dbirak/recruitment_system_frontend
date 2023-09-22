@@ -6,6 +6,9 @@ import { axiosWithBearer } from "@/utils/api/axios";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import CvTaskAnswer from "./applicationModalComponents/cvTaskAnswer";
+import TestTaskAnswer from "./applicationModalComponents/testTaskAnswer";
+import OpenTaskAnswer from "./applicationModalComponents/openTaskAnswer";
+import Modal3 from "@/components/modals/modal3";
 
 const ApplicationModal = (props) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -41,7 +44,7 @@ const ApplicationModal = (props) => {
             {props.name} -{" "}
             {props.stepModal.task.task_name === "cvTask"
               ? "CV"
-              : props.stepModal.task.task_name === "test"
+              : props.stepModal.task.task_name === "testTask"
               ? "test"
               : props.stepModal.task.task_name === "openTask"
               ? "pytanie otwarte"
@@ -62,6 +65,30 @@ const ApplicationModal = (props) => {
             application={application}
           />
         </Modal>
+      )}
+
+      {!isLoading && application.task.task_name === "testTask" && (
+        <Modal>
+          <TestTaskAnswer
+            closeApplicationModal={closeApplicationModal}
+            stepModal={props.stepModal}
+            data={props.data}
+            name={props.name}
+            application={application}
+          />
+        </Modal>
+      )}
+
+      {!isLoading && application.task.task_name === "openTask" && (
+        <Modal3>
+          <OpenTaskAnswer
+            closeApplicationModal={closeApplicationModal}
+            stepModal={props.stepModal}
+            data={props.data}
+            name={props.name}
+            application={application}
+          />
+        </Modal3>
       )}
     </div>
   );

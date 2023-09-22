@@ -119,6 +119,7 @@ const AnnouncementPage = (props) => {
     };
 
     setData(data);
+    console.log("asdas");
 
     setIsShowApplicationModal(true);
   };

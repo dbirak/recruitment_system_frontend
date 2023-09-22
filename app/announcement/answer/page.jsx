@@ -12,6 +12,7 @@ import { useContext } from "react";
 import { useEffect } from "react";
 import { useMutation } from "react-query";
 import TestTask from "./components/testTask";
+import OpenTask from "./components/openTask";
 
 const AnswerPage = () => {
   const router = useRouter();
@@ -23,6 +24,8 @@ const AnswerPage = () => {
     task: { task_name: "testTask" },
   });
   const [taskDetails, setTaskDetails] = useState(null);
+
+  const [data, setData] = useState(null);
 
   const { additionalStepState, setAdditionalStepState } =
     useContext(AdditionalContext);
@@ -97,13 +100,14 @@ const AnswerPage = () => {
     if (additionalStepState === null) {
       router.push("/");
     } else {
-      const data = {
+      let json = {
         id: additionalStepState.id,
         announcement_id: additionalStepState.announcement_id,
         step_number: additionalStepState.step_number,
       };
+      setData(json);
 
-      getTestTaskInfo.mutate(data);
+      getTestTaskInfo.mutate(json);
     }
   }, []);
 
@@ -113,12 +117,6 @@ const AnswerPage = () => {
 
   const beginTask = () => {
     setIsLoadingTask(true);
-
-    const data = {
-      id: additionalStepState.id,
-      announcement_id: additionalStepState.announcement_id,
-      step_number: additionalStepState.step_number,
-    };
 
     getTestTaskDetails.mutate(data);
   };
@@ -177,7 +175,7 @@ const AnswerPage = () => {
                     <table className="table text-center mt-6">
                       <tbody>
                         {/* row 1 */}
-                        <tr>
+                        <tr className="border-0">
                           <th className="w-1/2">Czas na odpowiedź</th>
                           <td>{taskInfo.task_info.time} min</td>
                         </tr>
@@ -187,10 +185,10 @@ const AnswerPage = () => {
                 ) : (
                   <div className="max-w-[700px] mx-auto text-justify mt-5 font-medium px-2">
                     Czy na pewno chcesz teraz przesłać swoje rozwiązanie? Etap
-                    będzie polegał na odpowiedzeniu na pytanie otwartege w
-                    formie przesłanego pliku jako odpowiedź. Po rozpoczęciu
-                    zadania nie będzie możliwości jego ponownego rozwiązania.
-                    Twoja odpowiedź zostanie przesłana do autora ogłoszenia, na
+                    będzie polegał na odpowiedzeniu na pytanie otwarte w formie
+                    przesłanego pliku jako odpowiedź. Po rozpoczęciu zadania nie
+                    będzie możliwości jego ponownego rozwiązania. Twoja
+                    odpowiedź zostanie przesłana do autora ogłoszenia, na
                     podstawie której podejmie on decyzję odnośnie twojego
                     dalszego uczestnictwie w procesie rekrutacji. Zamknięcie
                     strony spowoduje niezapisanie twojej odpowiedzi. Po upływie
@@ -199,7 +197,7 @@ const AnswerPage = () => {
                     <table className="table text-center mt-6">
                       <tbody>
                         {/* row 1 */}
-                        <tr>
+                        <tr className="border-0">
                           <th className="w-1/2">Czas na odpowiedź</th>
                           <td>{taskInfo.task_info.time} min</td>
                         </tr>
@@ -241,11 +239,11 @@ const AnswerPage = () => {
             {!isLoading &&
               taskDetails !== null &&
               (taskInfo.task.task_name === "testTask" ? (
-                <TestTask taskDetails={taskDetails} />
+                <TestTask taskDetails={taskDetails} data={data} />
               ) : taskInfo.task.task_name === "openTask" ? (
-                <TestTask taskDetails={taskDetails} />
+                <OpenTask taskDetails={taskDetails} data={data} />
               ) : (
-                <TestTask taskDetails={taskDetails} />
+                <TestTask taskDetails={taskDetails} data={data} />
               ))}
           </div>
         </MainContainer>
