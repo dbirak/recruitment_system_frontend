@@ -13,6 +13,7 @@ import { useEffect } from "react";
 import { useMutation } from "react-query";
 import TestTask from "./components/testTask";
 import OpenTask from "./components/openTask";
+import FileTask from "./components/fileTask";
 
 const AnswerPage = () => {
   const router = useRouter();
@@ -186,14 +187,14 @@ const AnswerPage = () => {
                   <div className="max-w-[700px] mx-auto text-justify mt-5 font-medium px-2">
                     Czy na pewno chcesz teraz przesłać swoje rozwiązanie? Etap
                     będzie polegał na odpowiedzeniu na pytanie otwarte w formie
-                    przesłanego pliku jako odpowiedź. Po rozpoczęciu zadania nie
-                    będzie możliwości jego ponownego rozwiązania. Twoja
-                    odpowiedź zostanie przesłana do autora ogłoszenia, na
-                    podstawie której podejmie on decyzję odnośnie twojego
-                    dalszego uczestnictwie w procesie rekrutacji. Zamknięcie
-                    strony spowoduje niezapisanie twojej odpowiedzi. Po upływie
-                    czasu przeznaczonego na odpowiedź, twoje rozwiązanie
-                    zostanie automatycznie zapisane.
+                    przesłania pliku opisanego przez autora jako swoją
+                    odpowiedź. Po rozpoczęciu zadania nie będzie możliwości jego
+                    ponownego rozwiązania. Twoja odpowiedź zostanie przesłana do
+                    autora ogłoszenia, na podstawie której podejmie on decyzję
+                    odnośnie twojego dalszego uczestnictwie w procesie
+                    rekrutacji. Zamknięcie strony spowoduje niezapisanie twojej
+                    odpowiedzi. Po upływie czasu przeznaczonego na odpowiedź,
+                    twoje rozwiązanie zostanie automatycznie zapisane.
                     <table className="table text-center mt-6">
                       <tbody>
                         {/* row 1 */}
@@ -243,7 +244,7 @@ const AnswerPage = () => {
               ) : taskInfo.task.task_name === "openTask" ? (
                 <OpenTask taskDetails={taskDetails} data={data} />
               ) : (
-                <TestTask taskDetails={taskDetails} data={data} />
+                <FileTask taskDetails={taskDetails} data={data} />
               ))}
           </div>
         </MainContainer>

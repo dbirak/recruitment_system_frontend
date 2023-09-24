@@ -35,7 +35,7 @@ const Timer = (props) => {
   }, []);
 
   return (
-    <div className="w-[330px] bg-white fixed top-0 right-[calc(50vw-165px)] flex justify-between py-1 px-2 border-2 drop-shadow-md">
+    <div className="w-[330px] bg-white fixed top-0 right-[calc(50vw-165px)] flex justify-between py-1 px-2 border-2 drop-shadow-md z-10">
       <span className="text-[25px] font-semibold">Pozostały czas: </span>
       <div className="text-[25px] font-bold text-black tracking-wide">
         <span className="countdown">
