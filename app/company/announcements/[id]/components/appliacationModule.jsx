@@ -2,8 +2,13 @@
 
 import moment from "moment";
 import React, { useState } from "react";
+import { BiSolidEnvelope } from "react-icons/bi";
 
 const AppliactionModule = (props) => {
+  const [lastStepInfo, setLastStepInfo] = useState(
+    props.announcement.steps[props.announcement.steps.length - 1]
+  );
+
   const showTask = (taskType, taskInfo) => {
     console.log(taskType, taskInfo);
     props.showTask(taskType, taskInfo);
@@ -15,6 +20,10 @@ const AppliactionModule = (props) => {
 
   const showBeginNewStepModal = (stepInfo) => {
     props.showBeginNewStepModal(stepInfo);
+  };
+
+  const showCloseAnnouncementModal = () => {
+    props.showCloseAnnouncementModal(lastStepInfo);
   };
 
   return (
@@ -135,6 +144,55 @@ const AppliactionModule = (props) => {
           </div>
         </div>
       ))}
+
+      {props.announcement.last_step_info.can_close_announcement && (
+        <div>
+          <button
+            className="btn btn-neutral mt-3 w-full"
+            onClick={showCloseAnnouncementModal}
+          >
+            zakończ ogłoszenie
+          </button>
+        </div>
+      )}
+
+      {props.announcement.last_step_info.winners_users !== null && (
+        <div className="mt-10">
+          <h1 className="text-center mb-3 font-bold text-[27px]">
+            Gratulacje!
+          </h1>
+          <h1 className="font-semibold mb-3 text-[22px] text-left">
+            Proces rekrutacyjny twojego ogłoszenia dobiegł końca. Poniżej
+            znajdują się osoby, które pozytywnie przeszli przez wszystkie etapy
+            rekrutacji:
+          </h1>
+
+          {props.announcement.last_step_info.winners_users.map(
+            (item, index) => (
+              <div
+                className="card rounded-lg md:h-fit  shadow-xl mb-6 w-[93%] mx-auto bg-base-100"
+                key={index}
+              >
+                <div className="card-body ">
+                  <div className="text-[22px] text-left font-semibold">
+                    {item.name} {item.surname}
+                  </div>
+                  <div className="text-[18px] text-left">{item.email}</div>
+                  <div>
+                    <button
+                      className="btn btn-base-100 w-full mt-2"
+                      onClick={() => (window.location = "mailto:" + item.email)}
+                    >
+                      <BiSolidEnvelope />
+                      wyślij wiadomość
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )
+          )}
+        </div>
+      )}
     </div>
   );
 };

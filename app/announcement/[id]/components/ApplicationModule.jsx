@@ -166,6 +166,19 @@ const ApplicationModule = (props) => {
                 </div>
               </div>
             ))}
+
+            {props.announcement.last_step_info === "winner" && (
+              <div className="mt-10">
+                <h1 className="text-center mb-3 font-bold text-[27px]">
+                  Gratulacje!
+                </h1>
+                <h1 className="font-semibold mb-3 text-[22px] text-left">
+                  Autor ogłoszenia pozytywnie rozpatrzył twoją aplikację.
+                  Wkrótce powinien skontaktować się z tobą poprzez wiadomość
+                  e-mail.
+                </h1>
+              </div>
+            )}
           </div>
         )}
 

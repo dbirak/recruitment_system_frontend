@@ -18,6 +18,7 @@ import ShowSendFileModal from "../../modules/send-files/components/showSendFileM
 import ManageUsers from "./components/manageUsers";
 import ApplicationModal from "./components/applicationModal";
 import BeginNewStepModal from "./components/beginNewStepModal";
+import CloseAnnouncementModal from "./components/closeAnnouncementModal";
 
 const AnnouncementPage = (props) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -38,6 +39,10 @@ const AnnouncementPage = (props) => {
   const [data, setData] = useState(null);
 
   const [isShowBeginNewStepModal, setIsShowBeginNewStepModal] = useState(false);
+
+  const [isShowCloseAnnouncementModal, setIsShowCloseAnnouncementModal] =
+    useState(false);
+  const [lastStepInfo, setLastStepInfo] = useState(null);
 
   const router = useRouter();
   const id = props.params.id;
@@ -85,6 +90,20 @@ const AnnouncementPage = (props) => {
 
   const closeBeginNewStepModal = () => {
     setIsShowBeginNewStepModal(false);
+  };
+
+  const showCloseAnnouncementModal = (lastStepInfo) => {
+    setLastStepInfo({
+      announcement_id: lastStepInfo.announcement_id,
+      step_id: lastStepInfo.id,
+      step_number: lastStepInfo.step_number,
+    });
+
+    setIsShowCloseAnnouncementModal(true);
+  };
+
+  const hideCloseAnnouncementModal = () => {
+    setIsShowCloseAnnouncementModal(false);
   };
 
   const getCompanyAnnouncementById = useQuery(
@@ -182,6 +201,7 @@ const AnnouncementPage = (props) => {
                   showManageUsersModal={showManageUsersModal}
                   showBeginNewStepModal={showBeginNewStepModal}
                   closeBeginNewStepModal={closeBeginNewStepModal}
+                  showCloseAnnouncementModal={showCloseAnnouncementModal}
                 />
               </div>
             )}
@@ -223,6 +243,13 @@ const AnnouncementPage = (props) => {
         <BeginNewStepModal
           stepModal={stepModal}
           closeBeginNewStepModal={closeBeginNewStepModal}
+        />
+      )}
+
+      {isShowCloseAnnouncementModal && (
+        <CloseAnnouncementModal
+          hideCloseAnnouncementModal={hideCloseAnnouncementModal}
+          lastStepInfo={lastStepInfo}
         />
       )}
     </div>

@@ -1,23 +1,12 @@
 "use client";
 
 import Navbar from "@/app/components/navbar";
-import MainContainer from "@/components/layouts/mainContainer";
-import Loading from "@/components/loadings/loading";
 import { axiosWithBearerOrBase } from "@/utils/api/axios";
 import ProtectRoute from "@/utils/middleware/protectRoute";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useQuery } from "react-query";
-import { AiFillFileText } from "react-icons/ai";
-import { BiSolidCategoryAlt } from "react-icons/bi";
-import {
-  MdAccessTimeFilled,
-  MdLocationOn,
-  MdOutlineTimelapse,
-  MdWork,
-} from "react-icons/md";
 import moment from "moment";
-import { TbPointFilled } from "react-icons/tb";
 import AdditionalInformatio from "./components/AdditionalInformation";
 import AnnouncementInformation from "./components/AnnouncementInformation";
 import ApplicationModule from "./components/ApplicationModule";

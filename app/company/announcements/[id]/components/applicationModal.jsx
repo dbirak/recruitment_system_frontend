@@ -9,6 +9,7 @@ import CvTaskAnswer from "./applicationModalComponents/cvTaskAnswer";
 import TestTaskAnswer from "./applicationModalComponents/testTaskAnswer";
 import OpenTaskAnswer from "./applicationModalComponents/openTaskAnswer";
 import Modal3 from "@/components/modals/modal3";
+import FileTaskAnswer from "./applicationModalComponents/fileTaskAnswer";
 
 const ApplicationModal = (props) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -89,6 +90,18 @@ const ApplicationModal = (props) => {
             application={application}
           />
         </Modal3>
+      )}
+
+      {!isLoading && application.task.task_name === "fileTask" && (
+        <Modal>
+          <FileTaskAnswer
+            closeApplicationModal={closeApplicationModal}
+            stepModal={props.stepModal}
+            data={props.data}
+            name={props.name}
+            application={application}
+          />
+        </Modal>
       )}
     </div>
   );
