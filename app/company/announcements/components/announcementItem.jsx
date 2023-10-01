@@ -16,7 +16,7 @@ const AnnouncementItem = (props) => {
         onClick={() =>
           navigation("/company/announcements/" + props.announcement.id)
         }
-        className="card rounded-lg ease-in-out hover:scale-[1.03] md:h-[268px] duration-[0.3s] shadow-xl mb-4 w-full bg-base-100 cursor-pointer"
+        className="card rounded-lg ease-in-out hover:scale-[1.03] md:h-[268px] duration-[0.3s] shadow-xl mb-11 w-full bg-base-100 cursor-pointer"
       >
         <div className="card-body">
           <h2 className="card-title word-break block md:max-h-[56px] overflow-hidden">
@@ -62,24 +62,53 @@ const AnnouncementItem = (props) => {
               </div>
               <div className="mb-1">
                 Aktualny etap rekrutacji:{" "}
-                <span className="font-medium">1 / 4</span>
+                <span className="font-medium">
+                  {props.announcement.steps.actual_step_number === null
+                    ? "-"
+                    : props.announcement.steps.actual_step_number}
+                </span>
               </div>
             </div>
             <div className="w-full md:w-1/2 text-center">
               <div className="mb-1">
                 Data końca aktualnego etapu:{" "}
                 <span className="font-medium">
-                  {moment
-                    .utc(props.announcement.created_at)
-                    .format("DD.MM.YYYY")}
+                  {props.announcement.steps.expiry_date_actual_step === null
+                    ? "-"
+                    : moment
+                        .utc(props.announcement.steps.expiry_date_actual_step)
+                        .format("DD.MM.YYYY")}
                 </span>
               </div>
               <div className="mb-1">
-                Aktualna liczba aplikacji:{" "}
-                <span className="font-medium">12</span>
+                Liczba odpowiedzi w aktualnym etapie:{" "}
+                <span className="font-medium">
+                  {props.announcement.steps
+                    .applied_user_count_in_actual_step === null
+                    ? "-"
+                    : props.announcement.steps
+                        .applied_user_count_in_actual_step}
+                </span>
               </div>
             </div>
           </div>
+        </div>
+        <div>
+          {props.announcement.steps.announcement_status === "active" ? (
+            <div className="w-full py-2 text-white text-center bg-green-800">
+              Status ogłoszenia: <span className="font-bold">aktywne</span>
+            </div>
+          ) : props.announcement.steps.announcement_status ===
+            "in_recruitment" ? (
+            <div className="w-full py-2 text-white text-center bg-yellow-800">
+              Status ogłoszenia:{" "}
+              <span className="font-bold">w trakcie rekrutacji</span>
+            </div>
+          ) : (
+            <div className="w-full py-2 text-white text-center bg-red-800">
+              Status ogłoszenia: <span className="font-bold">zakończone</span>
+            </div>
+          )}
         </div>
       </div>
     </div>

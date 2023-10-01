@@ -161,7 +161,7 @@ const AppliactionModule = (props) => {
           <h1 className="text-center mb-3 font-bold text-[27px]">
             Gratulacje!
           </h1>
-          <h1 className="font-semibold mb-3 text-[22px] text-left">
+          <h1 className="font-semibold mb-5 text-[22px] text-left">
             Proces rekrutacyjny twojego ogłoszenia dobiegł końca. Poniżej
             znajdują się osoby, które pozytywnie przeszli przez wszystkie etapy
             rekrutacji:
