@@ -133,7 +133,7 @@ const CompanyForm = () => {
             },
             pattern: {
               value: /^[a-zA-ZĄ-ŻĄąĆćĘęŁłŃńÓóŚśŹźŻż. _-]{1,}$/,
-              message: "Nieprawidłowe nazwa.",
+              message: "Nieprawidłowa nazwa.",
             },
           })}
         />

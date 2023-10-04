@@ -34,6 +34,7 @@ const AnnouncementItem = (props) => {
           <div className="flex flex-wrap mt-4 overflow-hidden">
             <div className="grid items-center w-[50px] h-[50px]">
               <Image
+                className="object-cover w-full h-full"
                 width={50}
                 height={50}
                 src={"/avatars/company.png"}

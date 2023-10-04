@@ -73,7 +73,11 @@ function AnnouncementPage(props) {
               <div className="relative bg-base-100 rounded-lg z-20 mt-[-100px] max-w-[1200px] mx-auto">
                 <div className="shadow-lg rounded-lg pt-7 pb-3 px-5">
                   <div className="w-[200px] h-[200px] bg-base-100 p-3 rounded-lg relative mt-[-100px] shadow-lg mx-auto">
-                    <img src="/avatars/company.png" alt="" />
+                    <img
+                      className="object-cover w-full h-full"
+                      src="/avatars/company.png"
+                      alt=""
+                    />
                   </div>
                   <div className="text-[33px] font-bold text-center mt-5 w-full">
                     {announcement.name}
