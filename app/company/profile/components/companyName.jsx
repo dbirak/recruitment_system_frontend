@@ -7,7 +7,7 @@ const CompanyName = (props) => {
     props.showEditItemModal({
       header: "Edytuj nazwę przedsiębiorstwa",
       placeholder: "Wpisz nazwę przedsiębiorstwa",
-      defaultValue: props.name,
+      defaultValue: props.profile.name,
       validaitionRules: {
         required: "Pole nazwa przedsiębiorstwa jest wymagane.",
         maxLength: {
@@ -24,16 +24,16 @@ const CompanyName = (props) => {
   };
 
   return (
-    <div className="text-[32px] font-bold text-center mt-5 w-full ">
+    <div className="text-[32px] text-center mt-5 w-full ">
       <div
-        className="tooltip tooltip-right tooltip-base-100"
+        className="tooltip font-normal tooltip-right tooltip-base-100"
         data-tip="Edytuj nazwę"
       >
         <span
           onClick={editName}
-          className="hover:brightness-[0.25] hover:cursor-pointer duration-150 ease-in-out"
+          className="hover:brightness-[0.25] hover:cursor-pointer font-bold duration-150 ease-in-out"
         >
-          {props.name}
+          {props.profile.name}
         </span>
       </div>
     </div>

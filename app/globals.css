@@ -58,6 +58,23 @@ button:hover .ql-fill,
 span.ql-picker-item.ql-selected {
   color: hsl(var(--s)) !important;
 }
+.ql-snow .ql-editor img {
+  display: inline-block;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.ql-bubble .ql-editor img {
+  display: inline-block;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.ql-editor {
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
 
 @layer base {
   input[type="number"]::-webkit-inner-spin-button,

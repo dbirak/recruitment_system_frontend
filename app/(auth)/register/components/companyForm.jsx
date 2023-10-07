@@ -35,7 +35,7 @@ const CompanyForm = () => {
           localStorage.setItem("token", token);
           localStorage.setItem("role", role);
 
-          router.push("/");
+          router.push("/company/profile");
         })
         .catch((error) => {
           if (error.response.status == 422) {
@@ -222,7 +222,7 @@ const CompanyForm = () => {
               message: "Podana ulica jest zbyt długia.",
             },
             pattern: {
-              value: /^[a-zA-Z0-9Ą-ŻĄąĆćĘęŁłŃńÓóŚśŹźŻż _-]{1,}$/,
+              value: /^[a-zA-Z0-9Ą-ŻĄąĆćĘęŁłŃńÓóŚśŹźŻż. _-]{1,}$/,
               message: "Nieprawidłowa ulica.",
             },
           })}

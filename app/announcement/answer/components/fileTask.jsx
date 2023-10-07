@@ -112,10 +112,6 @@ const FileTask = (props) => {
       formData.append("answer", null);
     }
 
-    formData.forEach((value, key) => {
-      console.log(key, value);
-    });
-
     sendFileTask.mutate(formData);
   };
 

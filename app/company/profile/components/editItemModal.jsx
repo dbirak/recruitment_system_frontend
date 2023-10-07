@@ -43,12 +43,12 @@ const EditItemModal = (props) => {
 
           <div className="w-full mx-auto mt-3 flex justify-around">
             <input
-              className="btn btn-success w-[150px]"
+              className="btn btn-neutral w-[150px]"
               type="submit"
               value="Edytuj"
             />
             <button
-              className="block btn btn-error w-[150px]"
+              className="block btn btn-base-100 w-[150px]"
               onClick={props.closeEditItemModal}
             >
               Anuluj
