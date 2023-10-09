@@ -93,7 +93,7 @@ const SendFilesPage = () => {
             {isLoading ? (
               <Loading />
             ) : allFileTasks.length === 0 ? (
-              <p>Brak pytań!</p>
+              <p className="text-center w-full">Brak pytań do wyświetlenia!</p>
             ) : (
               <div>
                 {allFileTasks.map((item, index) => {

@@ -1,3 +1,4 @@
+import { baseApiUrl, baseURL } from "@/utils/api/axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
@@ -31,11 +32,17 @@ const AnnouncementMainItem = (props) => {
           </p>
           <div className="flex flex-wrap mt-4 overflow-hidden">
             <div className="grid items-center w-[50px] h-[50px]">
-              <Image
+              <img
                 className="object-cover w-full h-full"
                 width={50}
                 height={50}
-                src={"/avatars/company.png"}
+                src={
+                  props.announcement.company.avatar === null
+                    ? "/avatars/company.png"
+                    : baseApiUrl +
+                      "/storage/avatarImage/" +
+                      props.announcement.company.avatar
+                }
                 alt={""}
               />
             </div>

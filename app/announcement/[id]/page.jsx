@@ -1,7 +1,7 @@
 "use client";
 
 import Navbar from "@/app/components/navbar";
-import { axiosWithBearerOrBase } from "@/utils/api/axios";
+import { axiosWithBearerOrBase, baseApiUrl } from "@/utils/api/axios";
 import ProtectRoute from "@/utils/middleware/protectRoute";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -18,6 +18,10 @@ function AnnouncementPage(props) {
 
   const router = useRouter();
   const id = props.params.id;
+
+  const showCompanyProfile = () => {
+    router.push("/company/" + announcement.company.id);
+  };
 
   const getAnnouncement = useQuery("getAnnouncement", () => {
     axiosWithBearerOrBase
@@ -65,7 +69,13 @@ function AnnouncementPage(props) {
             <div>
               <div className="h-[500px] z-10 mx-auto">
                 <img
-                  src="/assets/image3.jpg"
+                  src={
+                    announcement.company.background_image === null
+                      ? "/assets/image3.jpg"
+                      : baseApiUrl +
+                        "/storage/backgroundImage/" +
+                        announcement.company.background_image
+                  }
                   alt=""
                   className="object-cover w-full h-[500px]"
                 />
@@ -75,7 +85,13 @@ function AnnouncementPage(props) {
                   <div className="w-[200px] h-[200px] bg-base-100 p-3 rounded-lg relative mt-[-100px] shadow-lg mx-auto">
                     <img
                       className="object-cover w-full h-full"
-                      src="/avatars/company.png"
+                      src={
+                        announcement.company.avatar === null
+                          ? "/avatars/company.png"
+                          : baseApiUrl +
+                            "/storage/avatarImage/" +
+                            announcement.company.avatar
+                      }
                       alt=""
                     />
                   </div>
@@ -85,7 +101,9 @@ function AnnouncementPage(props) {
                   <div className="text-center my-3 w-full">
                     {announcement.company.name}
                     {" - "}
-                    <a className="link">zobacz profil</a>
+                    <a onClick={showCompanyProfile} className="link">
+                      zobacz profil
+                    </a>
                   </div>
                   <div className="my-14 mx-7 text-justify text-[17px]">
                     {announcement.description}

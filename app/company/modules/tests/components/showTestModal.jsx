@@ -92,7 +92,7 @@ const ShowTestModal = (props) => {
                   className="collapse collapse-sm collapse-arrow bg-base-200 mb-3"
                   key={index}
                 >
-                  <input type="checkbox" />
+                  <input type="checkbox" defaultChecked />
                   <div className="collapse-title text-xl font-medium">
                     {index + 1}. {item.pytanie}
                   </div>

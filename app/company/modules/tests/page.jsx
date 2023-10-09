@@ -90,7 +90,7 @@ const TestModulePage = () => {
             {isLoading ? (
               <Loading />
             ) : allTests.length === 0 ? (
-              <p>Brak testów!</p>
+              <p className="text-center w-full">Brak testów do wyświetlenia!</p>
             ) : (
               <div>
                 {allTests.map((item, index) => {

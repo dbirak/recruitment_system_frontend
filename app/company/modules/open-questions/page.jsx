@@ -93,7 +93,7 @@ const OpenQuestionsPage = () => {
             {isLoading ? (
               <Loading />
             ) : allOpenTasks.length === 0 ? (
-              <p>Brak pytań!</p>
+              <p className="text-center w-full">Brak pytań do wyświetlenia!</p>
             ) : (
               <div>
                 {allOpenTasks.map((item, index) => {

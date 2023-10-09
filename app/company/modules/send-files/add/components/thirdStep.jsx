@@ -35,7 +35,7 @@ const ThirdStep = (props) => {
             backdrop: "#000000a6",
             confirmButtonText: "Zamknij",
           }).then((result) => {
-            router.push("/company/modules/send-files");
+            location.href = "/company/modules/send-files";
           });
         })
         .catch((error) => {

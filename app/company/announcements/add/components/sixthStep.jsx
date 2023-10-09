@@ -34,7 +34,7 @@ const SixthStep = (props) => {
             backdrop: "#000000a6",
             confirmButtonText: "Zamknij",
           }).then((result) => {
-            router.push("/company/announcements");
+            location.href = "/company/announcements";
           });
         })
         .catch((error) => {

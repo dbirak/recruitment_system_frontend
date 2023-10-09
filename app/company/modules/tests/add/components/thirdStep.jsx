@@ -32,7 +32,7 @@ const ThirdStep = (props) => {
             backdrop: "#000000a6",
             confirmButtonText: "Zamknij",
           }).then((result) => {
-            router.push("/company/modules/tests");
+            location.href = "/company/modules/tests";
           });
         })
         .catch((error) => {
