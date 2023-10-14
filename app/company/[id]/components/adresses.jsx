@@ -83,7 +83,7 @@ const Adresses = (props) => {
           </div>
         </div>
       </div>
-      <div className="w-full h-[366px] overflow-hidden bg-red-500">
+      <div className="w-full h-[366px] overflow-hidden">
         <MapContainer
           center={position}
           zoom={13}

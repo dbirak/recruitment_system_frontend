@@ -10,6 +10,8 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "react-quill/dist/quill.bubble.css";
 import Adresses from "./components/adresses";
+import Announcements from "./components/announcements";
+import Comments from "./components/comments";
 
 const CompanyProfilePage = (props) => {
   const [profile, setProfile] = useState({});
@@ -29,7 +31,7 @@ const CompanyProfilePage = (props) => {
         if (error.response.status == 401 || error.response.status == 403) {
           location.reload;
         } else if (error.response.status == 404) {
-          //router.push("/");
+          router.push("/");
         }
       })
       .finally(() => {});
@@ -93,6 +95,16 @@ const CompanyProfilePage = (props) => {
                     />
                   </div>
                   <Adresses profile={profile} />
+
+                  <h1 className="w-full text-[26px] font-semibold text-neutral border-b-2 pb-2 border-neutral mb-5 mt-5 break-words">
+                    Aktualne ogłoszenia
+                  </h1>
+                  <Announcements id={id} />
+
+                  <h1 className="w-full text-[26px] font-semibold text-neutral border-b-2 pb-2 border-neutral mb-5 mt-5 break-words">
+                    Opinie
+                  </h1>
+                  <Comments id={id} />
                 </div>
               </div>
             </div>
