@@ -16,12 +16,26 @@ const SearchProvider = ({ children }) => {
     typ_pracy: [],
   });
 
+  const [searchCompaniesState, setSearchCompaniesState] = React.useState({
+    nazwa: "",
+    województwo: 0,
+    krs: "",
+    nip: "",
+  });
+
   return (
     <Provider
       value={{
         searchAnnouncementState: searchAnnouncementState,
         setSearchAnnouncementState: (newValues) => {
           setSearchAnnouncementState((prevSearchInfo) => ({
+            ...prevSearchInfo,
+            ...newValues,
+          }));
+        },
+        searchCompaniesState: searchCompaniesState,
+        setSearchCompaniesState: (newValues) => {
+          setSearchCompaniesState((prevSearchInfo) => ({
             ...prevSearchInfo,
             ...newValues,
           }));
