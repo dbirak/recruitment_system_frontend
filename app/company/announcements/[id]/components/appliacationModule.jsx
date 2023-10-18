@@ -26,6 +26,10 @@ const AppliactionModule = (props) => {
     props.showCloseAnnouncementModal(lastStepInfo);
   };
 
+  const showSendMailModal = (userInfo) => {
+    props.showSendMailModal(userInfo);
+  };
+
   return (
     <div className="relative bg-base-100 shadow-lg rounded-lg z-0 max-w-[1200px] text-center mx-auto py-5 px-4 mt-8 mb-4">
       <div className="flex justify-between mb-7">
@@ -181,7 +185,7 @@ const AppliactionModule = (props) => {
                   <div>
                     <button
                       className="btn btn-base-100 w-full mt-2"
-                      onClick={() => (window.location = "mailto:" + item.email)}
+                      onClick={() => showSendMailModal(item)}
                     >
                       <BiSolidEnvelope />
                       wyślij wiadomość

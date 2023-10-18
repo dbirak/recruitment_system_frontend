@@ -148,6 +148,7 @@ const ProfilePage = () => {
       axiosWithBearerFormData
         .post("/company/profile", data)
         .then((res) => {
+          const result = res;
           Swal.fire({
             title: "Sukces",
             text: "Twój profil został zaaktualizowany!",
@@ -158,7 +159,13 @@ const ProfilePage = () => {
             allowOutsideClick: false,
             backdrop: "#000000a6",
             confirmButtonText: "Zamknij",
-          }).then((result) => {
+          }).then(() => {
+            if (result.data.avatar !== null)
+              window.localStorage.setItem("avatar", result.data.avatar);
+            else window.localStorage.removeItem("avatar");
+
+            window.localStorage.setItem("name", result.data.name);
+
             location.reload();
           });
         })

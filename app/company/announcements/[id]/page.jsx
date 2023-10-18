@@ -19,6 +19,8 @@ import ManageUsers from "./components/manageUsers";
 import ApplicationModal from "./components/applicationModal";
 import BeginNewStepModal from "./components/beginNewStepModal";
 import CloseAnnouncementModal from "./components/closeAnnouncementModal";
+import SendMailModal from "./components/sendMailModal";
+import Swal from "sweetalert2";
 
 const AnnouncementPage = (props) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -43,6 +45,9 @@ const AnnouncementPage = (props) => {
   const [isShowCloseAnnouncementModal, setIsShowCloseAnnouncementModal] =
     useState(false);
   const [lastStepInfo, setLastStepInfo] = useState(null);
+
+  const [userInfo, setUserInfo] = useState(null);
+  const [isSendMailModal, setIsSendMailModal] = useState(false);
 
   const router = useRouter();
   const id = props.params.id;
@@ -92,6 +97,22 @@ const AnnouncementPage = (props) => {
     setIsShowBeginNewStepModal(false);
   };
 
+  const showSendMailModal = (item) => {
+    let info = {
+      userInfo: item,
+      companyInfo: announcement.company,
+      announcement_id: announcement.id,
+    };
+
+    setUserInfo(info);
+
+    setIsSendMailModal(true);
+  };
+
+  const closeSendMailModal = () => {
+    setIsSendMailModal(false);
+  };
+
   const showCloseAnnouncementModal = (lastStepInfo) => {
     setLastStepInfo({
       announcement_id: lastStepInfo.announcement_id,
@@ -104,6 +125,22 @@ const AnnouncementPage = (props) => {
 
   const hideCloseAnnouncementModal = () => {
     setIsShowCloseAnnouncementModal(false);
+  };
+
+  const successMailSend = () => {
+    setIsSendMailModal(false);
+
+    Swal.fire({
+      title: "Sukces",
+      text: "Twoja wiadomość została wysłana!",
+      icon: "success",
+      color: "hsl(var(--n))",
+      background: "hsl(var(--b1))",
+      confirmButtonColor: "hsl(var(--su))",
+      allowOutsideClick: false,
+      backdrop: "#000000a6",
+      confirmButtonText: "Zamknij",
+    }).then((result) => {});
   };
 
   const getCompanyAnnouncementById = useQuery(
@@ -202,6 +239,7 @@ const AnnouncementPage = (props) => {
                   showBeginNewStepModal={showBeginNewStepModal}
                   closeBeginNewStepModal={closeBeginNewStepModal}
                   showCloseAnnouncementModal={showCloseAnnouncementModal}
+                  showSendMailModal={showSendMailModal}
                 />
               </div>
             )}
@@ -250,6 +288,14 @@ const AnnouncementPage = (props) => {
         <CloseAnnouncementModal
           hideCloseAnnouncementModal={hideCloseAnnouncementModal}
           lastStepInfo={lastStepInfo}
+        />
+      )}
+
+      {isSendMailModal && (
+        <SendMailModal
+          userInfo={userInfo}
+          closeSendMailModal={closeSendMailModal}
+          successMailSend={successMailSend}
         />
       )}
     </div>

@@ -269,7 +269,6 @@ const SerachAnnouncementPage = () => {
                         <div className="collapse collapse-arrow bg-base-100 mb-3 rounded-none">
                           <input
                             type="checkbox"
-                            defaultChecked
                             {...register("advancedSearch")}
                           />
                           <div className="collapse-title mb-2 text-md font-medium">

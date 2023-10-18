@@ -35,7 +35,9 @@ const CompanyForm = () => {
           localStorage.setItem("token", token);
           localStorage.setItem("role", role);
 
-          router.push("/company/profile");
+          window.localStorage.setItem("name", res.data.company.name);
+
+          window.location = "/company/profile";
         })
         .catch((error) => {
           if (error.response.status == 422) {

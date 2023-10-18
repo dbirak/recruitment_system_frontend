@@ -4,19 +4,24 @@ import MainContainer from "@/components/layouts/mainContainer";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import Logo from "../components/logo";
 import { axiosBase } from "@/utils/api/axios";
 import ProtectRoute from "@/utils/middleware/protectRoute";
 import { useMutation } from "react-query";
+import Logo from "../components/logo";
+import Loading2 from "@/components/loadings/loading2";
+import Swal from "sweetalert2";
 
 export const metadata = {
-  title: "Zaloguj się na swoje konto w WorkHuner",
+  title: "Zresetuj hasło w systemie",
   description: "",
 };
 
-const LoginPage = () => {
+const ResetPasswordPage = () => {
   const router = useRouter();
+
   const [isLoading, setIsLoading] = useState(false);
+  useState(true);
+
   const {
     register,
     handleSubmit,
@@ -30,22 +35,21 @@ const LoginPage = () => {
   const loginRequest = useMutation({
     mutationFn: (data) => {
       axiosBase
-        .post("/auth/login", data)
+        .post("/auth/forgot-password", data)
         .then((res) => {
-          const token = res.data.token;
-          const role = res.data.data.role.role_name;
-
-          window.localStorage.setItem("token", token);
-          window.localStorage.setItem("role", role);
-
-          if (res.data.data.role.role_name === "company") {
-            if (res.data.data.avatar !== null)
-              window.localStorage.setItem("avatar", res.data.company.avatar);
-
-            window.localStorage.setItem("name", res.data.company.name);
-
-            router.push("/company/dashboard");
-          } else router.push("/announcement");
+          Swal.fire({
+            title: "Sukces",
+            text: "Twój link resetujący hasło został wysłany na podany adres e-mail!",
+            icon: "success",
+            color: "hsl(var(--n))",
+            background: "hsl(var(--b1))",
+            confirmButtonColor: "hsl(var(--su))",
+            allowOutsideClick: false,
+            backdrop: "#000000a6",
+            confirmButtonText: "Zamknij",
+          }).then((result) => {
+            router.push("/login");
+          });
         })
         .catch((error) => {
           if (error.response.status == 401) {
@@ -81,35 +85,23 @@ const LoginPage = () => {
             <div className="border-b-2 border-dotted border-neutral my-5"></div>
             <div>
               <h1 className="font-semibold text-[26px] text-center mb-5">
-                Logowanie
+                Resetowanie hasła
               </h1>
-
-              <p className="block text-center my-3 mb-4">
-                Nie masz konta?{" "}
-                <a
-                  className="link link-neutral font-semibold"
-                  onClick={() => {
-                    router.push("/register");
-                  }}
-                >
-                  Zarejestruj się!
-                </a>
-              </p>
 
               <form onSubmit={handleSubmit(onSubmitHandler)}>
                 <input
                   type="text"
-                  placeholder="Adres e-mail"
+                  placeholder="Wpisz swój adres e-mail"
                   className={errors.email ? styleInputError : styleInputCorrect}
                   {...register("email", {
-                    required: "Pole email jest wymagane.",
+                    required: "Pole e-mail jest wymagane.",
                     maxLength: {
                       value: 30,
-                      message: "Adres email jest zbyt długi.",
+                      message: "Adres e-mail jest zbyt długi.",
                     },
                     pattern: {
                       value: /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/,
-                      message: "Nieprawidłowy adres email.",
+                      message: "Nieprawidłowy adres e-mail.",
                     },
                   })}
                 />
@@ -121,38 +113,6 @@ const LoginPage = () => {
                   )}
                 </label>
 
-                <input
-                  type="password"
-                  placeholder="Hasło"
-                  className={errors.hasło ? styleInputError : styleInputCorrect}
-                  {...register("hasło", {
-                    required: "Pole hasło jest wymagane",
-                    maxLength: {
-                      value: 20,
-                      message: "Pole hasło jest zbyt długie.",
-                    },
-                  })}
-                />
-                <label className="label mb-2">
-                  {errors.hasło && (
-                    <span className="label-text-alt text-error text-[13px]">
-                      {errors.hasło.message}
-                    </span>
-                  )}
-                </label>
-
-                <p className="block text-center my-1 mb-6">
-                  Nie pamiętasz hasła?{" "}
-                  <a
-                    className="link link-neutral font-semibold"
-                    onClick={() => {
-                      router.push("/reset-password");
-                    }}
-                  >
-                    Zresetuj je!
-                  </a>
-                </p>
-
                 <div className="w-[150px] mx-auto mt-3">
                   {isLoading ? (
                     <button className="btn btn-neutral w-[150px] btn-disabled">
@@ -162,7 +122,7 @@ const LoginPage = () => {
                     <input
                       className="btn btn-neutral w-[150px]"
                       type="submit"
-                      value="Zaloguj się"
+                      value="Resetuj hasło"
                     />
                   )}
                 </div>
@@ -175,4 +135,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default ResetPasswordPage;

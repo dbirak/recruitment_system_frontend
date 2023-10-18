@@ -6,10 +6,13 @@ import { RxDotFilled } from "react-icons/rx";
 import { BiSolidCategoryAlt } from "react-icons/bi";
 import { RiLogoutBoxRLine } from "react-icons/ri";
 import { useRouter } from "next/navigation";
+import { baseApiUrl } from "@/utils/api/axios";
+import { useState } from "react";
 
 const Navbar = (props) => {
-  const activeButtonStyle = "active bg-primary text-neutral";
   const router = useRouter();
+
+  const activeButtonStyle = "active bg-primary text-neutral";
 
   const navigate = (url) => {
     router.push(url);
@@ -23,26 +26,46 @@ const Navbar = (props) => {
   return (
     <div className="z-20">
       {/* main navbar */}
-      <div className="navbar bg-base-100 shadow-lg">
+      <div className="navbar bg-base-100 shadow-lg fixed z-50 md:static md:z-0">
         <div className="navbar-start">
-          <label
-            htmlFor="my-drawer"
-            className="btn btn-square btn-ghost visible xl:hidden"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              className="inline-block w-6 h-6 stroke-current"
+          <div className="dropdown dropdown-start">
+            <label
+              tabIndex={0}
+              htmlFor="my-drawer"
+              className="btn btn-square btn-ghost visible xl:hidden"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h16M4 18h16"
-              ></path>
-            </svg>
-          </label>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                className="inline-block w-6 h-6 stroke-current"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                ></path>
+              </svg>
+            </label>
+            <ul
+              tabIndex={0}
+              className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
+            >
+              <li>
+                <a className="justify-between">
+                  Profile
+                  <span className="badge">New</span>
+                </a>
+              </li>
+              <li>
+                <a>Settings</a>
+              </li>
+              <li>
+                <a>Logout</a>
+              </li>
+            </ul>
+          </div>
         </div>
         <div className="navbar-center">
           <Image
@@ -52,7 +75,7 @@ const Navbar = (props) => {
             alt=""
             priority={false}
           />
-          <span className="text-center mx-auto ml-2   text-[25px] font-sans text-neutral font-semibold cursor-default select-none">
+          <span className="text-center mx-auto ml-2 text-[25px] font-sans text-neutral font-semibold cursor-default select-none">
             WorkHunter
           </span>
         </div>
@@ -69,15 +92,30 @@ const Navbar = (props) => {
       </div>
 
       {/* desktop sidebar */}
-      <div className="z-20 bg-base-100 shadow-lg w-72 m-0 h-[calc(100vh-0px)] pt-7 overflow-hidden fixed top-0 hidden xl:block">
-        <Image
-          className="rounded-full border-secondary mx-auto mb-7 block"
-          src="/avatars/company.png"
-          alt=""
-          width={105}
-          height={105}
-          priority={false}
-        />
+      <div className="z-20 bg-base-100 shadow-lg w-72 m-0 h-[calc(100vh-0px)] pt-7 overflow-hidden fixed top-0 hidden xl:block ">
+        <div
+          className="cursor-pointer w-fit mx-auto"
+          onClick={() => navigate("/company/profile")}
+        >
+          <img
+            className="shadow-xl p-2 border-secondary mx-auto mb-2 block w-[105px] h-[105px] object-cover"
+            src={
+              localStorage.getItem("avatar")
+                ? baseApiUrl +
+                  "/storage/avatarImage/" +
+                  localStorage.getItem("avatar")
+                : "/avatars/company.png"
+            }
+            alt=""
+            width={105}
+            height={105}
+          />
+
+          <div className="cursor-pointer w-fit mx-auto px-5 pt-2 font-semibold text-center mb-7">
+            {localStorage.getItem("name") ? localStorage.getItem("name") : ""}
+          </div>
+        </div>
+
         <div className="overflow-y-auto max-h-[calc(100vh-170px)] hide-scrollbar">
           <style>
             {`
@@ -199,24 +237,22 @@ const Navbar = (props) => {
         </div>
       </div>
 
+      {props.children}
+
       {/* navbar mobile */}
-      <div className="drawer">
+      {/* <div className="drawer">
         <input id="my-drawer" type="checkbox" className="drawer-toggle" />
-        <div className="drawer-content">
-          {/* Page content here */}
-          {props.children}
-        </div>
+        <div className="drawer-content"></div>
         <div className="drawer-side">
           <label htmlFor="my-drawer" className="drawer-overlay"></label>
 
           <div className="bg-base-200 w-72 m-0 h-[calc(100vh-0px)] pt-7 overflow-hidden top-0">
-            <Image
-              className="rounded-full border-secondary mx-auto mb-7 block"
+            <img
+              className="border-secondary mx-auto mb-7 block"
               src="/avatars/company.png"
               alt=""
               width={70}
               height={70}
-              priority={false}
             />
             <ul className="menu menu-md font-medium bg-base-200 h-auto">
               <li>
@@ -313,7 +349,7 @@ const Navbar = (props) => {
             </ul>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
