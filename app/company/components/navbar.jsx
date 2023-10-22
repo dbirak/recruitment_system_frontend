@@ -1,10 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { AiFillHome } from "react-icons/ai";
+import { AiFillHome, AiFillSetting } from "react-icons/ai";
 import { RxDotFilled } from "react-icons/rx";
 import { BiSolidCategoryAlt } from "react-icons/bi";
 import { RiLogoutBoxRLine } from "react-icons/ri";
+import { BsFillPersonFill } from "react-icons/bs";
+import { IoNewspaper } from "react-icons/io5";
 import { useRouter } from "next/navigation";
 import { baseApiUrl } from "@/utils/api/axios";
 import { useState } from "react";
@@ -48,23 +50,72 @@ const Navbar = (props) => {
                 ></path>
               </svg>
             </label>
-            <ul
+            <div
               tabIndex={0}
-              className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
+              className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box text-left"
             >
-              <li>
-                <a className="justify-between">
-                  Profile
-                  <span className="badge">New</span>
-                </a>
-              </li>
-              <li>
-                <a>Settings</a>
-              </li>
-              <li>
-                <a>Logout</a>
-              </li>
-            </ul>
+              <ul className="menu">
+                <button
+                  onClick={() => navigate("/company/dashboard")}
+                  className="btn btn-sm btn-ghost text-left"
+                >
+                  Strona główna
+                </button>
+                <ul className="menu bg-base-100">
+                  <li>
+                    <h2 className="menu-title">Moduły</h2>
+                    <ul>
+                      <li>
+                        <button
+                          onClick={() => navigate("/company/modules/tests")}
+                          className="btn btn-sm btn-ghost text-left"
+                        >
+                          Testy
+                        </button>
+                      </li>
+                      <li>
+                        <button
+                          onClick={() =>
+                            navigate("/company/modules/open-questions")
+                          }
+                          className="btn btn-sm btn-ghost text-left"
+                        >
+                          Pytania otwarte
+                        </button>
+                      </li>
+                      <li>
+                        <button
+                          onClick={() =>
+                            navigate("/company/modules/send-files")
+                          }
+                          className="btn btn-sm btn-ghost text-left"
+                        >
+                          Przesyłanie plików
+                        </button>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+                <button
+                  onClick={() => navigate("/company/setting")}
+                  className="btn btn-sm btn-ghost text-left"
+                >
+                  Twoje ogłoszenia
+                </button>
+                <button
+                  onClick={() => navigate("/company/profile")}
+                  className="btn btn-sm btn-ghost text-left"
+                >
+                  Profil
+                </button>
+                <button
+                  onClick={() => navigate("/company/setting")}
+                  className="btn btn-sm btn-ghost text-left"
+                >
+                  Ustawienia
+                </button>
+              </ul>
+            </div>
           </div>
         </div>
         <div className="navbar-center">
@@ -100,7 +151,8 @@ const Navbar = (props) => {
           <img
             className="shadow-xl p-2 border-secondary mx-auto mb-2 block w-[105px] h-[105px] object-cover"
             src={
-              localStorage.getItem("avatar")
+              localStorage.getItem("avatar") &&
+              localStorage.getItem("avatar") !== "null"
                 ? baseApiUrl +
                   "/storage/avatarImage/" +
                   localStorage.getItem("avatar")
@@ -116,7 +168,7 @@ const Navbar = (props) => {
           </div>
         </div>
 
-        <div className="overflow-y-auto max-h-[calc(100vh-170px)] hide-scrollbar">
+        <div className="overflow-y-auto max-h-[calc(100vh-205px)] hide-scrollbar">
           <style>
             {`
           .hide-scrollbar::-webkit-scrollbar {
@@ -199,7 +251,7 @@ const Navbar = (props) => {
                   navigate("/company/announcements");
                 }}
               >
-                <BiSolidCategoryAlt />
+                <IoNewspaper />
                 <span>Twoje ogłoszenia</span>
               </a>
             </li>
@@ -210,26 +262,13 @@ const Navbar = (props) => {
                   navigate("/company/profile");
                 }}
               >
-                <BiSolidCategoryAlt />
+                <BsFillPersonFill />
                 <span>Profil</span>
               </a>
             </li>
             <li>
               <a>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-                  />
-                </svg>
+                <AiFillSetting />
                 <span>Ustawienia</span>
               </a>
             </li>

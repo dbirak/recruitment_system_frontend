@@ -20,31 +20,31 @@ const CommentItem = (props) => {
             <div className="rating h-fit w-fit">
               <input
                 type="radio"
-                name="rating-1"
+                name={props.comment.id}
                 className="mask mask-star-2 rating-xs h-[17px] bg-orange-400 pointer-events-none"
                 defaultChecked={rating === 1}
               />
               <input
                 type="radio"
-                name="rating-2"
+                name={props.comment.id}
                 className="mask mask-star-2 rating-xs h-[17px] bg-orange-400 pointer-events-none"
                 defaultChecked={rating === 2}
               />
               <input
                 type="radio"
-                name="rating-3"
+                name={props.comment.id}
                 className="mask mask-star-2 rating-xs h-[17px] bg-orange-400 pointer-events-none"
                 defaultChecked={rating === 3}
               />
               <input
                 type="radio"
-                name="rating-4"
+                name={props.comment.id}
                 className="mask mask-star-2 rating-xs h-[17px] bg-orange-400 pointer-events-none"
                 defaultChecked={rating === 4}
               />
               <input
                 type="radio"
-                name="rating-5"
+                name={props.comment.id}
                 className="mask mask-star-2 rating-xs h-[17px] bg-orange-400 pointer-events-none"
                 defaultChecked={rating === 5}
               />
