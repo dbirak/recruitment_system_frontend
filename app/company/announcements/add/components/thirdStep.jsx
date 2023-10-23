@@ -81,7 +81,7 @@ const ThirdStep = (props) => {
 
     await props.updateAnnoucementInfo(data);
     await props.setAdditionalInformation(additionalInfo);
-    console.log(additionalInfo);
+
     props.changeStep("up");
   };
 

@@ -46,9 +46,7 @@ export default function Home() {
           {isLoading ? (
             <Loading />
           ) : announcements.length === 0 ? (
-            <p className="block w-full mx-3 text-center">
-              Błąd pobierania ogłoszeń!
-            </p>
+            <p className="block w-full mx-3 text-center">Brak ogłoszeń!</p>
           ) : (
             <div>
               <div className="lg:flex justify-around flex-wrap block">

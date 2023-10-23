@@ -10,7 +10,6 @@ const AppliactionModule = (props) => {
   );
 
   const showTask = (taskType, taskInfo) => {
-    console.log(taskType, taskInfo);
     props.showTask(taskType, taskInfo);
   };
 

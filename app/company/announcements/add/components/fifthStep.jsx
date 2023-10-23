@@ -100,7 +100,6 @@ const FifthStep = (props) => {
       step: stepsInformation[index],
     });
 
-    console.log(editedStep);
     setIsEditStepModal(true);
   };
 
@@ -114,8 +113,6 @@ const FifthStep = (props) => {
     temp.push(data);
 
     setStepsInformation(temp);
-
-    console.log(stepsInformation);
 
     closeAddItemModal();
   };

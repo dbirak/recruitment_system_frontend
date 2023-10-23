@@ -104,8 +104,6 @@ const FileTask = (props) => {
     formData.append("announcement_id", props.data.announcement_id);
     formData.append("step_number", props.data.step_number);
 
-    console.log(getValues("file")["0"]);
-
     if (getValues("file") && getValues("file")["0"]) {
       formData.append("answer", getValues("file")["0"]);
     } else {

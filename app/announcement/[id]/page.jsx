@@ -32,7 +32,6 @@ function AnnouncementPage(props) {
       )
       .then((res) => {
         setAnnouncement(res.data);
-        console.log(res.data);
         var a = moment(res.data.expiry_date);
         var b = moment();
 

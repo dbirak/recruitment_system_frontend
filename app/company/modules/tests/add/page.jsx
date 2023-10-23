@@ -35,8 +35,6 @@ const AddTestModulePage = () => {
   };
 
   const deleteQuestion = (index) => {
-    console.log(index);
-
     const updatedQuestions = [...questions.pytania];
     updatedQuestions.splice(index, 1);
     setQuestions({ pytania: updatedQuestions });

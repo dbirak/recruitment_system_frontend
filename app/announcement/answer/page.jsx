@@ -86,7 +86,6 @@ const AnswerPage = () => {
             response.task_details = transformedData;
           }
 
-          console.log(response);
           setTaskDetails(response);
           setIsLoadingTask(false);
         })

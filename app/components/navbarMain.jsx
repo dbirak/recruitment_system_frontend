@@ -42,7 +42,6 @@ const NavbarMain = () => {
       } else {
         setScrolled(false);
       }
-      console.log(window.scrollY);
     };
 
     window.addEventListener("scroll", handleScroll);

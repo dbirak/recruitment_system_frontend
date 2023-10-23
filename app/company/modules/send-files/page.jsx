@@ -61,9 +61,7 @@ const SendFilesPage = () => {
       });
   });
 
-  const deleteFileTask = (questionId) => {
-    console.log(questionId);
-  };
+  const deleteFileTask = (questionId) => {};
 
   const showFileTask = (questionId, questionName) => {
     setFileTaskShowInfo({ name: questionName, id: questionId });

@@ -61,9 +61,7 @@ const OpenQuestionsPage = () => {
       });
   });
 
-  const deleteOpenTask = (questionId) => {
-    console.log(questionId);
-  };
+  const deleteOpenTask = (questionId) => {};
 
   const showOpenTask = (questionId, questionName) => {
     setOpenQuestionShowInfo({ name: questionName, id: questionId });

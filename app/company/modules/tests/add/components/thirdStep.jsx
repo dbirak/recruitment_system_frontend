@@ -66,8 +66,6 @@ const ThirdStep = (props) => {
 
     let json = Object.assign({}, props.questions, props.additionalInformation);
 
-    console.log(json);
-
     addTestRequest.mutate(json);
   };
 

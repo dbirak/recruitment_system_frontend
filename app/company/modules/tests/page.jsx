@@ -58,9 +58,7 @@ const TestModulePage = () => {
       });
   });
 
-  const deleteTest = (testId) => {
-    console.log(testId);
-  };
+  const deleteTest = (testId) => {};
 
   const showTest = (testId, testName) => {
     setTestShowInfo({ name: testName, id: testId });

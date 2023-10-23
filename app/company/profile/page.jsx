@@ -75,7 +75,6 @@ const ProfilePage = () => {
   };
 
   const editItem = (value, place) => {
-    console.log(value + " " + place);
     setProfile((prevState) => ({
       ...prevState,
       [place]: value,
@@ -131,7 +130,6 @@ const ProfilePage = () => {
     formData.append("krs", profile.krs);
     formData.append("nip", profile.nip);
 
-    console.log(getValues("avatar"));
     if (getValues("avatar") && getValues("avatar")[0]) {
       formData.append("avatar", getValues("avatar")[0]);
     }

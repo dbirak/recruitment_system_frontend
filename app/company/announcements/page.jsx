@@ -29,7 +29,6 @@ const announcementsPage = () => {
     axiosWithBearer
       .get("/company/announcement?page=" + currentPage)
       .then((res) => {
-        console.log(res.data.meta.last_page);
         if (res.data.meta.last_page === currentPage) {
           setHasMore(false);
         } else {

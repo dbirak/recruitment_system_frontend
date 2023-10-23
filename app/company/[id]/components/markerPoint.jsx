@@ -26,9 +26,7 @@ const MarkerPoint = (props) => {
           draggable={false}
           icon={icon}
           eventHandlers={{
-            click: (e) => {
-              console.log(e.latlng);
-            },
+            click: (e) => {},
           }}
         ></Marker>
       ))}

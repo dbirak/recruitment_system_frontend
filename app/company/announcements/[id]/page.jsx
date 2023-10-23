@@ -53,8 +53,6 @@ const AnnouncementPage = (props) => {
   const id = props.params.id;
 
   const showTask = (taskType, taskInfo) => {
-    console.log(taskType);
-    console.log(taskInfo);
     setTaskModal({
       taskType: taskType,
       taskInfo: { name: taskInfo.name, id: taskInfo.id },
@@ -175,7 +173,6 @@ const AnnouncementPage = (props) => {
     };
 
     setData(data);
-    console.log("asdas");
 
     setIsShowApplicationModal(true);
   };

@@ -26,10 +26,6 @@ const EditStepModal = (props) => {
       let index = props.info.tests.indexOf(props.editedStep.step.task) + 1;
 
       setValue("task", props.editedStep.step.task.id.toString());
-
-      console.log(index);
-      console.log(props.editedStep);
-      console.log(props.info.tests);
     }
 
     if (props.editedStep.step.module === "openTask") {
