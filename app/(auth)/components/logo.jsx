@@ -6,7 +6,7 @@ const Logo = () => {
 
   return (
     <div className="w-auto">
-      <Image
+      <img
         src="/logo/logo.png"
         alt=""
         width={70}

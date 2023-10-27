@@ -95,13 +95,12 @@ export const adressItemEdit = (value, place) => {
       placeholder: "Wpisz numer KRS",
       defaultValue: value,
       validaitionRules: {
-        required: "Adres jest wymagany.",
         maxLength: {
           value: 10,
           message: "Podany KRS jest zbyt długi.",
         },
         pattern: {
-          value: /^[0-9]{10,10}$/,
+          value: /^$|^[0-9]{10}$/,
           message: "Niepoprawny numer KRS.",
         },
       },

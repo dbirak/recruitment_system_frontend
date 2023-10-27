@@ -191,13 +191,13 @@ const Navbar = () => {
                     className="mt-3 z-[1] p-2 shadow menu menu-md dropdown-content bg-base-100 rounded-box w-52"
                   >
                     <button
-                      onClick={() => navigation("/user/application")}
+                      onClick={() => navigation("/applications")}
                       className="btn btn-sm btn-ghost text-center"
                     >
                       Moje aplikacje
                     </button>
                     <button
-                      onClick={() => navigation("/user/setting")}
+                      onClick={() => navigation("/settings")}
                       className="btn btn-sm btn-ghost text-center"
                     >
                       Ustawienia
@@ -246,13 +246,13 @@ const Navbar = () => {
                     </button>
                     <div className="h-fit border-b-2 my-2 border-dotted"></div>
                     <button
-                      onClick={() => navigation("/user/application")}
+                      onClick={() => navigation("/applications")}
                       className="btn btn-sm btn-ghost text-center"
                     >
                       Moje aplikacje
                     </button>
                     <button
-                      onClick={() => navigation("/user/setting")}
+                      onClick={() => navigation("/settings")}
                       className="btn btn-sm btn-ghost text-center"
                     >
                       Ustawienia

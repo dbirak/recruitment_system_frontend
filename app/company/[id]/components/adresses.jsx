@@ -73,7 +73,9 @@ const Adresses = (props) => {
             <AiFillFileText />
           </div>
           <div className="block">
-            <div>KRS: {props.profile.krs}</div>
+            <div>
+              KRS: {props.profile.krs === null ? "-" : props.profile.krs}
+            </div>
             <div
               className="block text-left tooltip tooltip-bottom tooltip-base-100"
               data-tip="Edytuj NIP"

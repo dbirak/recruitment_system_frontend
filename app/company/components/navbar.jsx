@@ -109,7 +109,7 @@ const Navbar = (props) => {
                   Profil
                 </button>
                 <button
-                  onClick={() => navigate("/company/setting")}
+                  onClick={() => navigate("/company/settings")}
                   className="btn btn-sm btn-ghost text-left"
                 >
                   Ustawienia
@@ -119,13 +119,7 @@ const Navbar = (props) => {
           </div>
         </div>
         <div className="navbar-center">
-          <Image
-            src="/logo/logo.png"
-            width={40}
-            height={40}
-            alt=""
-            priority={false}
-          />
+          <img src="/logo/logo.png" width={40} height={40} alt="" />
           <span className="text-center mx-auto ml-2 text-[25px] font-sans text-neutral font-semibold cursor-default select-none">
             WorkHunter
           </span>
@@ -267,7 +261,12 @@ const Navbar = (props) => {
               </a>
             </li>
             <li>
-              <a>
+              <a
+                className={props.site === "settings" ? activeButtonStyle : ""}
+                onClick={() => {
+                  navigate("/company/settings");
+                }}
+              >
                 <AiFillSetting />
                 <span>Ustawienia</span>
               </a>

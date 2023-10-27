@@ -44,7 +44,7 @@ const CompanyItem = (props) => {
           <div className="flex justify-around mt-5">
             <div>
               <span className="font-semibold">Numer KRS: </span>
-              {props.company.krs}
+              {props.company.krs === null ? "-" : props.company.krs}
             </div>
             <div>
               <span className="font-semibold">Numer NIP: </span>

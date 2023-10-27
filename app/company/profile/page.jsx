@@ -127,7 +127,10 @@ const ProfilePage = () => {
     formData.append("city", profile.city);
     formData.append("phone_number", profile.phone_number);
     formData.append("contact_email", profile.contact_email);
-    formData.append("krs", profile.krs);
+    formData.append(
+      "krs",
+      profile.krs === "null" || profile.krs === null ? "" : profile.krs
+    );
     formData.append("nip", profile.nip);
 
     if (getValues("avatar") && getValues("avatar")[0]) {

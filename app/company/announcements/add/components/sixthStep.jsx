@@ -15,7 +15,6 @@ const SixthStep = (props) => {
 
   const changeStep = async (activities) => {
     props.changeStep(activities);
-    console.log(props.earnInformation);
   };
 
   const addAnnouncementRequest = useMutation({
@@ -25,7 +24,7 @@ const SixthStep = (props) => {
         .then((res) => {
           Swal.fire({
             title: "Sukces",
-            text: "Pytanie zostało poprawnie utworzone!",
+            text: "Ogłoszenie zostało poprawnie utworzone!",
             icon: "success",
             color: "hsl(var(--n))",
             background: "hsl(var(--b1))",

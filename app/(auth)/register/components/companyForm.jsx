@@ -58,10 +58,10 @@ const CompanyForm = () => {
               });
             }
           } else console.log(error);
-        })
-        .finally(() => {
+
           setIsLoading(false);
-        });
+        })
+        .finally(() => {});
     },
   });
 
@@ -289,16 +289,15 @@ const CompanyForm = () => {
 
         <input
           type="text"
-          placeholder="Numer KRS"
+          placeholder="Numer KRS (opcjonalnie)"
           className={errors.krs ? styleInputError : styleInputCorrect}
           {...register("krs", {
-            required: "Pole numer KRS jest wymagane.",
             maxLength: {
               value: 10,
               message: "Podany KRS jest zbyt długi.",
             },
             pattern: {
-              value: /^[0-9]{10,10}$/,
+              value: /^$|^[0-9]{10}$/,
               message: "Niepoprawny numer KRS.",
             },
           })}

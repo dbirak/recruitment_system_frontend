@@ -139,9 +139,12 @@ const Adresses = (props) => {
             >
               <div
                 onClick={() => editItem(props.profile.krs, "krs")}
-                className="hover:brightness-[0.25] hover:cursor-pointer duration-150 ease-in-out"
+                className="hover:brightness-[0.25] hover:cursor-pointer duration-150 ease-in-out text-left"
               >
-                KRS: {props.profile.krs}
+                KRS:{" "}
+                {props.profile.krs === null || props.profile.krs === ""
+                  ? "-"
+                  : props.profile.krs}
               </div>
             </div>
             <div
@@ -150,7 +153,7 @@ const Adresses = (props) => {
             >
               <div
                 onClick={() => editItem(props.profile.nip, "nip")}
-                className="hover:brightness-[0.25] hover:cursor-pointer duration-150 ease-in-out"
+                className="hover:brightness-[0.25] hover:cursor-pointer duration-150 ease-in-out text-left"
               >
                 NIP: {props.profile.nip}
               </div>
