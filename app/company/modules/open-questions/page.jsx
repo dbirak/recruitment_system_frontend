@@ -15,11 +15,16 @@ import { MdModeEdit, MdRemoveRedEye } from "react-icons/md";
 import { FaTrash } from "react-icons/fa";
 import moment from "moment";
 import ShowOpenQuestionModal from "./components/showOpenQuestionModal";
+import ConfirmModal from "./components/confirmModal";
 
 const OpenQuestionsPage = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const [isShowOpenTaskModal, setIsShowOpenTaskModal] = useState(false);
+  const [isShowOpenTaskDeleteModal, setIsShowOpenTaskDeleteModal] =
+    useState(false);
+
+  const [deleteTaskId, setDeleteTaskId] = useState(0);
   const [openQuestionShowInfo, setOpenQuestionShowInfo] = useState({
     name: "",
     id: null,
@@ -61,7 +66,48 @@ const OpenQuestionsPage = () => {
       });
   });
 
-  const deleteOpenTask = (questionId) => {};
+  const deleteOpenTask = (questionId) => {
+    setDeleteTaskId(questionId);
+    setIsShowOpenTaskDeleteModal(true);
+  };
+
+  const closeShowOpenTaskDeleteModal = () => {
+    setIsShowOpenTaskDeleteModal(false);
+  };
+
+  const successDelete = () => {
+    setIsShowOpenTaskDeleteModal();
+
+    Swal.fire({
+      title: "Sukces",
+      text: "Wybrane zadanie zostało usunięte!",
+      icon: "success",
+      color: "hsl(var(--n))",
+      background: "hsl(var(--b1))",
+      confirmButtonColor: "hsl(var(--su))",
+      allowOutsideClick: false,
+      backdrop: "#000000a6",
+      confirmButtonText: "Zamknij",
+    }).then((result) => {
+      location.reload();
+    });
+  };
+
+  const errorDelete = () => {
+    setIsShowOpenTaskDeleteModal();
+
+    Swal.fire({
+      title: "Błąd",
+      text: "Nie można usunąć wybranego zadania, ponieważ jest używane jako etap rekrutacji w twoim ogłoszeniu!",
+      icon: "error",
+      color: "hsl(var(--n))",
+      background: "hsl(var(--b1))",
+      confirmButtonColor: "hsl(var(--er))",
+      allowOutsideClick: false,
+      backdrop: "#000000a6",
+      confirmButtonText: "Zamknij",
+    }).then((result) => {});
+  };
 
   const showOpenTask = (questionId, questionName) => {
     setOpenQuestionShowInfo({ name: questionName, id: questionId });
@@ -128,18 +174,13 @@ const OpenQuestionsPage = () => {
                             </tbody>
                           </table>
                         </div>
-                        <div className="flex justify-around mt-6 w-[225px] mx-auto">
+                        <div className="flex justify-around mt-6 w-[150px] mx-auto">
                           <div className="tooltip" data-tip="wyświetl pytanie">
                             <button
                               onClick={() => showOpenTask(item.id, item.name)}
                               className="btn btn-square btn-primary text-[22px]"
                             >
                               <MdRemoveRedEye />
-                            </button>
-                          </div>
-                          <div className="tooltip" data-tip="edytuj pytanie">
-                            <button className="btn btn-square btn-warning text-[22px]">
-                              <MdModeEdit />
                             </button>
                           </div>
                           <div className="tooltip" data-tip="usuń pytanie">
@@ -165,6 +206,15 @@ const OpenQuestionsPage = () => {
         <ShowOpenQuestionModal
           openQuestionShowInfo={openQuestionShowInfo}
           closeShowOpenQuestionModal={closeShowOpenQuestionModal}
+        />
+      )}
+
+      {isShowOpenTaskDeleteModal && (
+        <ConfirmModal
+          deleteTaskId={deleteTaskId}
+          closeShowOpenTaskDeleteModal={closeShowOpenTaskDeleteModal}
+          successDelete={successDelete}
+          errorDelete={errorDelete}
         />
       )}
     </div>

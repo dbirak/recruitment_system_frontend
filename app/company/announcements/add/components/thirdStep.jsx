@@ -156,7 +156,7 @@ const ThirdStep = (props) => {
           {...register("czas_pracy", {
             pattern: {
               value: /^(?!0$).+$/,
-              message: "Proszę wybrać wymiar czasowy.",
+              message: "Proszę wybrać wymiar czasu pracy.",
             },
           })}
         >
@@ -185,7 +185,7 @@ const ThirdStep = (props) => {
           {...register("typ_pracy", {
             pattern: {
               value: /^(?!0$).+$/,
-              message: "Proszę wybrać typ pracy.",
+              message: "Proszę wybrać model pracy.",
             },
           })}
         >

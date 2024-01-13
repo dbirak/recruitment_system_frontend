@@ -290,14 +290,14 @@ const SerachAnnouncementPage = () => {
                               />
                               <CollapseItem
                                 name="czas_pracy"
-                                header="Wymiar czasowy"
+                                header="Wymiar czasu pracy"
                                 data={info.workTimes}
                                 changeValue={changeValue}
                                 searchInfo={searchInfo}
                               />
                               <CollapseItem
                                 name="typ_pracy"
-                                header="Typ pracy"
+                                header="Model pracy"
                                 data={info.workTypes}
                                 changeValue={changeValue}
                                 searchInfo={searchInfo}
@@ -335,14 +335,14 @@ const SerachAnnouncementPage = () => {
                         />
                         <CollapseItem
                           name="czas_pracy"
-                          header="Wymiar czasowy"
+                          header="Wymiar czasu pracy"
                           data={info.workTimes}
                           changeValue={changeValue}
                           searchInfo={searchInfo}
                         />
                         <CollapseItem
                           name="typ_pracy"
-                          header="Typ pracy"
+                          header="Model pracy"
                           data={info.workTypes}
                           changeValue={changeValue}
                           searchInfo={searchInfo}

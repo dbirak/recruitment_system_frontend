@@ -149,7 +149,7 @@ const SearchCompaniesPage = () => {
                     <div className="w-full mb-3 md:mb-0 md:w-1/2 mx-auto">
                       <input
                         type="text"
-                        placeholder="Wpisz nazwę stanowiska lub firmy"
+                        placeholder="Wpisz nazwę firmy"
                         defaultValue={searchInfo.nazwa}
                         className={
                           errors.nazwa ? styleInputError : styleInputCorrect

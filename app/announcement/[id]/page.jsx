@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import moment from "moment";
-import AdditionalInformatio from "./components/AdditionalInformation";
+import AdditionalInformation from "./components/AdditionalInformation";
 import AnnouncementInformation from "./components/AnnouncementInformation";
 import ApplicationModule from "./components/ApplicationModule";
 
@@ -128,7 +128,7 @@ function AnnouncementPage(props) {
                 </div>
               </div>
 
-              <AdditionalInformatio announcement={announcement} />
+              <AdditionalInformation announcement={announcement} />
 
               <ApplicationModule announcement={announcement} />
             </div>

@@ -140,7 +140,16 @@ const AppliactionModule = (props) => {
                 Rozpocznij etap
               </button>
             ) : item.expiry_date !== null ? (
-              moment.utc(item.expiry_date).format("DD.MM.YYYY")
+              <div>
+                <div>{moment.utc(item.expiry_date).format("DD.MM.YYYY")}</div>
+                {item.info.application_info === "manage_answers" && (
+                  <div className="mt-2">
+                    <button className="btn scale-[0.77] md:scale-[1] btn-base-100 btn-sm w-fit md:px-3 mx-auto">
+                      Przedłuż datę
+                    </button>
+                  </div>
+                )}
+              </div>
             ) : (
               "-"
             )}

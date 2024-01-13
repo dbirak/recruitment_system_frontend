@@ -15,11 +15,15 @@ import { FaTrash } from "react-icons/fa";
 import { MdModeEdit, MdRemoveRedEye } from "react-icons/md";
 import ShowTestModal from "./components/showTestModal";
 import moment from "moment";
+import ConfirmModal from "./components/confirmModal";
 
 const TestModulePage = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const [isShowTestModal, setIsShowTestModal] = useState(false);
+  const [isShowTestDeleteModal, setIsShowTestDeleteModal] = useState(false);
+
+  const [deleteTaskId, setDeleteTaskId] = useState(0);
   const [testShowInfo, setTestShowInfo] = useState({ name: "", id: null });
 
   const [allTests, setAllTests] = useState([]);
@@ -58,7 +62,48 @@ const TestModulePage = () => {
       });
   });
 
-  const deleteTest = (testId) => {};
+  const deleteTest = (testId) => {
+    setDeleteTaskId(testId);
+    setIsShowTestDeleteModal(true);
+  };
+
+  const closeShowTestDeleteModal = () => {
+    setIsShowTestDeleteModal(false);
+  };
+
+  const successDelete = () => {
+    setIsShowTestDeleteModal();
+
+    Swal.fire({
+      title: "Sukces",
+      text: "Wybrane zadanie zostało usunięte!",
+      icon: "success",
+      color: "hsl(var(--n))",
+      background: "hsl(var(--b1))",
+      confirmButtonColor: "hsl(var(--su))",
+      allowOutsideClick: false,
+      backdrop: "#000000a6",
+      confirmButtonText: "Zamknij",
+    }).then((result) => {
+      location.reload();
+    });
+  };
+
+  const errorDelete = () => {
+    setIsShowTestDeleteModal();
+
+    Swal.fire({
+      title: "Błąd",
+      text: "Nie można usunąć wybranego zadania, ponieważ jest używane jako etap rekrutacji w twoim ogłoszeniu!",
+      icon: "error",
+      color: "hsl(var(--n))",
+      background: "hsl(var(--b1))",
+      confirmButtonColor: "hsl(var(--er))",
+      allowOutsideClick: false,
+      backdrop: "#000000a6",
+      confirmButtonText: "Zamknij",
+    }).then((result) => {});
+  };
 
   const showTest = (testId, testName) => {
     setTestShowInfo({ name: testName, id: testId });
@@ -128,18 +173,13 @@ const TestModulePage = () => {
                             </tbody>
                           </table>
                         </div>
-                        <div className="flex justify-around mt-6 w-[225px] mx-auto">
+                        <div className="flex justify-around mt-6 w-[150px] mx-auto">
                           <div className="tooltip" data-tip="wyświetl pytania">
                             <button
                               onClick={() => showTest(item.id, item.name)}
                               className="btn btn-square btn-primary text-[22px]"
                             >
                               <MdRemoveRedEye />
-                            </button>
-                          </div>
-                          <div className="tooltip" data-tip="edytuj test">
-                            <button className="btn btn-square btn-warning text-[22px]">
-                              <MdModeEdit />
                             </button>
                           </div>
                           <div className="tooltip" data-tip="usuń test">
@@ -165,6 +205,15 @@ const TestModulePage = () => {
         <ShowTestModal
           testShowInfo={testShowInfo}
           closeShowTestModal={closeShowTestModal}
+        />
+      )}
+
+      {isShowTestDeleteModal && (
+        <ConfirmModal
+          deleteTaskId={deleteTaskId}
+          closeShowTestDeleteModal={closeShowTestDeleteModal}
+          successDelete={successDelete}
+          errorDelete={errorDelete}
         />
       )}
     </div>

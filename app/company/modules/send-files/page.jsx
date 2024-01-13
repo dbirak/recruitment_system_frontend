@@ -15,11 +15,16 @@ import { MdModeEdit, MdRemoveRedEye } from "react-icons/md";
 import { FaTrash } from "react-icons/fa";
 import moment from "moment";
 import ShowSendFileModal from "./components/showSendFileModal";
+import ConfirmModal from "./components/confirmModal";
 
 const SendFilesPage = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const [isShowFileTaskModal, setIsShowFileTaskModal] = useState(false);
+  const [isShowFileTaskDeleteModal, setIsShowFileTaskDeleteModal] =
+    useState(false);
+
+  const [deleteTaskId, setDeleteTaskId] = useState(0);
   const [fileTaskShowInfo, setFileTaskShowInfo] = useState({
     name: "",
     id: null,
@@ -61,7 +66,48 @@ const SendFilesPage = () => {
       });
   });
 
-  const deleteFileTask = (questionId) => {};
+  const deleteFileTask = (questionId) => {
+    setDeleteTaskId(questionId);
+    setIsShowFileTaskDeleteModal(true);
+  };
+
+  const closeShowFileTaskDeleteModal = () => {
+    setIsShowFileTaskDeleteModal(false);
+  };
+
+  const successDelete = () => {
+    setIsShowFileTaskDeleteModal();
+
+    Swal.fire({
+      title: "Sukces",
+      text: "Wybrane zadanie zostało usunięte!",
+      icon: "success",
+      color: "hsl(var(--n))",
+      background: "hsl(var(--b1))",
+      confirmButtonColor: "hsl(var(--su))",
+      allowOutsideClick: false,
+      backdrop: "#000000a6",
+      confirmButtonText: "Zamknij",
+    }).then((result) => {
+      location.reload();
+    });
+  };
+
+  const errorDelete = () => {
+    setIsShowFileTaskDeleteModal();
+
+    Swal.fire({
+      title: "Błąd",
+      text: "Nie można usunąć wybranego zadania, ponieważ jest używane jako etap rekrutacji w twoim ogłoszeniu!",
+      icon: "error",
+      color: "hsl(var(--n))",
+      background: "hsl(var(--b1))",
+      confirmButtonColor: "hsl(var(--er))",
+      allowOutsideClick: false,
+      backdrop: "#000000a6",
+      confirmButtonText: "Zamknij",
+    }).then((result) => {});
+  };
 
   const showFileTask = (questionId, questionName) => {
     setFileTaskShowInfo({ name: questionName, id: questionId });
@@ -128,18 +174,13 @@ const SendFilesPage = () => {
                             </tbody>
                           </table>
                         </div>
-                        <div className="flex justify-around mt-6 w-[225px] mx-auto">
+                        <div className="flex justify-around mt-6 w-[150px] mx-auto">
                           <div className="tooltip" data-tip="wyświetl pytanie">
                             <button
                               onClick={() => showFileTask(item.id, item.name)}
                               className="btn btn-square btn-primary text-[22px]"
                             >
                               <MdRemoveRedEye />
-                            </button>
-                          </div>
-                          <div className="tooltip" data-tip="edytuj pytanie">
-                            <button className="btn btn-square btn-warning text-[22px]">
-                              <MdModeEdit />
                             </button>
                           </div>
                           <div className="tooltip" data-tip="usuń pytanie">
@@ -165,6 +206,15 @@ const SendFilesPage = () => {
         <ShowSendFileModal
           fileTaskShowInfo={fileTaskShowInfo}
           closeShowSendFileModal={closeShowSendFileModal}
+        />
+      )}
+
+      {isShowFileTaskDeleteModal && (
+        <ConfirmModal
+          deleteTaskId={deleteTaskId}
+          closeShowFileTaskDeleteModal={closeShowFileTaskDeleteModal}
+          successDelete={successDelete}
+          errorDelete={errorDelete}
         />
       )}
     </div>

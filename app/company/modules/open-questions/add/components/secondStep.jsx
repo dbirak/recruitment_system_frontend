@@ -65,7 +65,7 @@ const SecondStep = (props) => {
           </label>
 
           <div className="flex">
-            <div className="w-[190px]">Czas trwania testu: </div>
+            <div className="w-[260px]">Czas trwania odpowiedzi: </div>
             <div className="grid items-center w-[100%]">
               <input
                 type="range"

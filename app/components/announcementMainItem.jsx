@@ -51,7 +51,7 @@ const AnnouncementMainItem = (props) => {
                 {props.announcement.company.name}
               </div>
               <div className="text-[14px] truncate">
-                {props.announcement.company.city},
+                {props.announcement.company.city},{" "}
                 {props.announcement.company.province.province_name}
               </div>
             </div>
