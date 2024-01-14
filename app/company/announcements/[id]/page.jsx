@@ -21,6 +21,7 @@ import BeginNewStepModal from "./components/beginNewStepModal";
 import CloseAnnouncementModal from "./components/closeAnnouncementModal";
 import SendMailModal from "./components/sendMailModal";
 import Swal from "sweetalert2";
+import ExtendDateStepModal from "./components/extendDateStepModal";
 
 const AnnouncementPage = (props) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -41,6 +42,8 @@ const AnnouncementPage = (props) => {
   const [data, setData] = useState(null);
 
   const [isShowBeginNewStepModal, setIsShowBeginNewStepModal] = useState(false);
+
+  const [isExtendDateStepModal, setIsExtendDateStepModal] = useState(false);
 
   const [isShowCloseAnnouncementModal, setIsShowCloseAnnouncementModal] =
     useState(false);
@@ -93,6 +96,16 @@ const AnnouncementPage = (props) => {
 
   const closeBeginNewStepModal = () => {
     setIsShowBeginNewStepModal(false);
+  };
+
+  const showExtendDateStep = (stepInfo) => {
+    setStepModal(stepInfo);
+
+    setIsExtendDateStepModal(true);
+  };
+
+  const closeExtendDateStep = () => {
+    setIsExtendDateStepModal(false);
   };
 
   const showSendMailModal = (item) => {
@@ -237,6 +250,7 @@ const AnnouncementPage = (props) => {
                   closeBeginNewStepModal={closeBeginNewStepModal}
                   showCloseAnnouncementModal={showCloseAnnouncementModal}
                   showSendMailModal={showSendMailModal}
+                  showExtendDateStep={showExtendDateStep}
                 />
               </div>
             )}
@@ -278,6 +292,14 @@ const AnnouncementPage = (props) => {
         <BeginNewStepModal
           stepModal={stepModal}
           closeBeginNewStepModal={closeBeginNewStepModal}
+        />
+      )}
+
+      {isExtendDateStepModal && (
+        <ExtendDateStepModal
+          stepModal={stepModal}
+          closeBeginNewStepModal={closeBeginNewStepModal}
+          closeExtendDateStep={closeExtendDateStep}
         />
       )}
 

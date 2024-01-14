@@ -29,6 +29,14 @@ const AppliactionModule = (props) => {
     props.showSendMailModal(userInfo);
   };
 
+  const showExtendDateStep = (stepInfo) => {
+    props.showExtendDateStep(stepInfo);
+  };
+
+  const closeExtendDateStep = (stepInfo) => {
+    props.closeExtendDateStep(stepInfo);
+  };
+
   return (
     <div className="relative bg-base-100 shadow-lg rounded-lg z-0 max-w-[1200px] text-center mx-auto py-5 px-4 mt-8 mb-4">
       <div className="flex justify-between mb-7">
@@ -144,7 +152,10 @@ const AppliactionModule = (props) => {
                 <div>{moment.utc(item.expiry_date).format("DD.MM.YYYY")}</div>
                 {item.info.application_info === "manage_answers" && (
                   <div className="mt-2">
-                    <button className="btn scale-[0.77] md:scale-[1] btn-base-100 btn-sm w-fit md:px-3 mx-auto">
+                    <button
+                      onClick={() => showExtendDateStep(item)}
+                      className="btn scale-[0.77] md:scale-[1] btn-base-100 btn-sm w-fit md:px-3 mx-auto"
+                    >
                       Przedłuż datę
                     </button>
                   </div>
