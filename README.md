@@ -47,11 +47,9 @@ Backend setup:
 <br>
 
 Frontend setup:
-1. Download the repository
-2. In XAMPP run the apache and mysql module
-3. Install dependencies with the command `npm install`
-4. Run `npm run dev` for a dev server.
-5. The application is available at `localhost:3000`
+1. Install dependencies with the command `npm install`
+2. Run `npm run dev` for a dev server.
+3. The application is available at `localhost:3000`
 
 <br>
 
